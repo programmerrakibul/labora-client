@@ -1,2 +1,43 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+
 @import "tailwindcss";
 @plugin "daisyui";
+
+.nav_links {
+  @apply capitalize font-medium;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-['Raleway'];
+}
+
+.btn {
+  @apply font-['Raleway'];
+}
+
+.input,
+.textarea,
+.select {
+  @apply w-full;
+}
+
+.textarea {
+  @apply focus:textarea-primary;
+}
+
+.select {
+  @apply focus:select-primary;
+}
+
+.input {
+  @apply focus:input-primary;
+}
+
+.label {
+  @apply font-semibold text-neutral text-lg font-['Raleway'];
+}
