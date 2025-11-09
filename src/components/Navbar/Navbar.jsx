@@ -94,12 +94,17 @@ const Navbar = () => {
           <div className="navbar-end">
             {currentUser ? (
               <>
-                <div className="avatar">
-                  <div className="ring-primary ring-offset-base-100 size-10 rounded-full ring-2">
-                    <img
-                      src={currentUser.photoURL}
-                      alt={currentUser.displayName}
-                    />
+                <div
+                  className="tooltip tooltip-bottom tooltip-primary"
+                  data-tip={currentUser.displayName}
+                >
+                  <div className="avatar">
+                    <div className="ring-primary ring-offset-base-100 size-10 rounded-full ring-2">
+                      <img
+                        src={currentUser.photoURL}
+                        alt={currentUser.displayName}
+                      />
+                    </div>
                   </div>
                 </div>
 
