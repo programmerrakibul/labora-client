@@ -31,6 +31,7 @@ const Navbar = () => {
     try {
       await logoutUser();
 
+      navigate("/auth/login");
       mySwal.fire({
         icon: "success",
         title: "Logged out successfully",

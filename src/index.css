@@ -20,6 +20,10 @@ h6 {
   @apply font-['Raleway'];
 }
 
+.btn:disabled {
+  @apply pointer-events-auto cursor-not-allowed bg-[#D6D3E4];
+}
+
 .input,
 .textarea,
 .select {

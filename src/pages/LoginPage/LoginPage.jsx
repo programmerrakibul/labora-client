@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router";
 import useAuthInfo from "../../hooks/useAuthInfo";
-import bgImg from "../../assets/auth_sign-up.svg";
+import bgImg from "../../assets/auth_login.svg";
 import useGoogleLogin from "../../hooks/useGoogleLogin";
 import MyLabel from "../../components/MyLabel/MyLabel";
 import MyInput from "../../components/MyInput/MyInput";
@@ -12,59 +12,24 @@ import ActionSpinner from "../../components/ActionSpinner/ActionSpinner";
 import getAuthErrorMessage from "../../utilities/getAuthErrorMessage";
 import useLoginSuccessMessage from "../../hooks/useLoginSuccessMessage";
 
-const RegisterPage = () => {
+const LoginPage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const loginSuccessMessage = useLoginSuccessMessage();
-  const { createUser, updateUserProfile } = useAuthInfo();
+  const { loginUser } = useAuthInfo();
   const { handleGoogleLogin, googleLoading } = useGoogleLogin();
 
-  const handleCreateUser = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     const form = e.currentTarget;
-    const displayName = form.name.value.trim();
     const email = form.email.value.trim();
-    const photoURL = form.photoURL.value.trim();
     const password = form.password.value;
-    const lowerCase = /[a-z]/;
-    const upperCase = /[A-Z]/;
-
-    if (!displayName || !email || !photoURL) {
-      toast.warn("Enter valid information");
-      setLoading(false);
-      return;
-    }
-
-    if (password.length < 6) {
-      toast.warn("Password must be at least 6 characters");
-      setLoading(false);
-      return;
-    }
-
-    if (!upperCase.test(password)) {
-      toast.warn("Password must contain at least one uppercase letter");
-      setLoading(false);
-      return;
-    }
-
-    if (!lowerCase.test(password)) {
-      toast.warn("Password must contain at least one lowercase letter");
-      setLoading(false);
-      return;
-    }
-
-    if (password.includes(" ")) {
-      toast.warn("Password cannot contain spaces");
-      return;
-    }
 
     try {
-      const userCreds = await createUser(email, password);
+      const userCreds = await loginUser(email, password);
       const user = userCreds.user;
-
-      await updateUserProfile({ ...user, photoURL, displayName });
 
       loginSuccessMessage(user.displayName);
       navigate("/");
@@ -83,13 +48,16 @@ const RegisterPage = () => {
       <section className="py-8 my-6">
         <div className="p-8 rounded-md shadow-md mx-auto w-full max-w-5xl bg-primary/10">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8 ">
-            <div className="flex-1/2">
-              <form onSubmit={handleCreateUser} className="space-y-3.5">
-                <div className="space-y-1.5">
-                  <MyLabel htmlFor="name">Name</MyLabel>
-                  <MyInput disabled={loading} name="name" holder="John Doe" />
-                </div>
+            <div className="flex-1/2 space-y-8">
+              <h3 className="text-center font-bold text-3xl text-neutral">
+                Login Now
+              </h3>
 
+              <img src={bgImg} alt="Register here" />
+            </div>
+
+            <div className="flex-1/2">
+              <form onSubmit={handleLogin} className="space-y-3.5">
                 <div className="space-y-1.5">
                   <MyLabel htmlFor="email">Email</MyLabel>
                   <MyInput
@@ -97,15 +65,6 @@ const RegisterPage = () => {
                     type="email"
                     disabled={loading}
                     holder="john-doe@gmail.com"
-                  />
-                </div>
-
-                <div className="space-y-1.5">
-                  <MyLabel htmlFor="photoURL">Photo URL</MyLabel>
-                  <MyInput
-                    disabled={loading}
-                    name="photoURL"
-                    holder="https://example.png"
                   />
                 </div>
 
@@ -124,18 +83,18 @@ const RegisterPage = () => {
                     disabled={loading || googleLoading}
                     className="btn-block"
                   >
-                    {loading ? <ActionSpinner /> : "Register"}
+                    {loading ? <ActionSpinner /> : "Login"}
                   </MyButton>
                 </div>
 
                 <div className="text-center">
-                  Already have an account?{" "}
-                  <Link to="/auth/login" className="link link-hover">
-                    Login here
+                  Don't have an account?{" "}
+                  <Link to="/auth/register" className="link link-hover">
+                    Register here
                   </Link>
                 </div>
 
-                <div className="divider divider-neutral">OR</div>
+                <div className="divider divider-primary">OR</div>
 
                 <button
                   type="button"
@@ -154,14 +113,6 @@ const RegisterPage = () => {
                 </button>
               </form>
             </div>
-
-            <div className="flex-1/2 space-y-8">
-              <h3 className="text-center font-bold text-3xl text-neutral">
-                Register Now
-              </h3>
-
-              <img src={bgImg} alt="Register here" />
-            </div>
           </div>
         </div>
       </section>
@@ -169,4 +120,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default LoginPage;
