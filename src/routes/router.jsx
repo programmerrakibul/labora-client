@@ -9,6 +9,7 @@ import AllJobsPage from "../pages/AllJobsPage/AllJobsPage";
 import JobDetailsPage from "../pages/JobDetailsPage/JobDetailsPage";
 import MyJobsPage from "../pages/MyJobsPage/MyJobsPage";
 import UpdateJobDetails from "../pages/UpdateJobDetails/UpdateJobDetails";
+import MyAcceptedTasksPage from "../pages/MyAcceptedTasksPage/MyAcceptedTasksPage";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
           {
             path: "update-job-details/:id",
             element: <UpdateJobDetails />,
+          },
+          {
+            path: "my-accepted-tasks",
+            element: <MyAcceptedTasksPage />,
           },
         ],
       },

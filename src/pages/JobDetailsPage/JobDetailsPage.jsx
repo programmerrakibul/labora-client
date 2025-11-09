@@ -9,11 +9,15 @@ import MyContainer from "../../components/MyContainer/MyContainer";
 import { SiMinutemailer } from "react-icons/si";
 import MyButton from "../../components/MyButton/MyButton";
 import useAuthInfo from "../../hooks/useAuthInfo";
+import useMySwal from "../../hooks/useMySwal";
+import ActionSpinner from "../../components/ActionSpinner/ActionSpinner";
 
 const JobDetailsPage = () => {
   const { id } = useParams();
+  const mySwal = useMySwal();
   const secureAxios = useSecureAxios();
   const [loading, setLoading] = useState(true);
+  const [acceptLoading, setAcceptLoading] = useState(false);
   const [singleJob, setSingleJob] = useState({});
   const { currentUser } = useAuthInfo();
   const {
@@ -43,6 +47,34 @@ const JobDetailsPage = () => {
       }
     })();
   }, [secureAxios, id]);
+
+  const handleAcceptJob = async () => {
+    setAcceptLoading(true);
+
+    const newTask = {
+      job_id: id,
+      accepted_user_name: currentUser.displayName,
+      accepted_user_email: currentUser.email,
+      accepted_at: new Date().toISOString(),
+    };
+
+    try {
+      const { data } = await secureAxios.post("/added-tasks", newTask);
+
+      if (data.success) {
+        mySwal.fire({
+          icon: "success",
+          title: data.message,
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      }
+    } catch {
+      toast.error("Job Accepted failed");
+    } finally {
+      setAcceptLoading(false);
+    }
+  };
 
   if (loading) {
     return <p>Loading...</p>;
@@ -88,7 +120,9 @@ const JobDetailsPage = () => {
 
               {currentUser.email !== creator_email && (
                 <div className="card-actions justify-end">
-                  <MyButton>Accept Job</MyButton>
+                  <MyButton disabled={acceptLoading} onClick={handleAcceptJob}>
+                    {acceptLoading ? <ActionSpinner /> : "Accept Job"}
+                  </MyButton>
                 </div>
               )}
             </div>
