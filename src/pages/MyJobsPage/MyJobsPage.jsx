@@ -7,6 +7,9 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { FaRegEdit } from "react-icons/fa";
 import { VscEye } from "react-icons/vsc";
 import { useNavigate } from "react-router";
+import useMySwal from "../../hooks/useMySwal";
+import MyButton from "../../components/MyButton/MyButton";
+import { toast } from "react-toastify";
 
 const MyJobsPage = () => {
   const [loading, setLoading] = useState(true);
@@ -14,6 +17,7 @@ const MyJobsPage = () => {
   const { currentUser } = useAuthInfo();
   const secureAxios = useSecureAxios();
   const navigate = useNavigate();
+  const mySwal = useMySwal();
 
   useEffect(() => {
     (async () => {
@@ -38,6 +42,52 @@ const MyJobsPage = () => {
   if (loading) {
     return <p>Loading...</p>;
   }
+
+  const handleDeleteClick = (id) => {
+    mySwal.fire({
+      title: "Are you sure?",
+      icon: "warning",
+      showCancelButton: false,
+      showConfirmButton: false,
+      html: (
+        <>
+          <p className="mb-5">You won't be able to revert this!</p>
+          <div className="space-x-2.5">
+            <MyButton onClick={() => handleDelete(id)}>
+              Yes, Delete it!
+            </MyButton>
+            <MyButton className="btn-outline" onClick={() => mySwal.close()}>
+              Cancel
+            </MyButton>
+          </div>
+        </>
+      ),
+    });
+  };
+
+  const handleDelete = async (id) => {
+    mySwal.showLoading();
+
+    try {
+      const { data } = await secureAxios.delete(`/jobs/${id}`);
+
+      if (data.success) {
+        const updatedJobs = userJobs.filter((item) => item._id !== id);
+        setUserJobs(updatedJobs);
+
+        mySwal.fire({
+          icon: "success",
+          title: data.message,
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      }
+    } catch {
+      toast.error("Job Data Delete Failed");
+    } finally {
+      mySwal.hideLoading();
+    }
+  };
 
   return (
     <>
@@ -92,6 +142,7 @@ const MyJobsPage = () => {
                       </button>
 
                       <button
+                        onClick={() => handleDeleteClick(item._id)}
                         title="Delete"
                         className="btn shadow-none border-none bg-transparent p-1.5 text-2xl text-error"
                       >
