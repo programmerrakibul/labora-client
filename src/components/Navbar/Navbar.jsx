@@ -1,10 +1,17 @@
 import { NavLink, useNavigate } from "react-router";
 import MyContainer from "../MyContainer/MyContainer";
 import useAuthInfo from "../../hooks/useAuthInfo";
+import { useState } from "react";
+import getAuthErrorMessage from "../../utilities/getAuthErrorMessage";
+import { toast } from "react-toastify";
+import ActionSpinner from "../ActionSpinner/ActionSpinner";
+import useMySwal from "../../hooks/useMySwal";
 
 const Navbar = () => {
-  const { currentUser } = useAuthInfo();
   const navigate = useNavigate();
+  const mySwal = useMySwal();
+  const [loading, setLoading] = useState(false);
+  const { currentUser, logoutUser } = useAuthInfo();
   const navLinks = ["home", "all jobs", "add job", "my accepted tasks"].map(
     (link) => (
       <li key={link}>
@@ -17,6 +24,26 @@ const Navbar = () => {
       </li>
     )
   );
+
+  const handleLogoutUser = async () => {
+    setLoading(true);
+
+    try {
+      await logoutUser();
+
+      mySwal.fire({
+        icon: "success",
+        title: "Logged out successfully",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    } catch (err) {
+      const errorMessage = getAuthErrorMessage(err.code);
+      toast.error(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <nav className="bg-base-100 shadow-sm">
@@ -36,7 +63,6 @@ const Navbar = () => {
                   viewBox="0 0 24 24"
                   stroke="currentColor"
                 >
-                  {" "}
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -70,7 +96,13 @@ const Navbar = () => {
                   </div>
                 </div>
 
-                <button className="btn btn-primary">Logout</button>
+                <button
+                  disabled={loading}
+                  onClick={handleLogoutUser}
+                  className="btn btn-primary"
+                >
+                  {loading ? <ActionSpinner /> : "Logout"}
+                </button>
               </>
             ) : (
               <>
