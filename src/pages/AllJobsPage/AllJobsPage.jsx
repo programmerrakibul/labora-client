@@ -1,14 +1,16 @@
-import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
-import JobCard from "../../components/JobCard/JobCard";
-import MyTitle from "../../components/MyTitle/MyTitle";
-import usePublicAxios from "../../hooks/usePublicAxios";
 import MyContainer from "../../components/MyContainer/MyContainer";
+import { toast } from "react-toastify";
+import usePublicAxios from "../../hooks/usePublicAxios";
+import MyTitle from "../../components/MyTitle/MyTitle";
+import JobCard from "../../components/JobCard/JobCard";
 
-const Homepage = () => {
-  const publicAxios = usePublicAxios();
+const AllJobsPage = () => {
   const [loading, setLoading] = useState(true);
-  const [latestJobs, setLatestJobs] = useState([]);
+  const [allJobs, setAllJobs] = useState([]);
+  const publicAxios = usePublicAxios();
+
+  console.log(allJobs);
 
   useEffect(() => {
     (async () => {
@@ -16,7 +18,7 @@ const Homepage = () => {
 
       try {
         const { data } = await publicAxios.get("/jobs/latest");
-        setLatestJobs(data.latest_jobs);
+        setAllJobs(data.latest_jobs);
       } catch (err) {
         toast.error(err.message);
       } finally {
@@ -25,21 +27,21 @@ const Homepage = () => {
     })();
   }, [publicAxios]);
 
-  const jobCardElements = latestJobs.map((item) => (
+  const jobCardElements = allJobs.map((item) => (
     <JobCard key={item._id} singleJob={item} />
   ));
 
   return (
     <>
-      <title>Home - Labora</title>
+      <title>All Jobs - Labora</title>
 
       <section>
-        <MyContainer>This is banner</MyContainer>
-      </section>
-
-      <section>
-        <MyContainer className="space-y-7">
+        <MyContainer>
           <MyTitle>Latest Jobs for You</MyTitle>
+
+          <div>
+            
+          </div>
 
           <div className="grid md:grid-cols-2 gap-7">
             {loading ? <p>Loading...</p> : jobCardElements}
@@ -50,4 +52,4 @@ const Homepage = () => {
   );
 };
 
-export default Homepage;
+export default AllJobsPage;
