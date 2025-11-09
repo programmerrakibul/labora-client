@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { FcGoogle } from "react-icons/fc";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import useAuthInfo from "../../hooks/useAuthInfo";
 import bgImg from "../../assets/auth_login.svg";
 import useGoogleLogin from "../../hooks/useGoogleLogin";
@@ -18,6 +18,7 @@ const LoginPage = () => {
   const loginSuccessMessage = useLoginSuccessMessage();
   const { loginUser } = useAuthInfo();
   const { handleGoogleLogin, googleLoading } = useGoogleLogin();
+  const { state } = useLocation();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -32,7 +33,7 @@ const LoginPage = () => {
       const user = userCreds.user;
 
       loginSuccessMessage(user.displayName);
-      navigate("/");
+      navigate((state && state.path) || "/");
     } catch (err) {
       const errorMessage = getAuthErrorMessage(err.code);
       toast.error(errorMessage);
@@ -99,7 +100,7 @@ const LoginPage = () => {
                 <button
                   type="button"
                   disabled={googleLoading || loading}
-                  onClick={() => handleGoogleLogin()}
+                  onClick={() => handleGoogleLogin(state && state.path) || "/"}
                   className="btn btn-block bg-white text-black border-[#e5e5e5]"
                 >
                   {googleLoading ? (

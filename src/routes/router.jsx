@@ -4,6 +4,7 @@ import Homepage from "../pages/Homepage/Homepage";
 import AddJobPage from "../pages/AddJobPage/AddJobPage";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import LoginPage from "../pages/LoginPage/LoginPage";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -15,9 +16,16 @@ const router = createBrowserRouter([
         element: <Homepage />,
       },
       {
-        path: "add-job",
-        element: <AddJobPage />,
+        path: "",
+        element: <PrivateRoute />,
+        children: [
+          {
+            path: "add-job",
+            element: <AddJobPage />,
+          },
+        ],
       },
+
       {
         path: "auth/register",
         element: <RegisterPage />,
