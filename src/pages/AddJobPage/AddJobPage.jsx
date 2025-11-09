@@ -6,8 +6,14 @@ import MyButton from "../../components/MyButton/MyButton";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import ActionSpinner from "../../components/ActionSpinner/ActionSpinner";
+import useAuthInfo from "../../hooks/useAuthInfo";
+import useSecureAxios from "../../hooks/useSecureAxios";
+import useMySwal from "../../hooks/useMySwal";
 
 const AddJobPage = () => {
+  const mySwal = useMySwal();
+  const secureAxios = useSecureAxios();
+  const { currentUser } = useAuthInfo();
   const [loading, setLoading] = useState(false);
 
   const handlePostJob = async (e) => {
@@ -29,8 +35,25 @@ const AddJobPage = () => {
       return;
     }
 
-    console.log(formData);
-    setLoading(false);
+    formData["posted_by"] = currentUser.displayName;
+    formData["user_email"] = currentUser.email;
+    formData["created_at"] = new Date().toISOString();
+
+    try {
+      const { data } = await secureAxios.post("/jobs", formData);
+
+      form.reset();
+      mySwal.fire({
+        icon: "success",
+        title: data.message,
+        timer: 2000,
+        showConfirmButton: false,
+      });
+    } catch (err) {
+      toast.error(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -101,6 +124,7 @@ const AddJobPage = () => {
                   id="job_summery"
                   className="textarea"
                   placeholder="Enter Job Summery"
+                  required
                   disabled={loading}
                 ></textarea>
               </div>
