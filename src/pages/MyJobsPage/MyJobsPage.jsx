@@ -117,7 +117,7 @@ const MyJobsPage = () => {
                       <img
                         src={item.job_image}
                         alt={item.job_title}
-                        className="w-16 rounded-md"
+                        className="w-16 h-10 rounded-md overflow-hidden"
                       />
                     </td>
                     <td>{item.job_title}</td>
