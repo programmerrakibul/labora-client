@@ -1,8 +1,11 @@
 import { MdOutlineVerifiedUser } from "react-icons/md";
 import MyButton from "../MyButton/MyButton";
+import { useNavigate } from "react-router";
+import Badge from "../../Badge/Badge";
 
 const JobCard = ({ singleJob }) => {
-  const { job_title, job_image, job_category, job_summery, posted_by } =
+  const navigate = useNavigate();
+  const { _id, job_title, job_image, job_category, job_summery, posted_by } =
     singleJob || {};
 
   return (
@@ -23,7 +26,7 @@ const JobCard = ({ singleJob }) => {
             </span>
             <span>{posted_by}</span>
           </p>
-          <span className="badge badge-primary">{job_category}</span>
+          <Badge>{job_category}</Badge>
         </div>
 
         <h4
@@ -35,7 +38,12 @@ const JobCard = ({ singleJob }) => {
         <p className="line-clamp-2">{job_summery}</p>
 
         <div className="card-actions justify-end">
-          <MyButton className="btn-outline">View Details</MyButton>
+          <MyButton
+            onClick={() => navigate(`/job-details/${_id}`)}
+            className="btn-outline"
+          >
+            View Details
+          </MyButton>
         </div>
       </div>
     </div>

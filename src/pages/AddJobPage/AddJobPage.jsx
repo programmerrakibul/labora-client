@@ -36,7 +36,7 @@ const AddJobPage = () => {
     }
 
     formData["posted_by"] = currentUser.displayName;
-    formData["user_email"] = currentUser.email;
+    formData["creator_email"] = currentUser.email;
     formData["created_at"] = new Date().toISOString();
 
     try {

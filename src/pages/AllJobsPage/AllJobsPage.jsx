@@ -10,15 +10,14 @@ const AllJobsPage = () => {
   const [allJobs, setAllJobs] = useState([]);
   const publicAxios = usePublicAxios();
 
-  console.log(allJobs);
-
   useEffect(() => {
     (async () => {
       setLoading(true);
 
       try {
-        const { data } = await publicAxios.get("/jobs/latest");
-        setAllJobs(data.latest_jobs);
+        const { data } = await publicAxios.get("/jobs");
+
+        setAllJobs(data.all_jobs);
       } catch (err) {
         toast.error(err.message);
       } finally {
@@ -39,9 +38,7 @@ const AllJobsPage = () => {
         <MyContainer>
           <MyTitle>Latest Jobs for You</MyTitle>
 
-          <div>
-            
-          </div>
+          <div></div>
 
           <div className="grid md:grid-cols-2 gap-7">
             {loading ? <p>Loading...</p> : jobCardElements}
