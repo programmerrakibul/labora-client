@@ -1,7 +1,9 @@
 import { NavLink, useNavigate } from "react-router";
 import MyContainer from "../MyContainer/MyContainer";
+import useAuthInfo from "../../hooks/useAuthInfo";
 
 const Navbar = () => {
+  const { currentUser } = useAuthInfo();
   const navigate = useNavigate();
   const navLinks = ["home", "all jobs", "add job", "my accepted tasks"].map(
     (link) => (
@@ -57,19 +59,36 @@ const Navbar = () => {
           </div>
 
           <div className="navbar-end">
-            <button
-              onClick={() => navigate("/auth/login")}
-              className="btn btn-primary"
-            >
-              Login
-            </button>
+            {currentUser ? (
+              <>
+                <div className="avatar">
+                  <div className="ring-primary ring-offset-base-100 size-10 rounded-full ring-2">
+                    <img
+                      src={currentUser.photoURL}
+                      alt={currentUser.displayName}
+                    />
+                  </div>
+                </div>
 
-            <button
-              onClick={() => navigate("/auth/register")}
-              className="btn btn-primary btn-outline"
-            >
-              Register
-            </button>
+                <button className="btn btn-primary">Logout</button>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={() => navigate("/auth/login")}
+                  className="btn btn-primary"
+                >
+                  Login
+                </button>
+
+                <button
+                  onClick={() => navigate("/auth/register")}
+                  className="btn btn-primary btn-outline"
+                >
+                  Register
+                </button>
+              </>
+            )}
           </div>
         </div>
       </MyContainer>
