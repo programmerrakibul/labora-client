@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import Badge from "../../Badge/Badge";
+import Badge from "../../components/Badge/Badge";
 import { toast } from "react-toastify";
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";

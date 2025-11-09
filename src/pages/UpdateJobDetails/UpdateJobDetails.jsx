@@ -1,0 +1,158 @@
+import { useEffect, useState } from "react";
+import updateImg from "../../assets/job_update.svg";
+import MyLabel from "../../components/MyLabel/MyLabel";
+import MyInput from "../../components/MyInput/MyInput";
+import useSecureAxios from "../../hooks/useSecureAxios";
+import MyButton from "../../components/MyButton/MyButton";
+import ActionSpinner from "../../components/ActionSpinner/ActionSpinner";
+import MyContainer from "../../components/MyContainer/MyContainer";
+import { useParams } from "react-router";
+import useMySwal from "../../hooks/useMySwal";
+import { toast } from "react-toastify";
+
+const UpdateJobDetails = () => {
+  const { id } = useParams();
+  const secureAxios = useSecureAxios();
+  const mySwal = useMySwal();
+  const [productLoading, setProductLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [singleJob, setSingleJob] = useState({});
+  const { job_title, job_image, job_category, job_summery } = singleJob;
+
+  useEffect(() => {
+    (async () => {
+      setProductLoading(true);
+
+      try {
+        const { data } = await secureAxios.get(`/jobs/${id}`);
+
+        if (data.success) {
+          setSingleJob(data.single_job);
+        }
+      } finally {
+        setProductLoading(false);
+      }
+    })();
+  }, [secureAxios, id]);
+
+  const handleUpdateJob = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const form = e.currentTarget;
+    const formData = Object.fromEntries(new FormData(form));
+
+    Object.entries(formData).forEach(([key, value]) => {
+      formData[key] = value.trim();
+    });
+
+    try {
+      const { data } = await secureAxios.put(`/jobs/${id}`, formData);
+
+      if (data.success) {
+        mySwal.fire({
+          icon: "success",
+          title: data.message,
+          timer: 2000,
+          showConfirmButton: false,
+        });
+      }
+    } catch {
+      toast.error("Job data update failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (productLoading) {
+    return <p>Loading...</p>;
+  }
+
+  return (
+    <>
+      <title>Post a Job</title>
+
+      <section className="py-8 my-5">
+        <MyContainer className="flex flex-col md:flex-row items-center justify-between gap-7">
+          <div className="flex-1/2 grid place-items-center">
+            <form
+              onSubmit={handleUpdateJob}
+              className="bg-base-300 p-7 rounded-lg shadow-lg w-full space-y-5"
+            >
+              <div className="space-y-1.5">
+                <MyLabel htmlFor="job_title">Title</MyLabel>
+                <MyInput
+                  disabled={loading}
+                  name="job_title"
+                  holder="Enter Job Title"
+                  defaultValue={job_title}
+                  required={false}
+                />
+              </div>
+
+              <div className="flex items-center justify-between gap-4">
+                <div className="space-y-1.5 flex-1/2">
+                  <MyLabel htmlFor="job_category">Category</MyLabel>
+
+                  <select
+                    defaultValue={job_category}
+                    className="select"
+                    name="job_category"
+                    id="job_category"
+                    disabled={loading}
+                  >
+                    <option disabled={true}>Enter Job Category</option>
+                    <option>AI & Machine Learning</option>
+                    <option>Graphics Design</option>
+                    <option>Scriptwriting</option>
+                    <option>Video Editing</option>
+                    <option>UI/UX Design</option>
+                    <option>Game Design</option>
+                    <option>3D Modeling</option>
+                    <option>Web Design</option>
+                    <option>Data Entry</option>
+                  </select>
+                </div>
+
+                <div className="space-y-1.5 flex-1/2">
+                  <MyLabel htmlFor="job_image">Job Image</MyLabel>
+                  <MyInput
+                    disabled={loading}
+                    name="job_image"
+                    holder="Enter Job Photo URL"
+                    required={false}
+                    defaultValue={job_image}
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <MyLabel htmlFor="job_summery">Summery</MyLabel>
+                <textarea
+                  name="job_summery"
+                  id="job_summery"
+                  className="textarea"
+                  placeholder="Enter Job Summery"
+                  defaultValue={job_summery}
+                  disabled={loading}
+                ></textarea>
+              </div>
+
+              <div>
+                <MyButton disabled={loading} className="btn-block">
+                  {loading ? <ActionSpinner /> : "Update"}
+                </MyButton>
+              </div>
+            </form>
+          </div>
+
+          <div className="flex-1/2">
+            <img src={updateImg} alt="Post a Job" />
+          </div>
+        </MyContainer>
+      </section>
+    </>
+  );
+};
+
+export default UpdateJobDetails;

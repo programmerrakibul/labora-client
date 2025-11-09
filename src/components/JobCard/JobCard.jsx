@@ -1,7 +1,7 @@
 import { MdOutlineVerifiedUser } from "react-icons/md";
 import MyButton from "../MyButton/MyButton";
 import { useNavigate } from "react-router";
-import Badge from "../../Badge/Badge";
+import Badge from "../Badge/Badge";
 
 const JobCard = ({ singleJob }) => {
   const navigate = useNavigate();

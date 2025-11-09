@@ -5,6 +5,7 @@ const MyInput = ({
   className = "",
   required = true,
   disabled = false,
+  defaultValue = "",
 }) => {
   return (
     <>
@@ -15,6 +16,7 @@ const MyInput = ({
         placeholder={holder}
         className={`input ${className}`}
         disabled={disabled}
+        defaultValue={defaultValue}
         required={required}
       />
     </>

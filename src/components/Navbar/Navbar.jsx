@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import MyContainer from "../MyContainer/MyContainer";
 import useAuthInfo from "../../hooks/useAuthInfo";
 import { useState } from "react";
@@ -12,18 +12,22 @@ const Navbar = () => {
   const mySwal = useMySwal();
   const [loading, setLoading] = useState(false);
   const { currentUser, logoutUser } = useAuthInfo();
-  const navLinks = ["home", "all jobs", "add job", "my accepted tasks"].map(
-    (link) => (
-      <li key={link}>
-        <NavLink
-          to={link === "home" ? "/" : link.replaceAll(" ", "-")}
-          className="nav_links"
-        >
-          {link}
-        </NavLink>
-      </li>
-    )
-  );
+  const navLinks = [
+    "home",
+    "all jobs",
+    "add job",
+    "my added jobs",
+    "my accepted tasks",
+  ].map((link) => (
+    <li key={link}>
+      <NavLink
+        to={link === "home" ? "/" : link.replaceAll(" ", "-")}
+        className="nav_links"
+      >
+        {link}
+      </NavLink>
+    </li>
+  ));
 
   const handleLogoutUser = async () => {
     setLoading(true);
@@ -79,7 +83,9 @@ const Navbar = () => {
                 {navLinks}
               </ul>
             </div>
-            <a className="text-2xl font-bold">Labora</a>
+            <Link to="/" className="text-2xl font-bold">
+              Labora
+            </Link>
           </div>
           <div className="navbar-center hidden lg:flex">
             <ul className="menu menu-horizontal px-1">{navLinks}</ul>

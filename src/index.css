@@ -27,7 +27,7 @@ h6 {
 .input,
 .textarea,
 .select {
-  @apply w-full;
+  @apply w-full block;
 }
 
 .textarea {
