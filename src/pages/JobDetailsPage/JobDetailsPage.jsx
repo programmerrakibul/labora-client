@@ -8,12 +8,14 @@ import useSecureAxios from "../../hooks/useSecureAxios";
 import MyContainer from "../../components/MyContainer/MyContainer";
 import { SiMinutemailer } from "react-icons/si";
 import MyButton from "../../components/MyButton/MyButton";
+import useAuthInfo from "../../hooks/useAuthInfo";
 
 const JobDetailsPage = () => {
   const { id } = useParams();
   const secureAxios = useSecureAxios();
   const [loading, setLoading] = useState(true);
   const [singleJob, setSingleJob] = useState({});
+  const { currentUser } = useAuthInfo();
   const {
     job_title,
     job_image,
@@ -84,9 +86,11 @@ const JobDetailsPage = () => {
                 </p>
               </div>
 
-              <div className="card-actions justify-end">
-                <MyButton>Accept Job</MyButton>
-              </div>
+              {currentUser.email !== creator_email && (
+                <div className="card-actions justify-end">
+                  <MyButton>Accept Job</MyButton>
+                </div>
+              )}
             </div>
           </div>
 
