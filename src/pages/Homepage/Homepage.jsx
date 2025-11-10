@@ -53,7 +53,7 @@ const Homepage = () => {
               for You
             </MyTitle>
 
-            <p className="max-w-xl mx-auto">
+            <p className="text-base md:text-lg max-w-xl mx-auto">
               Discover fresh opportunities tailored to your skills and
               interests. Stay ahead with curated job listings that match your
               goals and career aspirations
@@ -75,7 +75,7 @@ const Homepage = () => {
               </span>{" "}
               Categories
             </MyTitle>
-            <p className="max-w-xl mx-auto">
+            <p className="text-base md:text-lg max-w-xl mx-auto">
               Discover thousands of opportunities across our most popular
               freelance categories
             </p>
@@ -141,11 +141,20 @@ const Homepage = () => {
         </MyContainer>
       </section>
 
-      <section>
+      <section className="mb-16">
         <MyContainer className="space-y-9">
           <div className="text-center space-y-3.5">
-            <MyTitle>Where Talent Meets Opportunity</MyTitle>
-            <p className="text-lg max-w-3xl mx-auto">
+            <MyTitle>
+              Where{" "}
+              <span className="primary_linear bg-clip-text text-transparent">
+                Talent
+              </span>{" "}
+              Meets{" "}
+              <span className="primary_linear bg-clip-text text-transparent">
+                Opportunity
+              </span>
+            </MyTitle>
+            <p className="text-base md:text-lg max-w-xl mx-auto">
               Labora is where world-class talent meets opportunity. We're
               building the future of work by connecting exceptional freelancers
               with businesses that need their skills. Whether you're looking to
@@ -153,9 +162,9 @@ const Homepage = () => {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-4">
-              <h3 className="text-2xl text-neutral font-bold">
+              <h3 className="text-xl sm:text-2xl text-neutral font-bold">
                 Revolutionizing How The World Works
               </h3>
               <div className="space-y-2.5">
@@ -186,12 +195,10 @@ const Homepage = () => {
                 >
                   <div className="card-body">
                     <div className="text-primary mb-3">{feature.icon}</div>
-                    <h4 className="card-title text-lg font-semibold text-gray-900">
+                    <h4 className="card-title text-lg font-semibold text-neutral">
                       {feature.title}
                     </h4>
-                    <p className="text-gray-600 text-sm">
-                      {feature.description}
-                    </p>
+                    <p>{feature.description}</p>
                   </div>
                 </div>
               ))}
