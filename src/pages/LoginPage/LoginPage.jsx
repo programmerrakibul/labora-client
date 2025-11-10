@@ -11,14 +11,16 @@ import MyButton from "../../components/MyButton/MyButton";
 import ActionSpinner from "../../components/ActionSpinner/ActionSpinner";
 import getAuthErrorMessage from "../../utilities/getAuthErrorMessage";
 import useLoginSuccessMessage from "../../hooks/useLoginSuccessMessage";
+import { VscEye, VscEyeClosed } from "react-icons/vsc";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { state } = useLocation();
+  const { loginUser } = useAuthInfo();
+  const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
   const loginSuccessMessage = useLoginSuccessMessage();
-  const { loginUser } = useAuthInfo();
   const { handleGoogleLogin, googleLoading } = useGoogleLogin();
-  const { state } = useLocation();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -71,12 +73,20 @@ const LoginPage = () => {
 
                 <div className="space-y-1.5">
                   <MyLabel htmlFor="password">Password</MyLabel>
-                  <MyInput
-                    disabled={loading}
-                    name="password"
-                    type="password"
-                    holder="••••••••"
-                  />
+                  <div className="relative">
+                    <MyInput
+                      disabled={loading}
+                      name="password"
+                      type={show ? "text" : "password"}
+                      holder="••••••••"
+                    />
+                    <span
+                      onClick={() => setShow(!show)}
+                      className="cursor-pointer absolute right-5 top-[50%] -translate-y-[50%] z-10"
+                    >
+                      {show ? <VscEye /> : <VscEyeClosed />}
+                    </span>
+                  </div>
                 </div>
 
                 <div>

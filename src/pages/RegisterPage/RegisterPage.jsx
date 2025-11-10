@@ -11,10 +11,12 @@ import MyButton from "../../components/MyButton/MyButton";
 import ActionSpinner from "../../components/ActionSpinner/ActionSpinner";
 import getAuthErrorMessage from "../../utilities/getAuthErrorMessage";
 import useLoginSuccessMessage from "../../hooks/useLoginSuccessMessage";
+import { VscEye, VscEyeClosed } from "react-icons/vsc";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [show, setShow] = useState(false);
   const loginSuccessMessage = useLoginSuccessMessage();
   const { createUser, updateUserProfile } = useAuthInfo();
   const { handleGoogleLogin, googleLoading } = useGoogleLogin();
@@ -111,12 +113,20 @@ const RegisterPage = () => {
 
                 <div className="space-y-1.5">
                   <MyLabel htmlFor="password">Password</MyLabel>
-                  <MyInput
-                    disabled={loading}
-                    name="password"
-                    type="password"
-                    holder="••••••••"
-                  />
+                  <div className="relative">
+                    <MyInput
+                      disabled={loading}
+                      name="password"
+                      type={show ? "text" : "password"}
+                      holder="••••••••"
+                    />
+                    <span
+                      onClick={() => setShow(!show)}
+                      className="cursor-pointer absolute right-5 top-[50%] -translate-y-[50%] z-10"
+                    >
+                      {show ? <VscEye /> : <VscEyeClosed />}
+                    </span>
+                  </div>
                 </div>
 
                 <div>
