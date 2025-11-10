@@ -59,6 +59,11 @@ h6 {
   @apply transition-all duration-300 hover:from-primary/70  hover:to-secondary/70;
 }
 
+.swiper-button-prev,
+.swiper-button-next {
+  @apply hidden! md:inline-block!;
+}
+
 .swiper-navigation-icon {
   @apply text-secondary;
 }
