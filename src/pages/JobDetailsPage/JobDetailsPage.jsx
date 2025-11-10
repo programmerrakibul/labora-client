@@ -96,66 +96,81 @@ const JobDetailsPage = () => {
     <>
       <title>{`${job_title || "Job Details"} - Labora`}</title>
 
-      <section>
-        <MyContainer className="flex justify-between gap-7">
-          <div className="flex-2/3">
-            <h2>{job_title}</h2>
-            <div className="flex items-center justify-between">
-              <p className="flex items-center gap-1.5">
-                <strong>Posted By:</strong> <span>{posted_by}</span>
+      <section className="py-6 my-8">
+        <MyContainer className="space-y-3.5">
+          <div className="flex flex-col-reverse md:flex-row justify-between gap-7">
+            <div className="flex-2/3 space-y-3.5">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold">
+                {job_title}
+              </h1>
+              <div className="flex flex-col-reverse sm:flex-row sm:items-center justify-between gap-2.5">
+                <p className="flex items-center gap-1.5">
+                  <strong>Posted By:</strong> <span>{posted_by}</span>
+                </p>
+
+                <Badge>{job_category}</Badge>
+              </div>
+
+              <p className="space-x-1.5">
+                <strong className="underline">Status:</strong>
+                <span className="capitalize">{status}</span>
               </p>
 
-              <Badge>{job_category}</Badge>
-            </div>
-
-            <div className="space-y-3.5">
-              <strong className="underline">Summery:</strong>
-              <p>{job_summery}</p>
-
-              <div className="flex items-center justify-between gap-1.5">
-                <p className="flex items-center gap-1.5">
-                  <span>
-                    <SiMinutemailer />
-                  </span>
-                  <span>{creator_email}</span>
-                </p>
+              <div className="flex items-center flex-wrap justify-between gap-1.5">
+                <div className="space-y-1.5">
+                  <strong className="underline">Contact:</strong>
+                  <p className="flex items-center gap-1.5">
+                    <span>
+                      <SiMinutemailer />
+                    </span>
+                    <span>{creator_email}</span>
+                  </p>
+                </div>
 
                 <p className="flex items-center gap-1.5">
                   <span>
                     <CiCalendarDate size={20} />
                   </span>
+
                   {created_at && (
                     <span>{format(new Date(created_at), "do MMMM, yyyy")}</span>
                   )}
                 </p>
               </div>
+            </div>
 
-              {currentUser.email !== creator_email && (
-                <div className="card-actions justify-end">
-                  <MyButton
-                    disabled={acceptLoading || status === "accepted"}
-                    onClick={handleAcceptJob}
-                  >
-                    {acceptLoading ? (
-                      <ActionSpinner />
-                    ) : status === "accepted" ? (
-                      "Accepted"
-                    ) : (
-                      "Accept Job"
-                    )}
-                  </MyButton>
-                </div>
-              )}
+            <div className="flex-1/3 mx-auto">
+              <div className="p-3 rounded-lg w-fit shadow-lg bg-base-300">
+                <img
+                  src={job_image}
+                  alt={job_title}
+                  className="rounded-lg aspect-3/2 object-cover"
+                />
+              </div>
             </div>
           </div>
 
-          <div className="flex-1/3 p-3 rounded-lg shadow-lg bg-base-300">
-            <img
-              src={job_image}
-              alt={job_title}
-              className="rounded-lg aspect-3/2 object-cover"
-            />
+          <div className="space-y-1.5">
+            <strong className="underline">Summery:</strong>
+            <p className="text-justify">{job_summery}</p>
           </div>
+
+          {currentUser.email !== creator_email && (
+            <div className="card-actions">
+              <MyButton
+                disabled={acceptLoading || status === "accepted"}
+                onClick={handleAcceptJob}
+              >
+                {acceptLoading ? (
+                  <ActionSpinner />
+                ) : status === "accepted" ? (
+                  "Accepted"
+                ) : (
+                  "Accept Job"
+                )}
+              </MyButton>
+            </div>
+          )}
         </MyContainer>
       </section>
     </>
