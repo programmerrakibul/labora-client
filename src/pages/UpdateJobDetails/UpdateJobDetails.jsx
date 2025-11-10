@@ -70,7 +70,7 @@ const UpdateJobDetails = () => {
 
   return (
     <>
-      <title>Post a Job</title>
+      <title>Update your job details - Labora</title>
 
       <section className="py-8 my-5">
         <MyContainer className="flex flex-col md:flex-row items-center justify-between gap-7">

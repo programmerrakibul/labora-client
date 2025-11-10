@@ -41,8 +41,6 @@ const JobDetailsPage = () => {
         if (data.success) {
           setSingleJob(data.single_job);
         }
-      } catch (err) {
-        toast.error(err.message);
       } finally {
         setLoading(false);
       }

@@ -59,7 +59,7 @@ const AddJobPage = () => {
 
   return (
     <>
-      <title>Post a Job</title>
+      <title>Post a Job - Labora</title>
 
       <section className="py-8 my-5">
         <MyContainer className="flex flex-col md:flex-row items-center justify-between gap-7">

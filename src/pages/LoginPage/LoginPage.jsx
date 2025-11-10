@@ -46,7 +46,7 @@ const LoginPage = () => {
 
   return (
     <>
-      <title>Login Now</title>
+      <title>Login in to your account - Labora</title>
 
       <section className="py-8 my-6">
         <div className="p-8 rounded-md shadow-md mx-auto w-full max-w-5xl bg-primary/10">

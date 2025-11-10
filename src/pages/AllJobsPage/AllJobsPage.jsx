@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import MyContainer from "../../components/MyContainer/MyContainer";
-import { toast } from "react-toastify";
 import usePublicAxios from "../../hooks/usePublicAxios";
 import MyTitle from "../../components/MyTitle/MyTitle";
 import JobCard from "../../components/JobCard/JobCard";
@@ -18,8 +17,6 @@ const AllJobsPage = () => {
         const { data } = await publicAxios.get("/jobs");
 
         setAllJobs(data.all_jobs);
-      } catch (err) {
-        toast.error(err.message);
       } finally {
         setLoading(false);
       }
@@ -32,7 +29,7 @@ const AllJobsPage = () => {
 
   return (
     <>
-      <title>All Jobs - Labora</title>
+      <title>Explore All Jobs - Labora</title>
 
       <section>
         <MyContainer>

@@ -56,7 +56,7 @@ const MyJobsPage = () => {
             <MyButton onClick={() => handleDelete(id)}>
               Yes, Delete it!
             </MyButton>
-            
+
             <MyButton onClick={() => mySwal.close()}>Cancel</MyButton>
           </div>
         </>
@@ -90,7 +90,7 @@ const MyJobsPage = () => {
 
   return (
     <>
-      <title>My Jobs</title>
+      <title>My Added Jobs - Labora</title>
 
       <section>
         <MyContainer>

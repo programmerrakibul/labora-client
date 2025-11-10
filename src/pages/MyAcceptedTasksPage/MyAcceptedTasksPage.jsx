@@ -74,7 +74,7 @@ const MyAcceptedTasksPage = () => {
 
   return (
     <>
-      <title>My Accepted Tasks</title>
+      <title>My Accepted Tasks - Labora</title>
 
       <section>
         <MyContainer>
