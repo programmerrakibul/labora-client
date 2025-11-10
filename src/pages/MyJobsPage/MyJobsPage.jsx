@@ -92,13 +92,13 @@ const MyJobsPage = () => {
     <>
       <title>My Added Jobs - Labora</title>
 
-      <section>
-        <MyContainer>
+      <section className="my-6 py-8">
+        <MyContainer className="space-y-7">
           <MyTitle>My Jobs</MyTitle>
 
           <div className="overflow-x-auto">
-            <table className="table">
-              <thead>
+            <table className="table rounded-lg overflow-hidden  shadow-lg bg-linear-to-r from-primary/4 to-primary/4">
+              <thead className="text-neutral bg-info/5 md:text-lg">
                 <tr>
                   <th>#</th>
                   <th>Image</th>
@@ -108,24 +108,24 @@ const MyJobsPage = () => {
                 </tr>
               </thead>
 
-              <tbody>
+              <tbody className="md:text-base">
                 {userJobs.map((item, index) => (
                   <tr key={item._id}>
-                    <td>{index + 1}</td>
+                    <td className="text-neutral">{index + 1}</td>
                     <td>
                       <img
                         src={item.job_image}
                         alt={item.job_title}
-                        className="w-16 h-10 rounded-md overflow-hidden"
+                        className="w-16 h-10 rounded-md object-cover overflow-hidden"
                       />
                     </td>
-                    <td>{item.job_title}</td>
-                    <td>{item.job_category}</td>
+                    <td className="min-w-[200px]">{item.job_title}</td>
+                    <td className="text-nowrap">{item.job_category}</td>
                     <td className="space-x-1.5 text-nowrap">
                       <button
                         onClick={() => navigate(`/job-details/${item._id}`)}
                         title="View"
-                        className="btn shadow-none border-none bg-transparent p-1.5 text-2xl text-info"
+                        className="btn shadow-none border-none bg-transparent p-1.5 text-xl md:text-2xl text-info"
                       >
                         <VscEye />
                       </button>
@@ -135,7 +135,7 @@ const MyJobsPage = () => {
                         onClick={() =>
                           navigate(`/update-job-details/${item._id}`)
                         }
-                        className="btn shadow-none border-none bg-transparent p-1.5 text-2xl text-success"
+                        className="btn shadow-none border-none bg-transparent p-1.5 text-xl md:text-2xl text-success"
                       >
                         <FaRegEdit />
                       </button>
@@ -143,7 +143,7 @@ const MyJobsPage = () => {
                       <button
                         onClick={() => handleDeleteClick(item._id)}
                         title="Delete"
-                        className="btn shadow-none border-none bg-transparent p-1.5 text-2xl text-error"
+                        className="btn shadow-none border-none bg-transparent p-1.5 text-xl md:text-2xl text-error"
                       >
                         <RiDeleteBinLine />
                       </button>
