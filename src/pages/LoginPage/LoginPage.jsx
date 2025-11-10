@@ -12,6 +12,8 @@ import ActionSpinner from "../../components/ActionSpinner/ActionSpinner";
 import getAuthErrorMessage from "../../utilities/getAuthErrorMessage";
 import useLoginSuccessMessage from "../../hooks/useLoginSuccessMessage";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
+import MyContainer from "../../components/MyContainer/MyContainer";
+import MyTitle from "../../components/MyTitle/MyTitle";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -49,13 +51,13 @@ const LoginPage = () => {
       <title>Login in to your account - Labora</title>
 
       <section className="py-8 my-6">
-        <div className="p-8 rounded-md shadow-md mx-auto w-full max-w-5xl bg-primary/10">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8 ">
-            <div className="flex-1/2 space-y-8">
-              <h3 className="text-center font-bold text-3xl text-neutral">
-                Login Now
-              </h3>
+        <MyContainer className="space-y-10">
+          <div>
+            <MyTitle>Login Now</MyTitle>
+          </div>
 
+          <div className="p-4 md:p-8 rounded-md shadow-md bg-primary/7 flex md:items-center md:justify-between md:gap-8 max-w-md md:max-w-full mx-auto">
+            <div className="flex-1/2 space-y-8 hidden md:inline-block">
               <img src={bgImg} alt="Register here" />
             </div>
 
@@ -109,13 +111,13 @@ const LoginPage = () => {
                   </Link>
                 </div>
 
-                <div className="divider divider-primary">OR</div>
+                <div className="divider">OR</div>
 
                 <button
                   type="button"
                   disabled={googleLoading || loading}
                   onClick={() => handleGoogleLogin(state && state.path) || "/"}
-                  className="btn btn-block bg-white text-black border-[#e5e5e5]"
+                  className="btn btn-sm md:btn-md btn-block bg-white text-black border-[#e5e5e5]"
                 >
                   {googleLoading ? (
                     <ActionSpinner />
@@ -129,7 +131,7 @@ const LoginPage = () => {
               </form>
             </div>
           </div>
-        </div>
+        </MyContainer>
       </section>
     </>
   );
