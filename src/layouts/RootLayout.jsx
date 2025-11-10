@@ -14,7 +14,7 @@ const RootLayout = () => {
         <Outlet />
       </main>
 
-      <footer className="bg-base-200 rounded p-10">
+      <footer className="bg-base-200 rounded py-10">
         <Footer />
       </footer>
 
