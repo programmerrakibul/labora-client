@@ -6,8 +6,7 @@ import MyContainer from "../../components/MyContainer/MyContainer";
 import { FaCode, FaPalette, FaStar } from "react-icons/fa";
 import useCategoryData from "../../hooks/useCategoryData";
 import useFeaturesData from "../../hooks/useFeaturesData";
-import MyButton from "../../components/MyButton/MyButton";
-import { useNavigate } from "react-router";
+import BannerSlider from "../../components/BannerSlider/BannerSlider";
 
 const Homepage = () => {
   const publicAxios = usePublicAxios();
@@ -15,7 +14,6 @@ const Homepage = () => {
   const [latestJobs, setLatestJobs] = useState([]);
   const categories = useCategoryData();
   const featuresData = useFeaturesData();
-  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -38,26 +36,9 @@ const Homepage = () => {
     <>
       <title>Home - Labora</title>
 
-      <section className="bg-primary/20 min-h-[70dvh] grid place-items-center py-7">
-        <MyContainer className="text-center">
-          <div className="max-w-5xl mx-auto space-y-4">
-            <h1 className="text-neutral text-5xl md:text-6xl lg:text-7xl font-bold">
-              Find Your Perfect Freelance Job
-            </h1>
-            <p className="max-w-3xl mx-auto">
-              Discover a world of flexible opportunities tailored to your skills
-              and lifestyle. Whether you're a seasoned freelancer or just
-              starting out, our platform connects you with projects that match
-              your passion, schedule, and goals.
-            </p>
-            <div className="space-x-3.5">
-              <MyButton onClick={() => navigate("/all-jobs")}>
-                Explore Jobs
-              </MyButton>
-              
-              <MyButton onClick={() => navigate("/add-job")}>Add Job</MyButton>
-            </div>
-          </div>
+      <section className="mt-10">
+        <MyContainer>
+          <BannerSlider />
         </MyContainer>
       </section>
 

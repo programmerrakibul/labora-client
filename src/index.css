@@ -53,3 +53,15 @@ h6 {
 .primary_linear_hover {
   @apply transition-all duration-300 hover:from-primary/70  hover:to-secondary/70;
 }
+
+.swiper-navigation-icon {
+  @apply text-secondary;
+}
+
+.swiper-pagination-bullet {
+  @apply opacity-30!
+}
+
+.swiper-pagination-bullet-active {
+  @apply bg-secondary! opacity-100!;
+}
