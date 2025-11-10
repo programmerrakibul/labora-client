@@ -74,14 +74,14 @@ const UpdateJobDetails = () => {
       <title>Update your job details - Labora</title>
 
       <section className="py-8 my-5">
-        <MyContainer className="flex flex-col md:flex-row items-center justify-between gap-7">
+        <MyContainer>
           <div className="space-y-10 max-w-4xl mx-auto">
             <div>
               <MyTitle>Update Your Job</MyTitle>
             </div>
 
-            <div className="p-4 md:p-8 rounded-md shadow-md bg-primary/7 flex lg:items-center lg:justify-between lg:gap-8 max-w-md lg:max-w-full mx-auto">
-              <div className="flex-1/2">
+            <div className="p-4 md:p-8 rounded-md shadow-md bg-primary/7 lg:flex lg:items-center lg:justify-between lg:gap-8 max-w-md lg:max-w-full mx-auto">
+              <div className="lg:flex-1/2">
                 <form onSubmit={handleUpdateJob} className="space-y-3.5">
                   <div className="space-y-1.5">
                     <MyLabel htmlFor="job_title">Title</MyLabel>
@@ -94,7 +94,7 @@ const UpdateJobDetails = () => {
                     />
                   </div>
 
-                  <div className="flex items-center justify-between gap-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="space-y-1.5 flex-1/2">
                       <MyLabel htmlFor="job_category">Category</MyLabel>
 

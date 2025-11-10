@@ -68,16 +68,14 @@ const AddJobPage = () => {
             <div>
               <MyTitle>Add Your Job</MyTitle>
             </div>
-            <div className="flex flex-col md:flex-row items-center justify-between gap-7">
+
+            <div className="p-4 md:p-8 rounded-md shadow-md bg-primary/7 lg:flex lg:items-center lg:justify-between lg:gap-8 max-w-md lg:max-w-full mx-auto">
               <div className="flex-1/2 hidden lg:inline-block">
                 <img src={postImg} alt="Post a Job" />
               </div>
 
-              <div className="md:flex-1/2 grid place-items-center w-full">
-                <form
-                  onSubmit={handlePostJob}
-                  className="bg-linear-to-r from-primary/10 to-secondary/10 p-4 sm:p-7 rounded-lg shadow-lg w-full max-w-xl space-y-5"
-                >
+              <div className="lg:flex-1/2">
+                <form onSubmit={handlePostJob} className="space-y-3.5">
                   <div className="space-y-1.5">
                     <MyLabel htmlFor="job_title">Title</MyLabel>
                     <MyInput
