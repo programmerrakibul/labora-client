@@ -43,7 +43,7 @@ const Homepage = () => {
         </MyContainer>
       </section>
 
-      <section>
+      <section className="bg-secondary/3 py-10">
         <MyContainer className="space-y-7">
           <div className="text-center space-y-3.5">
             <MyTitle>
@@ -121,7 +121,7 @@ const Homepage = () => {
       <section>
         <MyContainer>
           <div className="text-center">
-            <div className="flex flex-wrap justify-center items-center shadow-lg bg-white mx-auto max-w-4xl w-full">
+            <div className="flex flex-wrap justify-center items-center shadow-lg bg-white mx-auto max-w-4xl w-full rounded-lg">
               <div className="stat border-none w-fit">
                 <div className="stat-title text-xl">Happy Clients</div>
                 <div className="stat-value text-5xl text-primary">10K+</div>
@@ -141,7 +141,7 @@ const Homepage = () => {
         </MyContainer>
       </section>
 
-      <section className="mb-16">
+      <section className="my-6 py-8 bg-info/4">
         <MyContainer className="space-y-9">
           <div className="text-center space-y-3.5">
             <MyTitle>
