@@ -63,86 +63,87 @@ const AddJobPage = () => {
       <title>Post a Job - Labora</title>
 
       <section className="py-8 my-5">
-        <MyContainer className="space-y-10">
-          <div>
-            <MyTitle>Add Your Job</MyTitle>
-          </div>
-
-          <div className="flex flex-col md:flex-row items-center justify-between gap-7">
-            <div className="flex-1/2 hidden lg:inline-block">
-              <img src={postImg} alt="Post a Job" />
+        <MyContainer>
+          <div className="space-y-10 max-w-4xl mx-auto">
+            <div>
+              <MyTitle>Add Your Job</MyTitle>
             </div>
+            <div className="flex flex-col md:flex-row items-center justify-between gap-7">
+              <div className="flex-1/2 hidden lg:inline-block">
+                <img src={postImg} alt="Post a Job" />
+              </div>
 
-            <div className="md:flex-1/2 grid place-items-center w-full">
-              <form
-                onSubmit={handlePostJob}
-                className="bg-linear-to-r from-primary/10 to-secondary/10 p-4 sm:p-7 rounded-lg shadow-lg w-full max-w-xl space-y-5"
-              >
-                <div className="space-y-1.5">
-                  <MyLabel htmlFor="job_title">Title</MyLabel>
-                  <MyInput
-                    disabled={loading}
-                    name="job_title"
-                    holder="Enter Job Title"
-                  />
-                </div>
-
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                  <div className="space-y-1.5 flex-1/2">
-                    <MyLabel htmlFor="job_category">Category</MyLabel>
-
-                    <select
-                      defaultValue=""
-                      className="select"
-                      name="job_category"
-                      id="job_category"
-                      disabled={loading}
-                      required
-                    >
-                      <option value="" disabled={true}>
-                        Enter Job Category
-                      </option>
-                      <option>AI & Machine Learning</option>
-                      <option>Graphics Design</option>
-                      <option>Scriptwriting</option>
-                      <option>Video Editing</option>
-                      <option>UI/UX Design</option>
-                      <option>Game Design</option>
-                      <option>3D Modeling</option>
-                      <option>Web Design</option>
-                      <option>Data Entry</option>
-                    </select>
-                  </div>
-
-                  <div className="space-y-1.5 flex-1/2">
-                    <MyLabel htmlFor="job_image">Job Image</MyLabel>
+              <div className="md:flex-1/2 grid place-items-center w-full">
+                <form
+                  onSubmit={handlePostJob}
+                  className="bg-linear-to-r from-primary/10 to-secondary/10 p-4 sm:p-7 rounded-lg shadow-lg w-full max-w-xl space-y-5"
+                >
+                  <div className="space-y-1.5">
+                    <MyLabel htmlFor="job_title">Title</MyLabel>
                     <MyInput
                       disabled={loading}
-                      name="job_image"
-                      holder="Enter Job Photo URL"
+                      name="job_title"
+                      holder="Enter Job Title"
                     />
                   </div>
-                </div>
 
-                <div className="space-y-1.5">
-                  <MyLabel htmlFor="job_summery">Summery</MyLabel>
-                  <textarea
-                    name="job_summery"
-                    id="job_summery"
-                    className="textarea"
-                    placeholder="Enter Job Summery"
-                    required
-                    disabled={loading}
-                  ></textarea>
-                </div>
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div className="space-y-1.5 flex-1/2">
+                      <MyLabel htmlFor="job_category">Category</MyLabel>
 
-                <div>
-                  <MyButton disabled={loading} className="btn-block">
-                    {loading ? <ActionSpinner /> : "Add A Job"}
-                  </MyButton>
-                </div>
-              </form>
-            </div>
+                      <select
+                        defaultValue=""
+                        className="select"
+                        name="job_category"
+                        id="job_category"
+                        disabled={loading}
+                        required
+                      >
+                        <option value="" disabled={true}>
+                          Enter Job Category
+                        </option>
+                        <option>AI & Machine Learning</option>
+                        <option>Graphics Design</option>
+                        <option>Scriptwriting</option>
+                        <option>Video Editing</option>
+                        <option>UI/UX Design</option>
+                        <option>Game Design</option>
+                        <option>3D Modeling</option>
+                        <option>Web Design</option>
+                        <option>Data Entry</option>
+                      </select>
+                    </div>
+
+                    <div className="space-y-1.5 flex-1/2">
+                      <MyLabel htmlFor="job_image">Job Image</MyLabel>
+                      <MyInput
+                        disabled={loading}
+                        name="job_image"
+                        holder="Enter Job Photo URL"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <MyLabel htmlFor="job_summery">Summery</MyLabel>
+                    <textarea
+                      name="job_summery"
+                      id="job_summery"
+                      className="textarea"
+                      placeholder="Enter Job Summery"
+                      required
+                      disabled={loading}
+                    ></textarea>
+                  </div>
+
+                  <div>
+                    <MyButton disabled={loading} className="btn-block">
+                      {loading ? <ActionSpinner /> : "Add A Job"}
+                    </MyButton>
+                  </div>
+                </form>
+              </div>
+            </div>{" "}
           </div>
         </MyContainer>
       </section>

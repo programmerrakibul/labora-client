@@ -51,84 +51,90 @@ const LoginPage = () => {
       <title>Login in to your account - Labora</title>
 
       <section className="py-8 my-6">
-        <MyContainer className="space-y-10">
-          <div>
-            <MyTitle>Login Now</MyTitle>
-          </div>
-
-          <div className="p-4 md:p-8 rounded-md shadow-md bg-primary/7 flex md:items-center md:justify-between md:gap-8 max-w-md md:max-w-full mx-auto">
-            <div className="flex-1/2 hidden md:inline-block">
-              <img src={bgImg} alt="Register here" />
+        <MyContainer>
+          <div className="space-y-10 max-w-4xl mx-auto">
+            <div>
+              <MyTitle>Login Now</MyTitle>
             </div>
 
-            <div className="flex-1/2">
-              <form onSubmit={handleLogin} className="space-y-3.5">
-                <div className="space-y-1.5">
-                  <MyLabel htmlFor="email">Email</MyLabel>
-                  <MyInput
-                    name="email"
-                    type="email"
-                    disabled={loading}
-                    holder="john-doe@gmail.com"
-                  />
-                </div>
+            <div className="p-4 md:p-8 rounded-md shadow-md bg-primary/7 flex md:items-center md:justify-between md:gap-8 max-w-md md:max-w-full mx-auto">
+              <div className="flex-1/2 hidden md:inline-block">
+                <img src={bgImg} alt="Register here" />
+              </div>
 
-                <div className="space-y-1.5 mb-0.5">
-                  <MyLabel htmlFor="password">Password</MyLabel>
-                  <div className="relative">
+              <div className="flex-1/2">
+                <form onSubmit={handleLogin} className="space-y-3.5">
+                  <div className="space-y-1.5">
+                    <MyLabel htmlFor="email">Email</MyLabel>
                     <MyInput
+                      name="email"
+                      type="email"
                       disabled={loading}
-                      name="password"
-                      type={show ? "text" : "password"}
-                      holder="••••••••"
+                      holder="john-doe@gmail.com"
                     />
-                    <span
-                      onClick={() => setShow(!show)}
-                      className="cursor-pointer absolute right-5 top-[50%] -translate-y-[50%] z-10"
-                    >
-                      {show ? <VscEye /> : <VscEyeClosed />}
-                    </span>
                   </div>
-                </div>
 
-                <div className="text-end">
-                  <a className="link link-hover text-sm">Forgotten Password?</a>
-                </div>
+                  <div className="space-y-1.5 mb-0.5">
+                    <MyLabel htmlFor="password">Password</MyLabel>
+                    <div className="relative">
+                      <MyInput
+                        disabled={loading}
+                        name="password"
+                        type={show ? "text" : "password"}
+                        holder="••••••••"
+                      />
+                      <span
+                        onClick={() => setShow(!show)}
+                        className="cursor-pointer absolute right-5 top-[50%] -translate-y-[50%] z-10"
+                      >
+                        {show ? <VscEye /> : <VscEyeClosed />}
+                      </span>
+                    </div>
+                  </div>
 
-                <div>
-                  <MyButton
-                    disabled={loading || googleLoading}
-                    className="btn-block"
+                  <div className="text-end">
+                    <a className="link link-hover text-sm">
+                      Forgotten Password?
+                    </a>
+                  </div>
+
+                  <div>
+                    <MyButton
+                      disabled={loading || googleLoading}
+                      className="btn-block"
+                    >
+                      {loading ? <ActionSpinner /> : "Login"}
+                    </MyButton>
+                  </div>
+
+                  <div className="text-center">
+                    Don't have an account?{" "}
+                    <Link to="/auth/register" className="link link-hover">
+                      Register here
+                    </Link>
+                  </div>
+
+                  <div className="divider">OR</div>
+
+                  <button
+                    type="button"
+                    disabled={googleLoading || loading}
+                    onClick={() =>
+                      handleGoogleLogin(state && state.path) || "/"
+                    }
+                    className="btn btn-sm md:btn-md btn-block bg-white text-black border-[#e5e5e5]"
                   >
-                    {loading ? <ActionSpinner /> : "Login"}
-                  </MyButton>
-                </div>
-
-                <div className="text-center">
-                  Don't have an account?{" "}
-                  <Link to="/auth/register" className="link link-hover">
-                    Register here
-                  </Link>
-                </div>
-
-                <div className="divider">OR</div>
-
-                <button
-                  type="button"
-                  disabled={googleLoading || loading}
-                  onClick={() => handleGoogleLogin(state && state.path) || "/"}
-                  className="btn btn-sm md:btn-md btn-block bg-white text-black border-[#e5e5e5]"
-                >
-                  {googleLoading ? (
-                    <ActionSpinner />
-                  ) : (
-                    <>
-                      <FcGoogle size={22} />
-                      Login with Google
-                    </>
-                  )}
-                </button>
-              </form>
+                    {googleLoading ? (
+                      <ActionSpinner />
+                    ) : (
+                      <>
+                        <FcGoogle size={22} />
+                        Login with Google
+                      </>
+                    )}
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
         </MyContainer>
