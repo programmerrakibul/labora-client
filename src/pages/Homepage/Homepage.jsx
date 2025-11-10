@@ -96,7 +96,9 @@ const Homepage = () => {
                   <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
 
                   <div className="absolute bottom-4 left-4">
-                    <Badge className={`${category.color} badge-lg`}>{category.icon}</Badge>
+                    <Badge className={`${category.color} badge-lg`}>
+                      {category.icon}
+                    </Badge>
                   </div>
 
                   <div className="absolute bottom-4 right-4">
@@ -119,27 +121,18 @@ const Homepage = () => {
       <section>
         <MyContainer>
           <div className="text-center">
-            <div className="stats shadow-lg bg-white max-w-4xl w-full">
-              <div className="stat">
-                <div className="stat-figure text-primary">
-                  <FaStar className="text-4xl" />
-                </div>
+            <div className="flex flex-wrap justify-center items-center shadow-lg bg-white mx-auto max-w-4xl w-full">
+              <div className="stat border-none w-fit">
                 <div className="stat-title text-xl">Happy Clients</div>
                 <div className="stat-value text-5xl text-primary">10K+</div>
               </div>
 
-              <div className="stat">
-                <div className="stat-figure text-secondary">
-                  <FaCode className="text-4xl" />
-                </div>
+              <div className="stat border-none w-fit">
                 <div className="stat-title text-xl">Projects Done</div>
                 <div className="stat-value text-5xl text-secondary">25K+</div>
               </div>
 
-              <div className="stat">
-                <div className="stat-figure text-accent">
-                  <FaPalette className="text-4xl" />
-                </div>
+              <div className="stat border-none w-fit">
                 <div className="stat-title text-xl">Freelancers</div>
                 <div className="stat-value text-5xl text-accent">5K+</div>
               </div>
