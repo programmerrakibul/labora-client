@@ -1,21 +1,24 @@
-import MyContainer from "../../components/MyContainer/MyContainer";
-import postImg from "../../assets/add_job_post.svg";
-import MyLabel from "../../components/MyLabel/MyLabel";
-import MyInput from "../../components/MyInput/MyInput";
-import MyButton from "../../components/MyButton/MyButton";
-import { toast } from "react-toastify";
 import { useState } from "react";
-import ActionSpinner from "../../components/ActionSpinner/ActionSpinner";
-import useAuthInfo from "../../hooks/useAuthInfo";
-import useSecureAxios from "../../hooks/useSecureAxios";
+import { toast } from "react-toastify";
 import useMySwal from "../../hooks/useMySwal";
+import useAuthInfo from "../../hooks/useAuthInfo";
+import postImg from "../../assets/add_job_post.svg";
+import MyInput from "../../components/MyInput/MyInput";
+import MyLabel from "../../components/MyLabel/MyLabel";
 import MyTitle from "../../components/MyTitle/MyTitle";
+import useSecureAxios from "../../hooks/useSecureAxios";
+import useThemeContext from "../../hooks/useThemeContext";
+import MyButton from "../../components/MyButton/MyButton";
+import postImgDark from "../../assets/add_job_post_dark.svg";
+import MyContainer from "../../components/MyContainer/MyContainer";
+import ActionSpinner from "../../components/ActionSpinner/ActionSpinner";
 
 const AddJobPage = () => {
   const mySwal = useMySwal();
   const secureAxios = useSecureAxios();
   const { currentUser } = useAuthInfo();
   const [loading, setLoading] = useState(false);
+  const { theme } = useThemeContext();
 
   const handlePostJob = async (e) => {
     e.preventDefault();
@@ -58,6 +61,8 @@ const AddJobPage = () => {
     }
   };
 
+  const image = theme === "light" ? postImg : postImgDark;
+
   return (
     <>
       <title>Post a Job - Labora</title>
@@ -68,10 +73,9 @@ const AddJobPage = () => {
             <div>
               <MyTitle>Add Your Job</MyTitle>
             </div>
-
-            <div className="p-4 md:p-8 rounded-md shadow-md bg-primary/7 lg:flex lg:items-center lg:justify-between lg:gap-8 max-w-md lg:max-w-full mx-auto">
+            <div className="p-4 md:p-8 rounded-md shadow-md bg-primary/7 dark:bg-info/30 lg:flex lg:items-center lg:justify-between lg:gap-8 max-w-md lg:max-w-full mx-auto">
               <div className="flex-1/2 hidden lg:inline-block">
-                <img src={postImg} alt="Post a Job" />
+                <img src={image} alt="Post a Job" />
               </div>
 
               <div className="lg:flex-1/2">

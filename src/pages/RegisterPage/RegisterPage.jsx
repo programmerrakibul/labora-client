@@ -3,7 +3,8 @@ import { toast } from "react-toastify";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router";
 import useAuthInfo from "../../hooks/useAuthInfo";
-import bgImg from "../../assets/auth_sign-up.svg";
+import registerImg from "../../assets/auth_sign-up.svg";
+import registerImgDark from "../../assets/auth_sign-up_dark.svg";
 import useGoogleLogin from "../../hooks/useGoogleLogin";
 import MyLabel from "../../components/MyLabel/MyLabel";
 import MyInput from "../../components/MyInput/MyInput";
@@ -14,11 +15,13 @@ import useLoginSuccessMessage from "../../hooks/useLoginSuccessMessage";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import MyContainer from "../../components/MyContainer/MyContainer";
 import MyTitle from "../../components/MyTitle/MyTitle";
+import useThemeContext from "../../hooks/useThemeContext";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const { theme } = useThemeContext();
   const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false);
   const loginSuccessMessage = useLoginSuccessMessage();
   const { createUser, updateUserProfile } = useAuthInfo();
   const { handleGoogleLogin, googleLoading } = useGoogleLogin();
@@ -80,6 +83,8 @@ const RegisterPage = () => {
     }
   };
 
+  const image = theme === "light" ? registerImg : registerImgDark;
+
   return (
     <>
       <title>Create your account - Labora</title>
@@ -91,7 +96,7 @@ const RegisterPage = () => {
               <MyTitle>Register Now</MyTitle>
             </div>
 
-            <div className="p-4 md:p-8 rounded-md shadow-md bg-primary/7 flex lg:items-center lg:justify-between lg:gap-8 max-w-md lg:max-w-full mx-auto">
+            <div className="p-4 md:p-8 rounded-md shadow-md bg-primary/7 dark:bg-info/15 flex lg:items-center lg:justify-between lg:gap-8 max-w-md lg:max-w-full mx-auto">
               <div className="flex-1/2">
                 <form onSubmit={handleCreateUser} className="space-y-3.5">
                   <div className="space-y-1.5">
@@ -158,7 +163,7 @@ const RegisterPage = () => {
                     type="button"
                     disabled={googleLoading || loading}
                     onClick={() => handleGoogleLogin()}
-                    className="btn btn-sm md:btn-md btn-block bg-white text-black border-[#e5e5e5]"
+                    className="btn btn-sm md:btn-md btn-block bg-white text-neutral dark:bg-neutral dark:border-neutral dark:shadow-white/20 dark:hover:shadow-md transition-shadow duration-300 dark:shadow dark:text-white border-[#e5e5e5]"
                   >
                     {googleLoading ? (
                       <ActionSpinner />
@@ -173,7 +178,7 @@ const RegisterPage = () => {
               </div>
 
               <div className="flex-1/2 hidden lg:inline-block">
-                <img src={bgImg} alt="Register here" />
+                <img src={image} alt="Register here" />
               </div>
             </div>
           </div>

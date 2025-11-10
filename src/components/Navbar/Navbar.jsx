@@ -1,19 +1,23 @@
-import { Link, NavLink, useNavigate } from "react-router";
-import MyContainer from "../MyContainer/MyContainer";
-import useAuthInfo from "../../hooks/useAuthInfo";
-import { useState } from "react";
-import getAuthErrorMessage from "../../utilities/getAuthErrorMessage";
-import { toast } from "react-toastify";
-import ActionSpinner from "../ActionSpinner/ActionSpinner";
-import useMySwal from "../../hooks/useMySwal";
-import MyButton from "../MyButton/MyButton";
 import Logo from "../Logo/Logo";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { LuSun } from "react-icons/lu";
+import { BsMoon } from "react-icons/bs";
+import MyButton from "../MyButton/MyButton";
+import useMySwal from "../../hooks/useMySwal";
+import useAuthInfo from "../../hooks/useAuthInfo";
+import { NavLink, useNavigate } from "react-router";
+import MyContainer from "../MyContainer/MyContainer";
+import useThemeContext from "../../hooks/useThemeContext";
+import ActionSpinner from "../ActionSpinner/ActionSpinner";
+import getAuthErrorMessage from "../../utilities/getAuthErrorMessage";
 
 const Navbar = () => {
+  const { currentUser, logoutUser } = useAuthInfo();
+  const [loading, setLoading] = useState(false);
+  const { toggleTheme, theme } = useThemeContext();
   const navigate = useNavigate();
   const mySwal = useMySwal();
-  const [loading, setLoading] = useState(false);
-  const { currentUser, logoutUser } = useAuthInfo();
   const navLinks = [
     "home",
     "all jobs",
@@ -53,7 +57,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-base-100 shadow-sm">
+    <nav className="backdrop-blur-sm bg-primary/2 dark:shadow-white/30 dark:bg-primary/10 shadow-sm">
       <MyContainer>
         <div className="navbar">
           <div className="navbar-start">
@@ -95,6 +99,23 @@ const Navbar = () => {
           </div>
 
           <div className="navbar-end gap-3">
+            <label
+              className="swap swap-rotate text-primary/70 tooltip tooltip-primary tooltip-bottom"
+              data-tip={`Switch to ${
+                theme === "light" ? "dark" : "light"
+              } mode`}
+            >
+              <input
+                onChange={toggleTheme}
+                type="checkbox"
+                checked={theme === "night"}
+              />
+
+              <LuSun className="size-8 swap-off" />
+
+              <BsMoon className="size-7 swap-on" />
+            </label>
+
             {currentUser ? (
               <>
                 <div

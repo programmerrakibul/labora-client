@@ -64,7 +64,7 @@ const BannerSlider = () => {
         ))}
 
         <div
-          className="size-12 z-10 absolute bottom-4 right-4 flex items-center justify-center font-bold text-secondary"
+          className="size-12 z-10 absolute bottom-4 right-4 flex items-center justify-center font-bold text-secondary dark:text-primary"
           slot="container-end"
         >
           <span ref={progressContent}></span>

@@ -1,7 +1,7 @@
 const Badge = ({ children, className = "" }) => {
   return (
     <>
-      <span className={`badge badge-primary ${className}`}>{children}</span>
+      <span className={`badge badge-primary text-white dark:badge-secondary ${className}`}>{children}</span>
     </>
   );
 };

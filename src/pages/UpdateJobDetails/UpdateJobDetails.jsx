@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import updateImg from "../../assets/job_update.svg";
+import updateImgDark from "../../assets/job_update_dark.svg";
 import MyLabel from "../../components/MyLabel/MyLabel";
 import MyInput from "../../components/MyInput/MyInput";
 import useSecureAxios from "../../hooks/useSecureAxios";
@@ -10,11 +11,13 @@ import { useParams } from "react-router";
 import useMySwal from "../../hooks/useMySwal";
 import { toast } from "react-toastify";
 import MyTitle from "../../components/MyTitle/MyTitle";
+import useThemeContext from "../../hooks/useThemeContext";
 
 const UpdateJobDetails = () => {
   const { id } = useParams();
-  const secureAxios = useSecureAxios();
   const mySwal = useMySwal();
+  const { theme } = useThemeContext();
+  const secureAxios = useSecureAxios();
   const [productLoading, setProductLoading] = useState(true);
   const [loading, setLoading] = useState(false);
   const [singleJob, setSingleJob] = useState({});
@@ -65,6 +68,8 @@ const UpdateJobDetails = () => {
     }
   };
 
+  const image = theme === "light" ? updateImg : updateImgDark;
+
   if (productLoading) {
     return <p>Loading...</p>;
   }
@@ -80,7 +85,7 @@ const UpdateJobDetails = () => {
               <MyTitle>Update Your Job</MyTitle>
             </div>
 
-            <div className="p-4 md:p-8 rounded-md shadow-md bg-primary/7 lg:flex lg:items-center lg:justify-between lg:gap-8 max-w-md lg:max-w-full mx-auto">
+            <div className="p-4 md:p-8 rounded-md shadow-md bg-primary/7 dark:bg-info/30 lg:flex lg:items-center lg:justify-between lg:gap-8 max-w-md lg:max-w-full mx-auto">
               <div className="lg:flex-1/2">
                 <form onSubmit={handleUpdateJob} className="space-y-3.5">
                   <div className="space-y-1.5">
@@ -151,7 +156,7 @@ const UpdateJobDetails = () => {
               </div>
 
               <div className="flex-1/2 hidden lg:inline-block">
-                <img src={updateImg} alt="Post a Job" />
+                <img src={image} alt="Post a Job" />
               </div>
             </div>
           </div>

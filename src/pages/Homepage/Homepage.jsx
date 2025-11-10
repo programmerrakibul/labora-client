@@ -85,7 +85,7 @@ const Homepage = () => {
             {categories.map((category) => (
               <div
                 key={category.id}
-                className="card bg-base-100 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 group"
+                className="card bg-base-100 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 group dark:border-2 border-white/20 dark:shadow-white/15"
               >
                 <figure className="relative h-40 overflow-hidden">
                   <img
@@ -121,7 +121,7 @@ const Homepage = () => {
       <section>
         <MyContainer>
           <div className="text-center">
-            <div className="flex flex-wrap justify-center items-center shadow-lg bg-white mx-auto max-w-4xl w-full rounded-lg">
+            <div className="flex flex-wrap justify-center items-center shadow-lg bg-base-200 mx-auto max-w-4xl w-full rounded-lg">
               <div className="stat border-none w-fit">
                 <div className="stat-title text-xl">Happy Clients</div>
                 <div className="stat-value text-5xl text-primary">10K+</div>
@@ -141,7 +141,7 @@ const Homepage = () => {
         </MyContainer>
       </section>
 
-      <section className="my-6 py-8 bg-info/4">
+      <section className="mt-6 py-8 bg-info/4 dark:bg-info/20">
         <MyContainer className="space-y-9">
           <div className="text-center space-y-3.5">
             <MyTitle>
@@ -191,11 +191,11 @@ const Homepage = () => {
               {featuresData.map((feature) => (
                 <div
                   key={feature.id}
-                  className="card bg-base-200 shadow-sm hover:shadow-md transition-shadow duration-300"
+                  className="card bg-base-200 shadow-sm dark:shadow-white/30 hover:shadow-md transition-shadow duration-300"
                 >
                   <div className="card-body">
                     <div className="text-primary mb-3">{feature.icon}</div>
-                    <h4 className="card-title text-lg font-semibold text-neutral">
+                    <h4 className="card-title text-lg font-semibold">
                       {feature.title}
                     </h4>
                     <p>{feature.description}</p>

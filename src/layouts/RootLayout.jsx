@@ -6,7 +6,7 @@ import { ToastContainer } from "react-toastify";
 const RootLayout = () => {
   return (
     <>
-      <header>
+      <header className="sticky top-0 z-50">
         <Navbar />
       </header>
 

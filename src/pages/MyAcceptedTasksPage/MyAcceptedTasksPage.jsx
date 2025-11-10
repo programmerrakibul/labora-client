@@ -81,8 +81,8 @@ const MyAcceptedTasksPage = () => {
           <MyTitle>My Accepted Tasks</MyTitle>
 
           <div className="overflow-x-auto">
-            <table className="table rounded-lg overflow-hidden  shadow-lg bg-linear-to-r from-primary/4 to-primary/4">
-              <thead className="text-neutral bg-info/5 md:text-lg">
+            <table className="table rounded-lg overflow-hidden  shadow-lg bg-linear-to-r from-primary/5 to-secondary/5 dark:from-primary/15  dark:to-secondary/15">
+              <thead className="text-neutral dark:text-white/90 bg-info/5 dark:bg-info/15 md:text-lg">
                 <tr>
                   <th>#</th>
                   <th>Image</th>
@@ -95,7 +95,7 @@ const MyAcceptedTasksPage = () => {
               <tbody className="md:text-base">
                 {tasks.map((item, index) => (
                   <tr key={item._id}>
-                    <td>{index + 1}</td>
+                    <td className="text-neutral dark:text-white/90">{index + 1}</td>
                     <td>
                       <img
                         src={item.job_details.job_image}
@@ -103,8 +103,12 @@ const MyAcceptedTasksPage = () => {
                         className="w-16 h-10 rounded-md object-cover overflow-hidden"
                       />
                     </td>
-                    <td className="min-w-[200px]">{item.job_details.job_title}</td>
-                    <td className="text-nowrap">{item.job_details.job_category}</td>
+                    <td className="min-w-[200px]">
+                      {item.job_details.job_title}
+                    </td>
+                    <td className="text-nowrap">
+                      {item.job_details.job_category}
+                    </td>
                     <td className="space-x-1.5 text-nowrap">
                       <button
                         onClick={() =>

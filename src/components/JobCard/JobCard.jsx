@@ -9,7 +9,7 @@ const JobCard = ({ singleJob }) => {
     singleJob || {};
 
   return (
-    <div className="bg-base-300 rounded-lg shadow-lg overflow-hidden">
+    <div className="bg-base-300 dark:border-2 border-white/20 rounded-lg shadow-lg dark:shadow-white/30 dark:shadow-md overflow-hidden">
       <figure className="relative">
         <img
           src={job_image}
@@ -20,7 +20,7 @@ const JobCard = ({ singleJob }) => {
       </figure>
 
       <div className="space-y-2 p-4">
-        <div className="flex items-center gap-1.5 text-sm text-primary/60">
+        <div className="flex items-center gap-1.5 text-sm text-primary/60 dark:text-primary">
           <span>
             <MdOutlineVerifiedUser />
           </span>

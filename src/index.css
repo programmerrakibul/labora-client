@@ -1,15 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
 
 @import "tailwindcss";
-@plugin "daisyui";
+@plugin "daisyui" {
+  themes: light --default, night --prefersdark;
+}
+
+@custom-variant dark (&:where([data-theme=night], [data-theme=night] *));
 
 .nav_links {
-  @apply capitalize text-neutral font-medium border-b-2 border-transparent bg-transparent px-1 py-0.5 rounded-none transition-all duration-300 inline-block w-fit;
+  @apply capitalize text-neutral dark:text-white font-semibold border-b-2 border-transparent bg-transparent px-1 py-0.5 rounded-none transition-all duration-300 inline-block w-fit;
 }
 
 .nav_links.active,
 .nav_links:hover {
-  @apply bg-linear-to-r from-primary/70  to-secondary/70 bg-clip-text text-transparent border-secondary/30;
+  @apply bg-linear-to-r from-primary/70 dark:from-primary  to-secondary/70 dark:to-secondary bg-clip-text text-transparent border-secondary/30 dark:border-primary/60;
 }
 
 .footer-link {
@@ -26,11 +30,11 @@ h3,
 h4,
 h5,
 h6 {
-  @apply font-['Raleway'] text-neutral;
+  @apply font-['Raleway'] text-neutral dark:text-white;
 }
 
 strong {
-  @apply text-neutral;
+  @apply text-neutral dark:text-white;
 }
 
 .btn {
@@ -44,7 +48,7 @@ strong {
 .input,
 .textarea,
 .select {
-  @apply w-full block;
+  @apply w-full block bg-transparent dark:border-white/50;
 }
 
 .textarea {
@@ -60,15 +64,15 @@ strong {
 }
 
 .label {
-  @apply font-semibold text-neutral text-base md:text-lg font-['Raleway'];
+  @apply font-semibold text-neutral dark:text-white text-base md:text-lg font-['Raleway'];
 }
 
 .primary_linear {
-  @apply bg-linear-to-r from-primary/60  to-secondary/60;
+  @apply bg-linear-to-r from-primary/60 dark:from-primary/80  to-secondary/60 dark:to-secondary/80;
 }
 
 .primary_linear_hover {
-  @apply transition-colors duration-300 hover:from-primary/70  hover:to-secondary/70;
+  @apply transition-colors duration-300 hover:from-primary/70  dark:hover:from-primary hover:to-secondary/70 dark:hover:to-secondary
 }
 
 .swiper-button-prev,
@@ -77,13 +81,17 @@ strong {
 }
 
 .swiper-navigation-icon {
-  @apply text-secondary;
+  @apply text-secondary dark:text-primary;
 }
 
 .swiper-pagination-bullet {
-  @apply opacity-30!;
+  @apply opacity-30! dark:opacity-40!;
 }
 
 .swiper-pagination-bullet-active {
-  @apply bg-secondary! opacity-100!;
+  @apply bg-secondary! dark:bg-primary! opacity-100!;
+}
+
+.swal2-modal {
+  @apply dark:bg-[#2D3250] dark:text-white
 }

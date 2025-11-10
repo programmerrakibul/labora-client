@@ -3,7 +3,8 @@ import { toast } from "react-toastify";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useLocation, useNavigate } from "react-router";
 import useAuthInfo from "../../hooks/useAuthInfo";
-import bgImg from "../../assets/auth_login.svg";
+import loginImg from "../../assets/auth_login.svg";
+import loginImgDark from "../../assets/auth_login_dark.svg";
 import useGoogleLogin from "../../hooks/useGoogleLogin";
 import MyLabel from "../../components/MyLabel/MyLabel";
 import MyInput from "../../components/MyInput/MyInput";
@@ -14,10 +15,12 @@ import useLoginSuccessMessage from "../../hooks/useLoginSuccessMessage";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import MyContainer from "../../components/MyContainer/MyContainer";
 import MyTitle from "../../components/MyTitle/MyTitle";
+import useThemeContext from "../../hooks/useThemeContext";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
+  const { theme } = useThemeContext();
   const { loginUser } = useAuthInfo();
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -46,6 +49,8 @@ const LoginPage = () => {
     }
   };
 
+  const image = theme === "light" ? loginImg : loginImgDark;
+
   return (
     <>
       <title>Login in to your account - Labora</title>
@@ -57,9 +62,9 @@ const LoginPage = () => {
               <MyTitle>Login Now</MyTitle>
             </div>
 
-            <div className="p-4 md:p-8 rounded-md shadow-md bg-primary/7 flex md:items-center md:justify-between md:gap-8 max-w-md md:max-w-full mx-auto">
+            <div className="p-4 md:p-8 rounded-md shadow-md bg-primary/7 dark:bg-info/15 flex md:items-center md:justify-between md:gap-8 max-w-md md:max-w-full mx-auto">
               <div className="flex-1/2 hidden md:inline-block">
-                <img src={bgImg} alt="Register here" />
+                <img src={image} alt="Register here" />
               </div>
 
               <div className="flex-1/2">
@@ -122,7 +127,7 @@ const LoginPage = () => {
                     onClick={() =>
                       handleGoogleLogin(state && state.path) || "/"
                     }
-                    className="btn btn-sm md:btn-md btn-block bg-white text-black border-[#e5e5e5]"
+                    className="btn btn-sm md:btn-md btn-block bg-white text-neutral dark:bg-neutral dark:border-neutral dark:shadow-white/20 dark:hover:shadow-md transition-shadow duration-300 dark:shadow dark:text-white border-[#e5e5e5]"
                   >
                     {googleLoading ? (
                       <ActionSpinner />
