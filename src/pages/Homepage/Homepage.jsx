@@ -44,12 +44,20 @@ const Homepage = () => {
 
       <section>
         <MyContainer className="space-y-7">
-          <MyTitle>
-            <span className="primary_linear bg-clip-text text-transparent">
-              Latest Jobs
-            </span>{" "}
-            for You
-          </MyTitle>
+          <div className="text-center space-y-3.5">
+            <MyTitle>
+              <span className="primary_linear bg-clip-text text-transparent">
+                Latest Jobs
+              </span>{" "}
+              for You
+            </MyTitle>
+
+            <p className="max-w-xl mx-auto">
+              Discover fresh opportunities tailored to your skills and
+              interests. Stay ahead with curated job listings that match your
+              goals and career aspirations
+            </p>
+          </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-7">
             {loading ? <p>Loading...</p> : jobCardElements}
