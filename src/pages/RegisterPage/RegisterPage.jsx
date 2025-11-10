@@ -12,6 +12,8 @@ import ActionSpinner from "../../components/ActionSpinner/ActionSpinner";
 import getAuthErrorMessage from "../../utilities/getAuthErrorMessage";
 import useLoginSuccessMessage from "../../hooks/useLoginSuccessMessage";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
+import MyContainer from "../../components/MyContainer/MyContainer";
+import MyTitle from "../../components/MyTitle/MyTitle";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -83,97 +85,99 @@ const RegisterPage = () => {
       <title>Create your account - Labora</title>
 
       <section className="py-8 my-6">
-        <div className="p-8 rounded-md shadow-md mx-auto w-full max-w-5xl bg-primary/10">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8 ">
-            <div className="flex-1/2">
-              <form onSubmit={handleCreateUser} className="space-y-3.5">
-                <div className="space-y-1.5">
-                  <MyLabel htmlFor="name">Name</MyLabel>
-                  <MyInput disabled={loading} name="name" holder="John Doe" />
-                </div>
+        <MyContainer>
+          <div className="max-w-4xl mx-auto space-y-10">
+            <div>
+              <MyTitle>Register Now</MyTitle>
+            </div>
 
-                <div className="space-y-1.5">
-                  <MyLabel htmlFor="email">Email</MyLabel>
-                  <MyInput
-                    name="email"
-                    type="email"
-                    disabled={loading}
-                    holder="john-doe@gmail.com"
-                  />
-                </div>
+            <div className="p-4 md:p-8 rounded-md shadow-md bg-primary/7 flex lg:items-center lg:justify-between lg:gap-8 max-w-md lg:max-w-full mx-auto">
+              <div className="flex-1/2">
+                <form onSubmit={handleCreateUser} className="space-y-3.5">
+                  <div className="space-y-1.5">
+                    <MyLabel htmlFor="name">Name</MyLabel>
+                    <MyInput disabled={loading} name="name" holder="John Doe" />
+                  </div>
 
-                <div className="space-y-1.5">
-                  <MyLabel htmlFor="photoURL">Photo URL</MyLabel>
-                  <MyInput
-                    disabled={loading}
-                    name="photoURL"
-                    holder="https://example.png"
-                  />
-                </div>
+                  <div className="space-y-1.5">
+                    <MyLabel htmlFor="email">Email</MyLabel>
+                    <MyInput
+                      name="email"
+                      type="email"
+                      disabled={loading}
+                      holder="john-doe@gmail.com"
+                    />
+                  </div>
 
-                <div className="space-y-1.5">
-                  <MyLabel htmlFor="password">Password</MyLabel>
-                  <div className="relative">
+                  <div className="space-y-1.5">
+                    <MyLabel htmlFor="photoURL">Photo URL</MyLabel>
                     <MyInput
                       disabled={loading}
-                      name="password"
-                      type={show ? "text" : "password"}
-                      holder="••••••••"
+                      name="photoURL"
+                      holder="https://example.png"
                     />
-                    <span
-                      onClick={() => setShow(!show)}
-                      className="cursor-pointer absolute right-5 top-[50%] -translate-y-[50%] z-10"
-                    >
-                      {show ? <VscEye /> : <VscEyeClosed />}
-                    </span>
                   </div>
-                </div>
 
-                <div>
-                  <MyButton
-                    disabled={loading || googleLoading}
-                    className="btn-block"
+                  <div className="space-y-1.5">
+                    <MyLabel htmlFor="password">Password</MyLabel>
+                    <div className="relative">
+                      <MyInput
+                        disabled={loading}
+                        name="password"
+                        type={show ? "text" : "password"}
+                        holder="••••••••"
+                      />
+                      <span
+                        onClick={() => setShow(!show)}
+                        className="cursor-pointer absolute right-5 top-[50%] -translate-y-[50%] z-10"
+                      >
+                        {show ? <VscEye /> : <VscEyeClosed />}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div>
+                    <MyButton
+                      disabled={loading || googleLoading}
+                      className="btn-block"
+                    >
+                      {loading ? <ActionSpinner /> : "Register"}
+                    </MyButton>
+                  </div>
+
+                  <div className="text-center">
+                    Already have an account?{" "}
+                    <Link to="/auth/login" className="link link-hover">
+                      Login here
+                    </Link>
+                  </div>
+
+                  <div className="divider divider-neutral">OR</div>
+
+                  <button
+                    type="button"
+                    disabled={googleLoading || loading}
+                    onClick={() => handleGoogleLogin()}
+                    className="btn btn-sm md:btn-md btn-block bg-white text-black border-[#e5e5e5]"
                   >
-                    {loading ? <ActionSpinner /> : "Register"}
-                  </MyButton>
-                </div>
+                    {googleLoading ? (
+                      <ActionSpinner />
+                    ) : (
+                      <>
+                        <FcGoogle size={22} />
+                        Login with Google
+                      </>
+                    )}
+                  </button>
+                </form>
+              </div>
 
-                <div className="text-center">
-                  Already have an account?{" "}
-                  <Link to="/auth/login" className="link link-hover">
-                    Login here
-                  </Link>
-                </div>
-
-                <div className="divider divider-neutral">OR</div>
-
-                <button
-                  type="button"
-                  disabled={googleLoading || loading}
-                  onClick={() => handleGoogleLogin()}
-                  className="btn btn-block bg-white text-black border-[#e5e5e5]"
-                >
-                  {googleLoading ? (
-                    <ActionSpinner />
-                  ) : (
-                    <>
-                      <FcGoogle size={22} />
-                      Login with Google
-                    </>
-                  )}
-                </button>
-              </form>
-            </div>
-
-            <div className="flex-1/2 space-y-8">
-              <h3 className="text-center font-bold text-3xl text-neutral">
-                Register Now
-              </h3>
-
-              <img src={bgImg} alt="Register here" />
+              <div className="flex-1/2 hidden lg:inline-block">
+                <img src={bgImg} alt="Register here" />
+              </div>
             </div>
           </div>
-        </div>
+        </MyContainer>
       </section>
     </>
   );

@@ -57,7 +57,7 @@ const LoginPage = () => {
           </div>
 
           <div className="p-4 md:p-8 rounded-md shadow-md bg-primary/7 flex md:items-center md:justify-between md:gap-8 max-w-md md:max-w-full mx-auto">
-            <div className="flex-1/2 space-y-8 hidden md:inline-block">
+            <div className="flex-1/2 hidden md:inline-block">
               <img src={bgImg} alt="Register here" />
             </div>
 
