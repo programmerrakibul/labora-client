@@ -31,13 +31,13 @@ const AllJobsPage = () => {
     <>
       <title>Explore All Jobs - Labora</title>
 
-      <section>
-        <MyContainer>
-          <MyTitle>Latest Jobs for You</MyTitle>
+      <section className="py-8 my-6">
+        <MyContainer className="space-y-10">
+          <div className="space-y-4">
+            <MyTitle>Explore All Jobs</MyTitle>
+          </div>
 
-          <div></div>
-
-          <div className="grid md:grid-cols-2 gap-7">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-7">
             {loading ? <p>Loading...</p> : jobCardElements}
           </div>
         </MyContainer>
