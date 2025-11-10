@@ -60,7 +60,7 @@ strong {
 }
 
 .label {
-  @apply font-semibold text-neutral text-lg font-['Raleway'];
+  @apply font-semibold text-neutral text-base md:text-lg font-['Raleway'];
 }
 
 .primary_linear {
