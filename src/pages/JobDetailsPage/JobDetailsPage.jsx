@@ -28,6 +28,7 @@ const JobDetailsPage = () => {
     posted_by,
     created_at,
     creator_email,
+    status,
   } = singleJob;
 
   useEffect(() => {
@@ -51,25 +52,38 @@ const JobDetailsPage = () => {
   const handleAcceptJob = async () => {
     setAcceptLoading(true);
 
+    const status = {
+      status: "accepted",
+    };
+
     const newTask = {
       job_id: id,
       accepted_user_name: currentUser.displayName,
       accepted_user_email: currentUser.email,
       accepted_at: new Date().toISOString(),
+      status: "pending",
     };
 
     try {
-      const { data } = await secureAxios.post("/added-tasks", newTask);
+      const { data } = await secureAxios.put(`/jobs/${id}`, status);
 
       if (data.success) {
-        mySwal.fire({
-          icon: "success",
-          title: data.message,
-          showConfirmButton: false,
-          timer: 2000,
-        });
+        setSingleJob({ ...singleJob, ...status });
+
+        const { data } = await secureAxios.post("/added-tasks", newTask);
+
+        if (data.success) {
+          mySwal.fire({
+            icon: "success",
+            title: data.message,
+            showConfirmButton: false,
+            timer: 2000,
+          });
+        }
       }
-    } catch {
+    } catch (err) {
+      console.log(err);
+
       toast.error("Job Accepted failed");
     } finally {
       setAcceptLoading(false);
@@ -120,8 +134,17 @@ const JobDetailsPage = () => {
 
               {currentUser.email !== creator_email && (
                 <div className="card-actions justify-end">
-                  <MyButton disabled={acceptLoading} onClick={handleAcceptJob}>
-                    {acceptLoading ? <ActionSpinner /> : "Accept Job"}
+                  <MyButton
+                    disabled={acceptLoading || status === "accepted"}
+                    onClick={handleAcceptJob}
+                  >
+                    {acceptLoading ? (
+                      <ActionSpinner />
+                    ) : status === "accepted" ? (
+                      "Accepted"
+                    ) : (
+                      "Accept Job"
+                    )}
                   </MyButton>
                 </div>
               )}

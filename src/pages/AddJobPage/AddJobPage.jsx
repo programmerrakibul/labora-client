@@ -38,6 +38,7 @@ const AddJobPage = () => {
     formData["posted_by"] = currentUser.displayName;
     formData["creator_email"] = currentUser.email;
     formData["created_at"] = new Date().toISOString();
+    formData["status"] = "pending";
 
     try {
       const { data } = await secureAxios.post("/jobs", formData);

@@ -21,7 +21,7 @@ h6 {
 }
 
 .btn:disabled {
-  @apply pointer-events-auto cursor-not-allowed bg-[#D6D3E4];
+  @apply pointer-events-auto cursor-not-allowed bg-[#D6D3E4] bg-none;
 }
 
 .input,
