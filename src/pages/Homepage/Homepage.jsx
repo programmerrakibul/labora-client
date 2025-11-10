@@ -7,6 +7,7 @@ import { FaCode, FaPalette, FaStar } from "react-icons/fa";
 import useCategoryData from "../../hooks/useCategoryData";
 import useFeaturesData from "../../hooks/useFeaturesData";
 import BannerSlider from "../../components/BannerSlider/BannerSlider";
+import Badge from "../../components/Badge/Badge";
 
 const Homepage = () => {
   const publicAxios = usePublicAxios();
@@ -65,17 +66,22 @@ const Homepage = () => {
         </MyContainer>
       </section>
 
-      <section className="py-6">
-        <MyContainer>
-          <div className="text-center mb-12">
-            <MyTitle>Popular Categories</MyTitle>
-            <p className="text-lg max-w-2xl mx-auto">
+      <section>
+        <MyContainer className="space-y-14">
+          <div className="text-center space-y-3.5">
+            <MyTitle>
+              <span className="primary_linear bg-clip-text text-transparent">
+                Popular
+              </span>{" "}
+              Categories
+            </MyTitle>
+            <p className="max-w-xl mx-auto">
               Discover thousands of opportunities across our most popular
               freelance categories
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-6">
             {categories.map((category) => (
               <div
                 key={category.id}
@@ -88,17 +94,13 @@ const Homepage = () => {
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
+
                   <div className="absolute bottom-4 left-4">
-                    <span
-                      className={`badge badge-lg text-white border-none ${category.color}`}
-                    >
-                      {category.icon}
-                    </span>
+                    <Badge className={`${category.color} badge-lg`}>{category.icon}</Badge>
                   </div>
+
                   <div className="absolute bottom-4 right-4">
-                    <span className="badge badge-lg badge-primary text-white">
-                      {category.jobs} jobs
-                    </span>
+                    <Badge>{category.jobs} jobs</Badge>
                   </div>
                 </figure>
 

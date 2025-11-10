@@ -10,7 +10,7 @@ const RootLayout = () => {
         <Navbar />
       </header>
 
-      <main className="space-y-10 md:space-y-16 min-h-[65dvh]">
+      <main className="space-y-16 md:space-y-20 min-h-[65dvh]">
         <Outlet />
       </main>
 
