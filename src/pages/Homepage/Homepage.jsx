@@ -44,9 +44,14 @@ const Homepage = () => {
 
       <section>
         <MyContainer className="space-y-7">
-          <MyTitle>Latest Jobs for You</MyTitle>
+          <MyTitle>
+            <span className="primary_linear bg-clip-text text-transparent">
+              Latest Jobs
+            </span>{" "}
+            for You
+          </MyTitle>
 
-          <div className="grid md:grid-cols-2 gap-7">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-7">
             {loading ? <p>Loading...</p> : jobCardElements}
           </div>
         </MyContainer>

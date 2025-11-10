@@ -9,24 +9,22 @@ const JobCard = ({ singleJob }) => {
     singleJob || {};
 
   return (
-    <div className="flex items-center gap-5 bg-base-300 p-4 rounded-lg shadow-lg">
-      <figure className="rounded-lg overflow-hidden">
+    <div className="bg-base-300 rounded-lg shadow-lg overflow-hidden">
+      <figure className="relative">
         <img
           src={job_image}
           alt={job_title}
-          className="aspect-3/2 object-cover w-full max-h-32"
+          className="aspect-3/2 object-cover w-full max-h-52"
         />
+        <Badge className="absolute bottom-5 right-5">{job_category}</Badge>
       </figure>
 
-      <div className="flex-1 space-y-2.5">
-        <div className="flex items-center justify-between gap-1.5">
-          <p className="flex items-center gap-1.5 text-sm">
-            <span>
-              <MdOutlineVerifiedUser />
-            </span>
-            <span>{posted_by}</span>
-          </p>
-          <Badge>{job_category}</Badge>
+      <div className="space-y-2 p-4">
+        <div className="flex items-center gap-1.5 text-sm text-primary/60">
+          <span>
+            <MdOutlineVerifiedUser />
+          </span>
+          <span>{posted_by}</span>
         </div>
 
         <h4
