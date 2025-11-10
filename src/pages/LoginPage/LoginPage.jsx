@@ -71,7 +71,7 @@ const LoginPage = () => {
                   />
                 </div>
 
-                <div className="space-y-1.5">
+                <div className="space-y-1.5 mb-0.5">
                   <MyLabel htmlFor="password">Password</MyLabel>
                   <div className="relative">
                     <MyInput
@@ -87,6 +87,10 @@ const LoginPage = () => {
                       {show ? <VscEye /> : <VscEyeClosed />}
                     </span>
                   </div>
+                </div>
+
+                <div className="text-end">
+                  <a className="link link-hover text-sm">Forgotten Password?</a>
                 </div>
 
                 <div>
