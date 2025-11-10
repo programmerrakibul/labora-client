@@ -76,13 +76,13 @@ const MyAcceptedTasksPage = () => {
     <>
       <title>My Accepted Tasks - Labora</title>
 
-      <section>
-        <MyContainer>
+      <section className="my-6 py-8">
+        <MyContainer className="space-y-7">
           <MyTitle>My Accepted Tasks</MyTitle>
 
           <div className="overflow-x-auto">
-            <table className="table">
-              <thead>
+            <table className="table rounded-lg overflow-hidden  shadow-lg bg-linear-to-r from-primary/4 to-primary/4">
+              <thead className="text-neutral bg-info/5 md:text-lg">
                 <tr>
                   <th>#</th>
                   <th>Image</th>
@@ -92,7 +92,7 @@ const MyAcceptedTasksPage = () => {
                 </tr>
               </thead>
 
-              <tbody>
+              <tbody className="md:text-base">
                 {tasks.map((item, index) => (
                   <tr key={item._id}>
                     <td>{index + 1}</td>
@@ -100,11 +100,11 @@ const MyAcceptedTasksPage = () => {
                       <img
                         src={item.job_details.job_image}
                         alt={item.job_details.job_title}
-                        className="w-16 h-10 rounded-md overflow-hidden"
+                        className="w-16 h-10 rounded-md object-cover overflow-hidden"
                       />
                     </td>
-                    <td>{item.job_details.job_title}</td>
-                    <td>{item.job_details.job_category}</td>
+                    <td className="min-w-[200px]">{item.job_details.job_title}</td>
+                    <td className="text-nowrap">{item.job_details.job_category}</td>
                     <td className="space-x-1.5 text-nowrap">
                       <button
                         onClick={() =>
