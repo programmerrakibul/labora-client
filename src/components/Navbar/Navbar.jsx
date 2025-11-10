@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import ActionSpinner from "../ActionSpinner/ActionSpinner";
 import useMySwal from "../../hooks/useMySwal";
 import MyButton from "../MyButton/MyButton";
+import Logo from "../Logo/Logo";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -85,15 +86,12 @@ const Navbar = () => {
               </ul>
             </div>
 
-            <Link
-              to="/"
-              className="text-2xl font-extrabold primary_linear bg-clip-text text-transparent"
-            >
-              Labora
-            </Link>
+            <Logo />
           </div>
           <div className="navbar-center hidden lg:flex">
-            <ul className="menu menu-horizontal px-1 gap-3.5 text-base">{navLinks}</ul>
+            <ul className="menu menu-horizontal px-1 gap-3.5 text-base">
+              {navLinks}
+            </ul>
           </div>
 
           <div className="navbar-end gap-3">

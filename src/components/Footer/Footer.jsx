@@ -2,18 +2,14 @@ import MyContainer from "../MyContainer/MyContainer";
 import { SiFacebook, SiGithub, SiLinkedin } from "react-icons/si";
 import { Link } from "react-router";
 import { FaSquareXTwitter } from "react-icons/fa6";
+import Logo from "../Logo/Logo";
 
 const Footer = () => {
   return (
     <MyContainer className="space-y-3.5">
       <div className="footer sm:footer-horizontal text-base-content">
         <aside>
-          <Link
-            to="/"
-            className="text-2xl font-extrabold primary_linear bg-clip-text text-transparent"
-          >
-            Labora
-          </Link>
+          <Logo />
 
           <p className="max-w-sm opacity-80">
             Labora is your trusted partner in connecting businesses with top
