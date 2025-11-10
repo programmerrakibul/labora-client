@@ -45,3 +45,11 @@ h6 {
 .label {
   @apply font-semibold text-neutral text-lg font-['Raleway'];
 }
+
+.primary_linear {
+  @apply bg-linear-to-r from-primary/60  to-secondary/60;
+}
+
+.primary_linear_hover {
+  @apply transition-all duration-300 hover:from-primary/70  hover:to-secondary/70;
+}

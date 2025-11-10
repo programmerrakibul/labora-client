@@ -56,9 +56,8 @@ const MyJobsPage = () => {
             <MyButton onClick={() => handleDelete(id)}>
               Yes, Delete it!
             </MyButton>
-            <MyButton className="btn-outline" onClick={() => mySwal.close()}>
-              Cancel
-            </MyButton>
+            
+            <MyButton onClick={() => mySwal.close()}>Cancel</MyButton>
           </div>
         </>
       ),

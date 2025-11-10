@@ -6,6 +6,7 @@ import getAuthErrorMessage from "../../utilities/getAuthErrorMessage";
 import { toast } from "react-toastify";
 import ActionSpinner from "../ActionSpinner/ActionSpinner";
 import useMySwal from "../../hooks/useMySwal";
+import MyButton from "../MyButton/MyButton";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -108,29 +109,19 @@ const Navbar = () => {
                   </div>
                 </div>
 
-                <button
-                  disabled={loading}
-                  onClick={handleLogoutUser}
-                  className="btn btn-primary"
-                >
+                <MyButton disabled={loading} onClick={handleLogoutUser}>
                   {loading ? <ActionSpinner /> : "Logout"}
-                </button>
+                </MyButton>
               </>
             ) : (
               <>
-                <button
-                  onClick={() => navigate("/auth/login")}
-                  className="btn btn-primary"
-                >
+                <MyButton onClick={() => navigate("/auth/login")}>
                   Login
-                </button>
+                </MyButton>
 
-                <button
-                  onClick={() => navigate("/auth/register")}
-                  className="btn btn-primary btn-outline"
-                >
+                <MyButton onClick={() => navigate("/auth/register")}>
                   Register
-                </button>
+                </MyButton>
               </>
             )}
           </div>

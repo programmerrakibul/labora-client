@@ -38,10 +38,7 @@ const JobCard = ({ singleJob }) => {
         <p className="line-clamp-2">{job_summery}</p>
 
         <div className="card-actions justify-end">
-          <MyButton
-            onClick={() => navigate(`/job-details/${_id}`)}
-            className="btn-outline"
-          >
+          <MyButton onClick={() => navigate(`/job-details/${_id}`)}>
             View Details
           </MyButton>
         </div>

@@ -51,12 +51,10 @@ const Homepage = () => {
               your passion, schedule, and goals.
             </p>
             <div className="space-x-3.5">
-              <MyButton
-                onClick={() => navigate("/all-jobs")}
-                className="btn-outline"
-              >
+              <MyButton onClick={() => navigate("/all-jobs")}>
                 Explore Jobs
               </MyButton>
+              
               <MyButton onClick={() => navigate("/add-job")}>Add Job</MyButton>
             </div>
           </div>
