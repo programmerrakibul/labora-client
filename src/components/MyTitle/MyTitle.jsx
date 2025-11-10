@@ -2,7 +2,7 @@ const MyTitle = ({ children, className = "" }) => {
   return (
     <>
       <h3
-        className={`${className} text-2xl text-neutral font-bold text-center`}
+        className={`${className} text-2xl md:text-3xl lg:text-4xl text-neutral font-bold text-center`}
       >
         {children}
       </h3>
