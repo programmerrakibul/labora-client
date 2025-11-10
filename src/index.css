@@ -4,7 +4,12 @@
 @plugin "daisyui";
 
 .nav_links {
-  @apply capitalize font-medium;
+  @apply capitalize text-neutral font-medium border-b-2 border-transparent bg-transparent px-1 py-0.5 rounded-none transition-all duration-300 inline-block w-fit;
+}
+
+.nav_links.active,
+.nav_links:hover {
+  @apply bg-linear-to-r from-primary/70  to-secondary/70 bg-clip-text text-transparent border-secondary/30;
 }
 
 h1,
@@ -59,7 +64,7 @@ h6 {
 }
 
 .swiper-pagination-bullet {
-  @apply opacity-30!
+  @apply opacity-30!;
 }
 
 .swiper-pagination-bullet-active {

@@ -79,20 +79,24 @@ const Navbar = () => {
               </div>
               <ul
                 tabIndex="-1"
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-52 p-2 shadow"
               >
                 {navLinks}
               </ul>
             </div>
-            <Link to="/" className="text-2xl font-bold">
+
+            <Link
+              to="/"
+              className="text-2xl font-extrabold primary_linear bg-clip-text text-transparent"
+            >
               Labora
             </Link>
           </div>
           <div className="navbar-center hidden lg:flex">
-            <ul className="menu menu-horizontal px-1">{navLinks}</ul>
+            <ul className="menu menu-horizontal px-1 gap-3.5 text-base">{navLinks}</ul>
           </div>
 
-          <div className="navbar-end">
+          <div className="navbar-end gap-3">
             {currentUser ? (
               <>
                 <div
@@ -100,7 +104,7 @@ const Navbar = () => {
                   data-tip={currentUser.displayName}
                 >
                   <div className="avatar">
-                    <div className="ring-primary ring-offset-base-100 size-10 rounded-full ring-2">
+                    <div className="ring-primary ring-offset-base-100 size-8 md:size-10 rounded-full ring-2">
                       <img
                         src={currentUser.photoURL}
                         alt={currentUser.displayName}
