@@ -8,6 +8,8 @@ import useFeaturesData from "../../hooks/useFeaturesData";
 import BannerSlider from "../../components/BannerSlider/BannerSlider";
 import Badge from "../../components/Badge/Badge";
 import FetchSpinner from "../../components/FetchSpinner/FetchSpinner";
+// eslint-disable-next-line no-unused-vars
+import * as motion from "motion/react-client";
 
 const Homepage = () => {
   const publicAxios = usePublicAxios();
@@ -55,7 +57,12 @@ const Homepage = () => {
 
       <section className="bg-secondary/3 py-10">
         <MyContainer className="space-y-7">
-          <div className="text-center space-y-3.5">
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.4 }}
+            className="text-center space-y-3.5"
+          >
             <MyTitle>
               <span className="primary_linear bg-clip-text text-transparent">
                 Latest Jobs
@@ -68,7 +75,7 @@ const Homepage = () => {
               interests. Stay ahead with curated job listings that match your
               goals and career aspirations
             </p>
-          </div>
+          </motion.div>
 
           {loading ? (
             <FetchSpinner className="min-h-[30dvh]" />
@@ -82,7 +89,12 @@ const Homepage = () => {
 
       <section>
         <MyContainer className="space-y-14">
-          <div className="text-center space-y-3.5">
+          <motion.div
+            initial={{ x: -100, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.5, type: "spring" }}
+            className="text-center space-y-3.5"
+          >
             <MyTitle>
               <span className="primary_linear bg-clip-text text-transparent">
                 Popular
@@ -93,13 +105,17 @@ const Homepage = () => {
               Discover thousands of opportunities across our most popular
               freelance categories
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-6">
             {categories.map((category) => (
-              <div
+              <motion.div
+                initial={{ opacity: 0, scale: 0, y: 20 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                whileHover={{ scale: 1.1, y: -10 }}
+                transition={{ duration: 0.4, delay: 0.1 }}
                 key={category.id}
-                className="card bg-base-100 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 group dark:border-2 border-white/20 dark:shadow-white/15"
+                className="card bg-base-100 shadow-lg hover:shadow-xl duration-300  group dark:border-2 border-white/20 dark:shadow-white/15"
               >
                 <figure className="relative h-40 overflow-hidden">
                   <img
@@ -126,7 +142,7 @@ const Homepage = () => {
                   </h3>
                   <p>{category.description}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </MyContainer>
@@ -157,7 +173,17 @@ const Homepage = () => {
 
       <section className="mt-6 py-8 bg-info/4 dark:bg-info/20">
         <MyContainer className="space-y-9">
-          <div className="text-center space-y-3.5">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{
+              delay: 0.4,
+              duration: 0.4,
+              type: "spring",
+              bounce: 0.5,
+            }}
+            className="text-center space-y-3.5"
+          >
             <MyTitle>
               Where{" "}
               <span className="primary_linear bg-clip-text text-transparent">
@@ -174,10 +200,14 @@ const Homepage = () => {
               with businesses that need their skills. Whether you're looking to
               hire or get hired, Labora makes it simple, secure, and successful.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-4">
+            <motion.div
+              initial={{ opacity: 0, x: -100 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              className="space-y-4"
+            >
               <h3 className="text-xl sm:text-2xl text-neutral font-bold">
                 Revolutionizing How The World Works
               </h3>
@@ -199,11 +229,13 @@ const Homepage = () => {
                   ideas to life.
                 </p>
               </div>
-            </div>
+            </motion.div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {featuresData.map((feature) => (
-                <div
+                <motion.div
+                  initial={{ opacity: 0, scale: 0 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
                   key={feature.id}
                   className="card bg-base-200 shadow-sm dark:shadow-white/30 hover:shadow-md transition-shadow duration-300"
                 >
@@ -214,7 +246,7 @@ const Homepage = () => {
                     </h4>
                     <p>{feature.description}</p>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>

@@ -2,6 +2,8 @@ import { MdOutlineVerifiedUser } from "react-icons/md";
 import MyButton from "../MyButton/MyButton";
 import { useNavigate } from "react-router";
 import Badge from "../Badge/Badge";
+// eslint-disable-next-line no-unused-vars
+import * as motion from "motion/react-client";
 
 const JobCard = ({ singleJob }) => {
   const navigate = useNavigate();
@@ -9,7 +11,13 @@ const JobCard = ({ singleJob }) => {
     singleJob || {};
 
   return (
-    <div className="bg-base-300 dark:border-2 border-white/20 rounded-lg shadow-lg dark:shadow-white/30 dark:shadow-md overflow-hidden">
+    <motion.div
+      initial={{ opacity: 0, scale: 0, y: 20 }}
+      whileInView={{ opacity: 1, scale: 1, y: 0 }}
+      whileHover={{ scale: 1.1, y: -10 }}
+      transition={{ duration: 0.4, delay: 0.1 }}
+      className="bg-base-300 dark:border-2 border-white/20 rounded-lg shadow-lg dark:shadow-white/30 dark:shadow-md overflow-hidden"
+    >
       <figure className="relative">
         <img
           src={job_image}
@@ -27,7 +35,10 @@ const JobCard = ({ singleJob }) => {
           <span>{posted_by}</span>
         </div>
 
-        <div data-tip={job_title} className="tooltip tooltip-top tooltip-primary">
+        <div
+          data-tip={job_title}
+          className="tooltip tooltip-top tooltip-primary"
+        >
           <h4 className="line-clamp-1 text-lg text-neutral font-semibold ">
             {job_title}
           </h4>
@@ -40,7 +51,7 @@ const JobCard = ({ singleJob }) => {
           </MyButton>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

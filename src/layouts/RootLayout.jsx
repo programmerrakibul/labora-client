@@ -4,6 +4,23 @@ import Footer from "../components/Footer/Footer";
 import { ToastContainer } from "react-toastify";
 import useRouteLoader from "../hooks/useRouteLoader";
 import PageSpinner from "../components/PageSpinner/PageSpinner";
+// eslint-disable-next-line no-unused-vars
+import * as motion from "motion/react-client";
+
+const layoutVariants = {
+  hidden: {
+    opacity: 0,
+    y: -100,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.4,
+      y: { type: "spring", duration: 0.6 },
+    },
+  },
+};
 
 const RootLayout = () => {
   const loading = useRouteLoader();
@@ -14,11 +31,16 @@ const RootLayout = () => {
 
   return (
     <>
-      <header className="sticky top-0 z-50">
+      <motion.header
+        variants={layoutVariants}
+        initial="hidden"
+        animate="visible"
+        className="sticky top-0 z-50"
+      >
         <Navbar />
-      </header>
+      </motion.header>
 
-      <main className="space-y-16 md:space-y-20 w-full min-h-[65dvh] grid grid-cols-1 place-items-center">
+      <main className="space-y-16 md:space-y-20 w-full min-h-[65dvh] grid grid-cols-1 place-items-center overflow-hidden">
         <Outlet />
       </main>
 
