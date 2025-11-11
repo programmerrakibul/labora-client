@@ -8,16 +8,25 @@ import FetchSpinner from "../../components/FetchSpinner/FetchSpinner";
 const AllJobsPage = () => {
   const [loading, setLoading] = useState(true);
   const [allJobs, setAllJobs] = useState([]);
+  const [dateSortOrder, setDateSortOrder] = useState("");
   const publicAxios = usePublicAxios();
 
   useEffect(() => {
     (async () => {
       setLoading(true);
 
+      const sort = {};
+
+      if (dateSortOrder) {
+        sort["sortBy"] = "created_at";
+        sort["sortOrder"] = dateSortOrder;
+      }
+
       try {
         const { data } = await publicAxios.get("/jobs", {
           params: {
-            excludes: "creator_email,created_at,status",
+            excludes: "creator_email,status",
+            ...sort,
           },
         });
 
@@ -28,15 +37,11 @@ const AllJobsPage = () => {
         setLoading(false);
       }
     })();
-  }, [publicAxios]);
+  }, [publicAxios, dateSortOrder]);
 
   const jobCardElements = allJobs.map((item) => (
     <JobCard key={item._id} singleJob={item} />
   ));
-
-  if (loading) {
-    return <FetchSpinner className="min-h-[40dvh]" />;
-  }
 
   return (
     <>
@@ -48,9 +53,27 @@ const AllJobsPage = () => {
             <MyTitle>Explore All Jobs</MyTitle>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-7">
-            {jobCardElements}
+          <div className="flex items-center justify-end">
+            <div>
+              <select
+                onChange={(e) => setDateSortOrder(e.currentTarget.value)}
+                defaultValue="Sort by Date"
+                className="select min-w-[150px] bg-base-300!"
+              >
+                <option disabled={true}>Sort by Date</option>
+                <option value="desc">Newest First</option>
+                <option value="asc">Oldest First</option>
+              </select>
+            </div>
           </div>
+
+          {loading ? (
+            <FetchSpinner />
+          ) : (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-7">
+              {jobCardElements}
+            </div>
+          )}
         </MyContainer>
       </section>
     </>
