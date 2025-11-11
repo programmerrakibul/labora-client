@@ -18,7 +18,7 @@ const RootLayout = () => {
         <Navbar />
       </header>
 
-      <main className="space-y-16 md:space-y-20 w-full min-h-[65dvh] grid place-items-center">
+      <main className="space-y-16 md:space-y-20 w-full min-h-[65dvh] grid grid-cols-1 place-items-center">
         <Outlet />
       </main>
 

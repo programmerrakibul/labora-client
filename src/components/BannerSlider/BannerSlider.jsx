@@ -38,7 +38,7 @@ const BannerSlider = () => {
               <img
                 src={item.image}
                 alt={item.alt}
-                className="w-full h-[280px] sm:h-80 md:h-[420px] lg:h-[480px] object-cover overflow-hidden"
+                className="w-full h-80 md:h-[420px] lg:h-[480px] object-cover overflow-hidden"
               />
               <div className="absolute top-0 left-0 w-full h-full bg-[#1111113f] grid place-items-center p-3">
                 <div className="text-center space-y-3.5 max-w-2xl">
@@ -46,7 +46,7 @@ const BannerSlider = () => {
                     {item.title}
                   </h1>
 
-                  <p className="text-white/90 text-base md:text-lg">{item.subtitle}</p>
+                  <p className="text-white/90 sm:text-base md:text-lg">{item.subtitle}</p>
 
                   <div className="space-x-3.5">
                     <MyButton onClick={() => navigate("/all-jobs")}>

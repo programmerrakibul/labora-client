@@ -3,7 +3,6 @@ import JobCard from "../../components/JobCard/JobCard";
 import MyTitle from "../../components/MyTitle/MyTitle";
 import usePublicAxios from "../../hooks/usePublicAxios";
 import MyContainer from "../../components/MyContainer/MyContainer";
-import { FaCode, FaPalette, FaStar } from "react-icons/fa";
 import useCategoryData from "../../hooks/useCategoryData";
 import useFeaturesData from "../../hooks/useFeaturesData";
 import BannerSlider from "../../components/BannerSlider/BannerSlider";
