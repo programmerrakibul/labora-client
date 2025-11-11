@@ -11,6 +11,7 @@ import useMySwal from "../../hooks/useMySwal";
 import MyButton from "../../components/MyButton/MyButton";
 import { toast } from "react-toastify";
 import FetchSpinner from "../../components/FetchSpinner/FetchSpinner";
+import DataNotFound from "../../components/DataNotFound/DataNotFound";
 
 const MyJobsPage = () => {
   const [loading, setLoading] = useState(true);
@@ -95,67 +96,75 @@ const MyJobsPage = () => {
 
       <section className="my-6 py-8">
         <MyContainer className="space-y-7">
-          <MyTitle>My Added Jobs</MyTitle>
+          {userJobs.length === 0 ? (
+            <DataNotFound value="tasks">
+              No job postings have been submitted yet.
+            </DataNotFound>
+          ) : (
+            <>
+              <MyTitle>My Added Jobs</MyTitle>
 
-          <div className="overflow-x-auto">
-            <table className="table rounded-lg overflow-hidden  shadow-lg bg-linear-to-r from-primary/5 to-secondary/5 dark:from-primary/15  dark:to-secondary/15">
-              <thead className="text-neutral dark:text-white/90 bg-info/5 dark:bg-info/10 md:text-lg">
-                <tr>
-                  <th>#</th>
-                  <th>Image</th>
-                  <th>Job Name</th>
-                  <th>Category</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
+              <div className="overflow-x-auto">
+                <table className="table rounded-lg overflow-hidden  shadow-lg bg-linear-to-r from-primary/5 to-secondary/5 dark:from-primary/15  dark:to-secondary/15">
+                  <thead className="text-neutral dark:text-white/90 bg-info/5 dark:bg-info/10 md:text-lg">
+                    <tr>
+                      <th>#</th>
+                      <th>Image</th>
+                      <th>Job Name</th>
+                      <th>Category</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
 
-              <tbody className="md:text-base">
-                {userJobs.map((item, index) => (
-                  <tr key={item._id}>
-                    <td className="text-neutral dark:text-white/90">
-                      {index + 1}
-                    </td>
-                    <td>
-                      <img
-                        src={item.job_image}
-                        alt={item.job_title}
-                        className="w-16 h-10 rounded-md object-cover overflow-hidden"
-                      />
-                    </td>
-                    <td className="min-w-[200px]">{item.job_title}</td>
-                    <td className="text-nowrap">{item.job_category}</td>
-                    <td className="space-x-1.5 text-nowrap">
-                      <button
-                        onClick={() => navigate(`/job-details/${item._id}`)}
-                        title="View"
-                        className="btn shadow-none border-none bg-transparent p-1.5 text-xl md:text-2xl text-info"
-                      >
-                        <VscEye />
-                      </button>
+                  <tbody className="md:text-base">
+                    {userJobs.map((item, index) => (
+                      <tr key={item._id}>
+                        <td className="text-neutral dark:text-white/90">
+                          {index + 1}
+                        </td>
+                        <td>
+                          <img
+                            src={item.job_image}
+                            alt={item.job_title}
+                            className="w-16 h-10 rounded-md object-cover overflow-hidden"
+                          />
+                        </td>
+                        <td className="min-w-[200px]">{item.job_title}</td>
+                        <td className="text-nowrap">{item.job_category}</td>
+                        <td className="space-x-1.5 text-nowrap">
+                          <button
+                            onClick={() => navigate(`/job-details/${item._id}`)}
+                            title="View"
+                            className="btn shadow-none border-none bg-transparent p-1.5 text-xl md:text-2xl text-info"
+                          >
+                            <VscEye />
+                          </button>
 
-                      <button
-                        title="Edit"
-                        onClick={() =>
-                          navigate(`/update-job-details/${item._id}`)
-                        }
-                        className="btn shadow-none border-none bg-transparent p-1.5 text-xl md:text-2xl text-success"
-                      >
-                        <FaRegEdit />
-                      </button>
+                          <button
+                            title="Edit"
+                            onClick={() =>
+                              navigate(`/update-job-details/${item._id}`)
+                            }
+                            className="btn shadow-none border-none bg-transparent p-1.5 text-xl md:text-2xl text-success"
+                          >
+                            <FaRegEdit />
+                          </button>
 
-                      <button
-                        onClick={() => handleDeleteClick(item._id)}
-                        title="Delete"
-                        className="btn shadow-none border-none bg-transparent p-1.5 text-xl md:text-2xl text-error"
-                      >
-                        <RiDeleteBinLine />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                          <button
+                            onClick={() => handleDeleteClick(item._id)}
+                            title="Delete"
+                            className="btn shadow-none border-none bg-transparent p-1.5 text-xl md:text-2xl text-error"
+                          >
+                            <RiDeleteBinLine />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
+          )}
         </MyContainer>
       </section>
     </>
