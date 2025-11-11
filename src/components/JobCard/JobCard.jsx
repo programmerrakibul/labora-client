@@ -27,12 +27,11 @@ const JobCard = ({ singleJob }) => {
           <span>{posted_by}</span>
         </div>
 
-        <h4
-          className="line-clamp-1 text-lg text-neutral font-semibold"
-          title={job_title}
-        >
-          {job_title}
-        </h4>
+        <div data-tip={job_title} className="tooltip tooltip-top tooltip-primary">
+          <h4 className="line-clamp-1 text-lg text-neutral font-semibold ">
+            {job_title}
+          </h4>
+        </div>
         <p className="line-clamp-2">{job_summery}</p>
 
         <div className="card-actions justify-end">
