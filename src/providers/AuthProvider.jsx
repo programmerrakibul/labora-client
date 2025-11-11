@@ -10,6 +10,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../firebase/firebase.init";
+import PageSpinner from "../components/PageSpinner/PageSpinner";
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -64,7 +65,7 @@ const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext value={authInfo}>
-      {loading ? <p>Loading...</p> : children}
+      {loading ? <PageSpinner /> : children}
     </AuthContext>
   );
 };

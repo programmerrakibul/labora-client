@@ -2,15 +2,23 @@ import { Outlet } from "react-router";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
 import { ToastContainer } from "react-toastify";
+import useRouteLoader from "../hooks/useRouteLoader";
+import PageSpinner from "../components/PageSpinner/PageSpinner";
 
 const RootLayout = () => {
+  const loading = useRouteLoader();
+
+  if (loading) {
+    return <PageSpinner />;
+  }
+
   return (
     <>
       <header className="sticky top-0 z-50">
         <Navbar />
       </header>
 
-      <main className="space-y-16 md:space-y-20 min-h-[65dvh]">
+      <main className="space-y-16 md:space-y-20 w-full min-h-[65dvh] grid place-items-center">
         <Outlet />
       </main>
 

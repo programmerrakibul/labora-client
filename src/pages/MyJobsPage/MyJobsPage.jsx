@@ -10,6 +10,7 @@ import { useNavigate } from "react-router";
 import useMySwal from "../../hooks/useMySwal";
 import MyButton from "../../components/MyButton/MyButton";
 import { toast } from "react-toastify";
+import FetchSpinner from "../../components/FetchSpinner/FetchSpinner";
 
 const MyJobsPage = () => {
   const [loading, setLoading] = useState(true);
@@ -40,7 +41,7 @@ const MyJobsPage = () => {
   }, [secureAxios, currentUser.email]);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <FetchSpinner />;
   }
 
   const handleDeleteClick = (id) => {
@@ -94,7 +95,7 @@ const MyJobsPage = () => {
 
       <section className="my-6 py-8">
         <MyContainer className="space-y-7">
-          <MyTitle>My Jobs</MyTitle>
+          <MyTitle>My Added Jobs</MyTitle>
 
           <div className="overflow-x-auto">
             <table className="table rounded-lg overflow-hidden  shadow-lg bg-linear-to-r from-primary/5 to-secondary/5 dark:from-primary/15  dark:to-secondary/15">
@@ -111,7 +112,9 @@ const MyJobsPage = () => {
               <tbody className="md:text-base">
                 {userJobs.map((item, index) => (
                   <tr key={item._id}>
-                    <td className="text-neutral dark:text-white/90">{index + 1}</td>
+                    <td className="text-neutral dark:text-white/90">
+                      {index + 1}
+                    </td>
                     <td>
                       <img
                         src={item.job_image}

@@ -11,6 +11,7 @@ import MyButton from "../../components/MyButton/MyButton";
 import useAuthInfo from "../../hooks/useAuthInfo";
 import useMySwal from "../../hooks/useMySwal";
 import ActionSpinner from "../../components/ActionSpinner/ActionSpinner";
+import FetchSpinner from "../../components/FetchSpinner/FetchSpinner";
 
 const JobDetailsPage = () => {
   const { id } = useParams();
@@ -89,7 +90,7 @@ const JobDetailsPage = () => {
   };
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <FetchSpinner />;
   }
 
   return (

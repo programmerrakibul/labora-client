@@ -3,6 +3,7 @@ import MyContainer from "../../components/MyContainer/MyContainer";
 import usePublicAxios from "../../hooks/usePublicAxios";
 import MyTitle from "../../components/MyTitle/MyTitle";
 import JobCard from "../../components/JobCard/JobCard";
+import FetchSpinner from "../../components/FetchSpinner/FetchSpinner";
 
 const AllJobsPage = () => {
   const [loading, setLoading] = useState(true);
@@ -16,7 +17,9 @@ const AllJobsPage = () => {
       try {
         const { data } = await publicAxios.get("/jobs");
 
-        setAllJobs(data.all_jobs);
+        if (data.success) {
+          setAllJobs(data.all_jobs);
+        }
       } finally {
         setLoading(false);
       }
@@ -26,6 +29,10 @@ const AllJobsPage = () => {
   const jobCardElements = allJobs.map((item) => (
     <JobCard key={item._id} singleJob={item} />
   ));
+
+  if (loading) {
+    return <FetchSpinner className="min-h-[40dvh]" />;
+  }
 
   return (
     <>
@@ -38,7 +45,7 @@ const AllJobsPage = () => {
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-7">
-            {loading ? <p>Loading...</p> : jobCardElements}
+            {jobCardElements}
           </div>
         </MyContainer>
       </section>

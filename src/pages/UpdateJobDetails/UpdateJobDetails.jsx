@@ -12,6 +12,7 @@ import useMySwal from "../../hooks/useMySwal";
 import { toast } from "react-toastify";
 import MyTitle from "../../components/MyTitle/MyTitle";
 import useThemeContext from "../../hooks/useThemeContext";
+import FetchSpinner from "../../components/FetchSpinner/FetchSpinner";
 
 const UpdateJobDetails = () => {
   const { id } = useParams();
@@ -71,7 +72,7 @@ const UpdateJobDetails = () => {
   const image = theme === "light" ? updateImg : updateImgDark;
 
   if (productLoading) {
-    return <p>Loading...</p>;
+    return <FetchSpinner />;
   }
 
   return (

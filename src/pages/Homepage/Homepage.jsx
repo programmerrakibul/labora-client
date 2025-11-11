@@ -8,6 +8,7 @@ import useCategoryData from "../../hooks/useCategoryData";
 import useFeaturesData from "../../hooks/useFeaturesData";
 import BannerSlider from "../../components/BannerSlider/BannerSlider";
 import Badge from "../../components/Badge/Badge";
+import FetchSpinner from "../../components/FetchSpinner/FetchSpinner";
 
 const Homepage = () => {
   const publicAxios = usePublicAxios();
@@ -60,9 +61,13 @@ const Homepage = () => {
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-7">
-            {loading ? <p>Loading...</p> : jobCardElements}
-          </div>
+          {loading ? (
+            <FetchSpinner className="min-h-[30dvh]" />
+          ) : (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-7">
+              {jobCardElements}
+            </div>
+          )}
         </MyContainer>
       </section>
 

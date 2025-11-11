@@ -9,6 +9,7 @@ import { FaRegCircleXmark } from "react-icons/fa6";
 import { VscEye } from "react-icons/vsc";
 import { toast } from "react-toastify";
 import useMySwal from "../../hooks/useMySwal";
+import FetchSpinner from "../../components/FetchSpinner/FetchSpinner";
 
 const MyAcceptedTasksPage = () => {
   const [tasks, setTasks] = useState([]);
@@ -69,7 +70,7 @@ const MyAcceptedTasksPage = () => {
   };
 
   if (taskLoading) {
-    return <p>Loading...</p>;
+    return <FetchSpinner />;
   }
 
   return (
@@ -95,7 +96,9 @@ const MyAcceptedTasksPage = () => {
               <tbody className="md:text-base">
                 {tasks.map((item, index) => (
                   <tr key={item._id}>
-                    <td className="text-neutral dark:text-white/90">{index + 1}</td>
+                    <td className="text-neutral dark:text-white/90">
+                      {index + 1}
+                    </td>
                     <td>
                       <img
                         src={item.job_details.job_image}

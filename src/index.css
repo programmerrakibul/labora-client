@@ -7,6 +7,23 @@
 
 @custom-variant dark (&:where([data-theme=night], [data-theme=night] *));
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-['Raleway'] text-neutral dark:text-white;
+}
+
+strong {
+  @apply text-neutral dark:text-white;
+}
+
+section {
+  @apply w-full;
+}
+
 .nav_links {
   @apply capitalize text-neutral dark:text-white font-semibold border-b-2 border-transparent bg-transparent px-1 py-0.5 rounded-none transition-all duration-300 inline-block w-fit;
 }
@@ -22,19 +39,6 @@
 
 .footer-social-icon {
   @apply inline-block mr-1.5;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  @apply font-['Raleway'] text-neutral dark:text-white;
-}
-
-strong {
-  @apply text-neutral dark:text-white;
 }
 
 .btn {
@@ -72,7 +76,7 @@ strong {
 }
 
 .primary_linear_hover {
-  @apply transition-colors duration-300 hover:from-primary/70  dark:hover:from-primary hover:to-secondary/70 dark:hover:to-secondary
+  @apply transition-colors duration-300 hover:from-primary/70  dark:hover:from-primary hover:to-secondary/70 dark:hover:to-secondary;
 }
 
 .swiper-button-prev,
@@ -93,5 +97,5 @@ strong {
 }
 
 .swal2-modal {
-  @apply dark:bg-[#2D3250] dark:text-white
+  @apply dark:bg-[#2D3250] dark:text-white;
 }
