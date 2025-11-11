@@ -25,7 +25,7 @@ const AllJobsPage = () => {
       try {
         const { data } = await publicAxios.get("/jobs", {
           params: {
-            excludes: "creator_email,status",
+            excludes: "creator_email,created_at,status",
             ...sort,
           },
         });

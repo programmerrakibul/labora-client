@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import useAuthInfo from "./useAuthInfo";
 
 const instance = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: "https://labora-marketplace.vercel.app",
 });
 
 const useSecureAxios = () => {
