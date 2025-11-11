@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import MyContainer from "../../components/MyContainer/MyContainer";
-import usePublicAxios from "../../hooks/usePublicAxios";
 import MyTitle from "../../components/MyTitle/MyTitle";
 import JobCard from "../../components/JobCard/JobCard";
+import usePublicAxios from "../../hooks/usePublicAxios";
+import MyContainer from "../../components/MyContainer/MyContainer";
 import FetchSpinner from "../../components/FetchSpinner/FetchSpinner";
 
 const AllJobsPage = () => {
@@ -15,10 +15,14 @@ const AllJobsPage = () => {
       setLoading(true);
 
       try {
-        const { data } = await publicAxios.get("/jobs");
+        const { data } = await publicAxios.get("/jobs", {
+          params: {
+            excludes: "creator_email,created_at,status",
+          },
+        });
 
         if (data.success) {
-          setAllJobs(data.all_jobs);
+          setAllJobs(data.jobs);
         }
       } finally {
         setLoading(false);

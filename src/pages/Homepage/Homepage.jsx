@@ -21,8 +21,18 @@ const Homepage = () => {
       setLoading(true);
 
       try {
-        const { data } = await publicAxios.get("/jobs/latest");
-        setLatestJobs(data.latest_jobs);
+        const { data } = await publicAxios.get("/jobs", {
+          params: {
+            excludes: "creator_email,created_at,status",
+            sortBy: "created_at",
+            sortOrder: "desc",
+            limit: 6,
+          },
+        });
+
+        if (data.success) {
+          setLatestJobs(data.jobs);
+        }
       } finally {
         setLoading(false);
       }
