@@ -4,6 +4,8 @@ import JobCard from "../../components/JobCard/JobCard";
 import usePublicAxios from "../../hooks/usePublicAxios";
 import MyContainer from "../../components/MyContainer/MyContainer";
 import FetchSpinner from "../../components/FetchSpinner/FetchSpinner";
+// eslint-disable-next-line no-unused-vars
+import * as motion from "motion/react-client";
 
 const AllJobsPage = () => {
   const [loading, setLoading] = useState(true);
@@ -49,11 +51,21 @@ const AllJobsPage = () => {
 
       <section className="py-8 my-6">
         <MyContainer className="space-y-10">
-          <div className="space-y-4">
+          <motion.div
+            className="space-y-4"
+            initial={{ opacity: 0, y: "-100vh" }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ type: "spring", delay: 0.3, bounce: 0.4 }}
+          >
             <MyTitle>Explore All Jobs</MyTitle>
-          </div>
+          </motion.div>
 
-          <div className="flex items-center justify-end">
+          <motion.div
+            className="flex items-center justify-end"
+            initial={{ opacity: 0, x: "100vw" }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ type: "spring", delay: 0.3, bounce: 0.4 }}
+          >
             <div>
               <select
                 onChange={(e) => setDateSortOrder(e.currentTarget.value)}
@@ -65,7 +77,7 @@ const AllJobsPage = () => {
                 <option value="asc">Oldest First</option>
               </select>
             </div>
-          </div>
+          </motion.div>
 
           {loading ? (
             <FetchSpinner />

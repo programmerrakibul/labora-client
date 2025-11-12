@@ -12,6 +12,8 @@ import MyButton from "../../components/MyButton/MyButton";
 import postImgDark from "../../assets/add_job_post_dark.svg";
 import MyContainer from "../../components/MyContainer/MyContainer";
 import ActionSpinner from "../../components/ActionSpinner/ActionSpinner";
+// eslint-disable-next-line no-unused-vars
+import * as motion from "motion/react-client";
 
 const AddJobPage = () => {
   const mySwal = useMySwal();
@@ -54,8 +56,8 @@ const AddJobPage = () => {
         timer: 2000,
         showConfirmButton: false,
       });
-    } catch (err) {
-      toast.error(err.message);
+    } catch {
+      toast.error("Job post failed");
     } finally {
       setLoading(false);
     }
@@ -67,7 +69,12 @@ const AddJobPage = () => {
     <>
       <title>Post a Job - Labora</title>
 
-      <section className="py-8 my-5">
+      <motion.section
+        className="py-8 my-5"
+        initial={{ opacity: 0, x: "-100vw" }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ type: 'spring', delay: 0.3, bounce: 0.4}}
+      >
         <MyContainer>
           <div className="space-y-10 max-w-4xl mx-auto">
             <div>
@@ -148,7 +155,7 @@ const AddJobPage = () => {
             </div>{" "}
           </div>
         </MyContainer>
-      </section>
+      </motion.section>
     </>
   );
 };

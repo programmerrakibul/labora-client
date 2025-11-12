@@ -12,6 +12,8 @@ import MyButton from "../../components/MyButton/MyButton";
 import { toast } from "react-toastify";
 import FetchSpinner from "../../components/FetchSpinner/FetchSpinner";
 import DataNotFound from "../../components/DataNotFound/DataNotFound";
+// eslint-disable-next-line no-unused-vars
+import * as motion from "motion/react-client";
 
 const MyJobsPage = () => {
   const [loading, setLoading] = useState(true);
@@ -94,7 +96,12 @@ const MyJobsPage = () => {
     <>
       <title>My Added Jobs - Labora</title>
 
-      <section className="my-6 py-8">
+      <motion.section
+        className="my-6 py-8"
+        initial={{ opacity: 0, x: "-100vw" }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ type: "spring", delay: 0.3, bounce: 0.4 }}
+      >
         <MyContainer className="space-y-7">
           {userJobs.length === 0 ? (
             <DataNotFound value="tasks">
@@ -166,7 +173,7 @@ const MyJobsPage = () => {
             </>
           )}
         </MyContainer>
-      </section>
+      </motion.section>
     </>
   );
 };

@@ -16,6 +16,8 @@ import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import MyContainer from "../../components/MyContainer/MyContainer";
 import MyTitle from "../../components/MyTitle/MyTitle";
 import useThemeContext from "../../hooks/useThemeContext";
+// eslint-disable-next-line no-unused-vars
+import * as motion from "motion/react-client";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -89,7 +91,12 @@ const RegisterPage = () => {
     <>
       <title>Create your account - Labora</title>
 
-      <section className="py-8 my-6">
+      <motion.section
+        className="py-8 my-6"
+        initial={{ opacity: 0, x: "-100vw" }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ type: "spring", delay: 0.3, bounce: 0.4 }}
+      >
         <MyContainer>
           <div className="max-w-4xl mx-auto space-y-10">
             <div>
@@ -183,7 +190,7 @@ const RegisterPage = () => {
             </div>
           </div>
         </MyContainer>
-      </section>
+      </motion.section>
     </>
   );
 };

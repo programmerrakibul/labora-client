@@ -12,6 +12,8 @@ import useAuthInfo from "../../hooks/useAuthInfo";
 import useMySwal from "../../hooks/useMySwal";
 import ActionSpinner from "../../components/ActionSpinner/ActionSpinner";
 import FetchSpinner from "../../components/FetchSpinner/FetchSpinner";
+// eslint-disable-next-line no-unused-vars
+import * as motion from "motion/react-client";
 
 const JobDetailsPage = () => {
   const { id } = useParams();
@@ -97,7 +99,12 @@ const JobDetailsPage = () => {
       <section className="py-6 my-8">
         <MyContainer className="space-y-3.5">
           <div className="flex flex-col-reverse md:flex-row justify-between gap-7">
-            <div className="flex-2/3 space-y-3.5">
+            <motion.div
+              className="flex-2/3 space-y-3.5"
+              initial={{ opacity: 0, y: "-100vh" }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ type: "spring", delay: 0.3, bounce: 0.4 }}
+            >
               <h1 className="text-xl sm:text-2xl md:text-3xl font-bold">
                 {job_title}
               </h1>
@@ -135,9 +142,14 @@ const JobDetailsPage = () => {
                   )}
                 </p>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="flex-1/3 mx-auto">
+            <motion.div
+              className="flex-1/3 mx-auto"
+              initial={{ opacity: 0, x: "100vw" }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ type: "spring", delay: 0.3, bounce: 0.4 }}
+            >
               <div className="p-3 rounded-lg h-fit shadow-lg bg-base-300">
                 <img
                   src={job_image}
@@ -145,16 +157,26 @@ const JobDetailsPage = () => {
                   className="rounded-lg aspect-3/2 w-full object-cover"
                 />
               </div>
-            </div>
+            </motion.div>
           </div>
 
-          <div className="space-y-1.5">
+          <motion.div
+            className="space-y-1.5"
+            initial={{ opacity: 0, x: "-100vw" }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ type: "spring", delay: 0.3, bounce: 0.4 }}
+          >
             <strong className="underline">Summery:</strong>
             <p className="text-justify max-w-4xl w-full">{job_summery}</p>
-          </div>
+          </motion.div>
 
           {currentUser.email !== creator_email && (
-            <div className="card-actions">
+            <motion.div
+              className="card-actions"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ type: "spring", delay: 0.3, bounce: 0.4 }}
+            >
               <MyButton
                 disabled={acceptLoading || status === "completed"}
                 onClick={handleAcceptJob}
@@ -167,7 +189,7 @@ const JobDetailsPage = () => {
                   "Accept Job"
                 )}
               </MyButton>
-            </div>
+            </motion.div>
           )}
         </MyContainer>
       </section>

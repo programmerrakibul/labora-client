@@ -11,6 +11,8 @@ import useSecureAxios from "../../hooks/useSecureAxios";
 import MyContainer from "../../components/MyContainer/MyContainer";
 import FetchSpinner from "../../components/FetchSpinner/FetchSpinner";
 import DataNotFound from "../../components/DataNotFound/DataNotFound";
+// eslint-disable-next-line no-unused-vars
+import * as motion from "motion/react-client";
 
 const MyAcceptedTasksPage = () => {
   const [taskLoading, setTaskLoading] = useState(true);
@@ -77,8 +79,7 @@ const MyAcceptedTasksPage = () => {
           title: "Task terminated successfully",
         });
       }
-    } catch (err) {
-      console.log(err);
+    } catch {
       toast.error("Task terminated failed");
     }
   };
@@ -91,7 +92,12 @@ const MyAcceptedTasksPage = () => {
     <>
       <title>My Accepted Tasks - Labora</title>
 
-      <section className="my-6 py-8">
+      <motion.section
+        className="my-6 py-8"
+        initial={{ opacity: 0, x: "-100vw" }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ type: "spring", delay: 0.3, bounce: 0.4 }}
+      >
         <MyContainer className="space-y-7">
           {tasks.length === 0 ? (
             <DataNotFound value="jobs">
@@ -168,7 +174,7 @@ const MyAcceptedTasksPage = () => {
             </>
           )}
         </MyContainer>
-      </section>
+      </motion.section>
     </>
   );
 };

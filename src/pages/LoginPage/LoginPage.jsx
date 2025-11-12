@@ -17,6 +17,8 @@ import useThemeContext from "../../hooks/useThemeContext";
 import loginGIF from "../../../lotties/login.json";
 import loginGIFDark from "../../../lotties/login_dark.json";
 import Lottie from "lottie-react";
+// eslint-disable-next-line no-unused-vars
+import * as motion from "motion/react-client";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -56,7 +58,12 @@ const LoginPage = () => {
     <>
       <title>Login in to your account - Labora</title>
 
-      <section className="py-8 my-6">
+      <motion.section
+        className="py-8 my-6"
+        initial={{ opacity: 0, x: "-100vw" }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ type: "spring", delay: 0.3, bounce: 0.4 }}
+      >
         <MyContainer>
           <div className="space-y-10 max-w-4xl mx-auto">
             <div>
@@ -144,7 +151,7 @@ const LoginPage = () => {
             </div>
           </div>
         </MyContainer>
-      </section>
+      </motion.section>
     </>
   );
 };

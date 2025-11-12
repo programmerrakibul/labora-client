@@ -13,6 +13,8 @@ import { toast } from "react-toastify";
 import MyTitle from "../../components/MyTitle/MyTitle";
 import useThemeContext from "../../hooks/useThemeContext";
 import FetchSpinner from "../../components/FetchSpinner/FetchSpinner";
+// eslint-disable-next-line no-unused-vars
+import * as motion from "motion/react-client";
 
 const UpdateJobDetails = () => {
   const { id } = useParams();
@@ -79,7 +81,12 @@ const UpdateJobDetails = () => {
     <>
       <title>Update your job details - Labora</title>
 
-      <section className="py-8 my-5">
+      <motion.section
+        className="py-8 my-5"
+        initial={{ opacity: 0, x: "-100vw" }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ type: "spring", delay: 0.3, bounce: 0.4 }}
+      >
         <MyContainer>
           <div className="space-y-10 max-w-4xl mx-auto">
             <div>
@@ -162,7 +169,7 @@ const UpdateJobDetails = () => {
             </div>
           </div>
         </MyContainer>
-      </section>
+      </motion.section>
     </>
   );
 };

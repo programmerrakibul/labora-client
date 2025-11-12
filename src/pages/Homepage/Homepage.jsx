@@ -49,11 +49,16 @@ const Homepage = () => {
     <>
       <title>Home - Labora</title>
 
-      <section className="mt-10">
+      <motion.section
+        className="mt-10"
+        initial={{ opacity: 0, x: "-100vw" }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ type: "spring", delay: 0.3, bounce: 0.4 }}
+      >
         <MyContainer>
           <BannerSlider />
         </MyContainer>
-      </section>
+      </motion.section>
 
       <section className="bg-secondary/3 py-10">
         <MyContainer className="space-y-7">
