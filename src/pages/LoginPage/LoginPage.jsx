@@ -3,8 +3,6 @@ import { toast } from "react-toastify";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useLocation, useNavigate } from "react-router";
 import useAuthInfo from "../../hooks/useAuthInfo";
-import loginImg from "../../assets/auth_login.svg";
-import loginImgDark from "../../assets/auth_login_dark.svg";
 import useGoogleLogin from "../../hooks/useGoogleLogin";
 import MyLabel from "../../components/MyLabel/MyLabel";
 import MyInput from "../../components/MyInput/MyInput";
@@ -16,6 +14,9 @@ import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import MyContainer from "../../components/MyContainer/MyContainer";
 import MyTitle from "../../components/MyTitle/MyTitle";
 import useThemeContext from "../../hooks/useThemeContext";
+import loginGIF from "../../../lotties/login.json";
+import loginGIFDark from "../../../lotties/login_dark.json";
+import Lottie from "lottie-react";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -49,7 +50,7 @@ const LoginPage = () => {
     }
   };
 
-  const image = theme === "light" ? loginImg : loginImgDark;
+  const data = theme === "light" ? loginGIF : loginGIFDark;
 
   return (
     <>
@@ -64,7 +65,7 @@ const LoginPage = () => {
 
             <div className="p-4 md:p-8 rounded-md shadow-md bg-primary/7 dark:bg-info/15 flex md:items-center md:justify-between md:gap-8 max-w-md md:max-w-full mx-auto">
               <div className="flex-1/2 hidden md:inline-block">
-                <img src={image} alt="Register here" />
+                <Lottie animationData={data} />
               </div>
 
               <div className="flex-1/2">
