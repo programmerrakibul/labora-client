@@ -6,6 +6,7 @@ import { BsMoon } from "react-icons/bs";
 import MyButton from "../MyButton/MyButton";
 import useMySwal from "../../hooks/useMySwal";
 import useAuthInfo from "../../hooks/useAuthInfo";
+import { HiOutlineMenuAlt1 } from "react-icons/hi";
 import { NavLink, useNavigate } from "react-router";
 import MyContainer from "../MyContainer/MyContainer";
 import useThemeContext from "../../hooks/useThemeContext";
@@ -58,34 +59,38 @@ const Navbar = () => {
   return (
     <nav className="backdrop-blur-sm bg-primary/2 dark:shadow-white/30 dark:bg-primary/10 shadow-sm">
       <MyContainer>
-        <div className="navbar">
-          <div className="navbar-start">
+        <div className="navbar p-0">
+          <div className="navbar-start gap-1.5">
             <div className="dropdown">
               <div
                 tabIndex={0}
                 role="button"
-                className="btn btn-ghost lg:hidden"
+                className="btn btn-ghost p-1 lg:hidden"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h8m-8 6h16"
-                  />{" "}
-                </svg>
+                <HiOutlineMenuAlt1 className="text-xl sm:text-2xl md:text-3xl" />
               </div>
+
               <ul
                 tabIndex="-1"
                 className="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-52 p-2 shadow"
               >
                 {navLinks}
+
+                <li className="gap-1.5 mt-4 sm:hidden">
+                  {currentUser ? (
+                    <>
+                      <MyButton disabled={loading} onClick={handleLogoutUser}>
+                        {loading ? <ActionSpinner /> : "Logout"}
+                      </MyButton>
+                    </>
+                  ) : (
+                    <>
+                      <MyButton onClick={() => navigate("/auth/register")}>
+                        Register
+                      </MyButton>
+                    </>
+                  )}
+                </li>
               </ul>
             </div>
 
@@ -113,20 +118,22 @@ const Navbar = () => {
             {currentUser ? (
               <>
                 <div
-                  className="tooltip tooltip-bottom tooltip-primary"
+                  className="avatar tooltip tooltip-left lg:tooltip-bottom tooltip-primary"
                   data-tip={currentUser.displayName}
                 >
-                  <div className="avatar">
-                    <div className="ring-primary ring-offset-base-100 size-8 md:size-10 rounded-full ring-2">
-                      <img
-                        src={currentUser.photoURL}
-                        alt={currentUser.displayName}
-                      />
-                    </div>
+                  <div className="ring-primary ring-offset-base-100 size-8 md:size-10 rounded-full ring-2">
+                    <img
+                      src={currentUser.photoURL}
+                      alt={currentUser.displayName}
+                    />
                   </div>
                 </div>
 
-                <MyButton disabled={loading} onClick={handleLogoutUser}>
+                <MyButton
+                  disabled={loading}
+                  onClick={handleLogoutUser}
+                  className="hidden sm:inline-flex"
+                >
                   {loading ? <ActionSpinner /> : "Logout"}
                 </MyButton>
               </>
@@ -136,7 +143,10 @@ const Navbar = () => {
                   Login
                 </MyButton>
 
-                <MyButton onClick={() => navigate("/auth/register")}>
+                <MyButton
+                  onClick={() => navigate("/auth/register")}
+                  className="hidden sm:inline-flex"
+                >
                   Register
                 </MyButton>
               </>
