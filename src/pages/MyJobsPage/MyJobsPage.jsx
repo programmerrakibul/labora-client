@@ -119,6 +119,7 @@ const MyJobsPage = () => {
                       <th>Image</th>
                       <th>Job Name</th>
                       <th>Category</th>
+                      <th>Status</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -138,6 +139,7 @@ const MyJobsPage = () => {
                         </td>
                         <td className="min-w-[200px]">{item.job_title}</td>
                         <td className="text-nowrap">{item.job_category}</td>
+                        <td className="capitalize">{item.status}</td>
                         <td className="space-x-1.5 text-nowrap">
                           <button
                             onClick={() => navigate(`/job-details/${item._id}`)}
