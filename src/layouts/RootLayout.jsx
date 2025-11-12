@@ -6,6 +6,7 @@ import useRouteLoader from "../hooks/useRouteLoader";
 import PageSpinner from "../components/PageSpinner/PageSpinner";
 // eslint-disable-next-line no-unused-vars
 import * as motion from "motion/react-client";
+import useThemeContext from "../hooks/useThemeContext";
 
 const layoutVariants = {
   hidden: {
@@ -24,6 +25,7 @@ const layoutVariants = {
 
 const RootLayout = () => {
   const loading = useRouteLoader();
+  const { theme } = useThemeContext();
 
   if (loading) {
     return <PageSpinner />;
@@ -48,7 +50,12 @@ const RootLayout = () => {
         <Footer />
       </footer>
 
-      <ToastContainer position="top-center" autoClose={2000} />
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar
+        theme={theme === "light" ? "light" : "dark"}
+      />
     </>
   );
 };

@@ -125,7 +125,7 @@ const LoginPage = () => {
                     type="button"
                     disabled={googleLoading || loading}
                     onClick={() =>
-                      handleGoogleLogin(state && state.path) || "/"
+                      handleGoogleLogin((state && state.path) || "/")
                     }
                     className="btn btn-sm md:btn-md btn-block bg-white text-neutral dark:bg-neutral dark:border-neutral dark:shadow-white/20 dark:hover:shadow-md transition-shadow duration-300 dark:shadow dark:text-white border-[#e5e5e5]"
                   >

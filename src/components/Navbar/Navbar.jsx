@@ -41,7 +41,6 @@ const Navbar = () => {
     try {
       await logoutUser();
 
-      navigate("/auth/login");
       mySwal.fire({
         icon: "success",
         title: "Logged out successfully",
@@ -99,12 +98,7 @@ const Navbar = () => {
           </div>
 
           <div className="navbar-end gap-3">
-            <label
-              className="swap swap-rotate text-primary/70 tooltip tooltip-primary tooltip-bottom"
-              data-tip={`Switch to ${
-                theme === "light" ? "dark" : "light"
-              } mode`}
-            >
+            <label className="swap swap-rotate text-primary/70">
               <input
                 onChange={toggleTheme}
                 type="checkbox"

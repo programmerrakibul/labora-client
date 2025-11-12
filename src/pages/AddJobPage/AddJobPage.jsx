@@ -95,7 +95,7 @@ const AddJobPage = () => {
 
                       <select
                         defaultValue=""
-                        className="select"
+                        className="select bg-base-300!"
                         name="job_category"
                         id="job_category"
                         disabled={loading}

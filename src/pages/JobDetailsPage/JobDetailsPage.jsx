@@ -74,15 +74,13 @@ const JobDetailsPage = () => {
         if (data.success) {
           mySwal.fire({
             icon: "success",
-            title: data.message,
+            title: "Job accepted successfully",
             showConfirmButton: false,
             timer: 2000,
           });
         }
       }
-    } catch (err) {
-      console.log(err);
-
+    } catch {
       toast.error("Job Accepted failed");
     } finally {
       setAcceptLoading(false);
@@ -153,7 +151,7 @@ const JobDetailsPage = () => {
 
           <div className="space-y-1.5">
             <strong className="underline">Summery:</strong>
-            <p className="text-justify">{job_summery}</p>
+            <p className="text-justify max-w-4xl w-full">{job_summery}</p>
           </div>
 
           {currentUser.email !== creator_email && (
