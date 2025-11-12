@@ -14,7 +14,6 @@ import DataNotFound from "../../components/DataNotFound/DataNotFound";
 
 const MyAcceptedTasksPage = () => {
   const [taskLoading, setTaskLoading] = useState(true);
-  const [loading, setLoading] = useState(false);
   const [tasks, setTasks] = useState([]);
   const { currentUser } = useAuthInfo();
   const secureAxios = useSecureAxios();
@@ -41,32 +40,46 @@ const MyAcceptedTasksPage = () => {
     })();
   }, [secureAxios, currentUser.email]);
 
-  const handleDoneAndCancel = async (value, taskId, jobId) => {
-    setLoading(true);
-
+  const handleCompleteTask = async (taskId, jobId) => {
     try {
-      const { data } = await secureAxios.delete(`/added-tasks/${taskId}`);
+      const { data } = await secureAxios.put(`/jobs/${jobId}`, {
+        status: "completed",
+      });
 
       if (data.success) {
-        const updated = tasks.filter((item) => item._id !== taskId);
-        setTasks(updated);
-
-        const { data } = await secureAxios.delete(`/jobs/${jobId}`);
+        const { data } = await secureAxios.delete(`/added-tasks/${taskId}`);
 
         if (data.success) {
+          const updated = tasks.filter((item) => item._id !== taskId);
+          setTasks(updated);
+
           mySwal.fire({
             icon: "success",
-            title:
-              value === "done"
-                ? "Task completed successfully"
-                : value === "terminate" && "Task terminated",
+            title: "Task completed successfully",
           });
         }
       }
+    } catch {
+      toast.error("Task complete failed");
+    }
+  };
+
+  const handleTerminateTask = async (id) => {
+    try {
+      const { data } = await secureAxios.delete(`/added-tasks/${id}`);
+
+      if (data.success) {
+        const updated = tasks.filter((item) => item._id !== id);
+        setTasks(updated);
+
+        mySwal.fire({
+          icon: "success",
+          title: "Task terminated successfully",
+        });
+      }
     } catch (err) {
-      toast.error(err.message);
-    } finally {
-      setLoading(false);
+      console.log(err);
+      toast.error("Task terminated failed");
     }
   };
 
@@ -131,13 +144,8 @@ const MyAcceptedTasksPage = () => {
 
                           <button
                             title="Done"
-                            disabled={loading}
                             onClick={() =>
-                              handleDoneAndCancel(
-                                "done",
-                                item._id,
-                                item.job_details._id
-                              )
+                              handleCompleteTask(item._id, item.job_details._id)
                             }
                             className="btn shadow-none border-none bg-transparent p-1.5 text-xl text-success"
                           >
@@ -146,14 +154,7 @@ const MyAcceptedTasksPage = () => {
 
                           <button
                             title="Terminate"
-                            disabled={loading}
-                            onClick={() =>
-                              handleDoneAndCancel(
-                                "terminate",
-                                item._id,
-                                item.job_details._id
-                              )
-                            }
+                            onClick={() => handleTerminateTask(item._id)}
                             className="btn shadow-none border-none bg-transparent p-1.5 text-xl text-error"
                           >
                             <FaRegCircleXmark />

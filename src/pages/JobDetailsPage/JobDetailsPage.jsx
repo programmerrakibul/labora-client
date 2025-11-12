@@ -60,7 +60,6 @@ const JobDetailsPage = () => {
       accepted_user_name: currentUser.displayName,
       accepted_user_email: currentUser.email,
       accepted_at: new Date().toISOString(),
-      status: "pending",
     };
 
     try {
@@ -139,11 +138,11 @@ const JobDetailsPage = () => {
             </div>
 
             <div className="flex-1/3 mx-auto">
-              <div className="p-3 rounded-lg w-fit shadow-lg bg-base-300">
+              <div className="p-3 rounded-lg h-fit shadow-lg bg-base-300">
                 <img
                   src={job_image}
                   alt={job_title}
-                  className="rounded-lg aspect-3/2 object-cover"
+                  className="rounded-lg aspect-3/2 w-full object-cover"
                 />
               </div>
             </div>
@@ -157,13 +156,13 @@ const JobDetailsPage = () => {
           {currentUser.email !== creator_email && (
             <div className="card-actions">
               <MyButton
-                disabled={acceptLoading || status === "accepted"}
+                disabled={acceptLoading || status === "completed"}
                 onClick={handleAcceptJob}
               >
                 {acceptLoading ? (
                   <ActionSpinner />
-                ) : status === "accepted" ? (
-                  "Accepted"
+                ) : status === "completed" ? (
+                  "Completed"
                 ) : (
                   "Accept Job"
                 )}
