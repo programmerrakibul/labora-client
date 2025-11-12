@@ -58,7 +58,7 @@ const AllJobsPage = () => {
               <select
                 onChange={(e) => setDateSortOrder(e.currentTarget.value)}
                 defaultValue="Sort by Date"
-                className="select min-w-[150px] bg-base-300!"
+                className="select min-w-[150px]"
               >
                 <option disabled={true}>Sort by Date</option>
                 <option value="desc">Newest First</option>

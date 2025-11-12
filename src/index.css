@@ -99,3 +99,7 @@ section {
 .swal2-modal {
   @apply dark:bg-[#2D3250] dark:text-white;
 }
+
+.select {
+  @apply bg-base-300!;
+}
