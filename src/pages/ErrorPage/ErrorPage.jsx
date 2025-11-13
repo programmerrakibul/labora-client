@@ -1,22 +1,23 @@
 import { useNavigate } from "react-router";
 import MyButton from "../../components/MyButton/MyButton";
-import img404 from "../../assets/page_not_found.svg";
-import img404Dark from "../../assets/page_not_found_dark.png";
 import useThemeContext from "../../hooks/useThemeContext";
+import GIF404 from "../../../lotties/page_not_found.json";
+import GIF404Dark from "../../../lotties/page_not_found_dark.json";
+import Lottie from "lottie-react";
 
 const ErrorPage = () => {
   const navigate = useNavigate();
   const { theme } = useThemeContext();
 
-  const image = theme === "light" ? img404 : img404Dark;
+  const data = theme === "light" ? GIF404 : GIF404Dark;
 
   return (
     <>
       <title>Page Not Found</title>
 
-      <section className="min-h-dvh w-full grid place-items-center px-5">
+      <section className="min-h-dvh w-full grid place-items-center px-5 py-8">
         <div className="max-w-md w-full text-center space-y-6">
-          <img src={image} alt="Page Not Found" className={`animate-pulse`} />
+          <Lottie animationData={data} loop={true} />
           <h1 className="font-bold text-3xl md:text-4xl text-neutral">
             Page Not Found
           </h1>
