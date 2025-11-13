@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import updateImg from "../../assets/job_update.svg";
-import updateImgDark from "../../assets/job_update_dark.svg";
 import MyLabel from "../../components/MyLabel/MyLabel";
 import MyInput from "../../components/MyInput/MyInput";
 import useSecureAxios from "../../hooks/useSecureAxios";
@@ -13,8 +11,11 @@ import { toast } from "react-toastify";
 import MyTitle from "../../components/MyTitle/MyTitle";
 import useThemeContext from "../../hooks/useThemeContext";
 import FetchSpinner from "../../components/FetchSpinner/FetchSpinner";
+import updateGIF from "../../../lotties/update.json";
+import updateGIFDark from "../../../lotties/update_dark.json";
 // eslint-disable-next-line no-unused-vars
 import * as motion from "motion/react-client";
+import Lottie from "lottie-react";
 
 const UpdateJobDetails = () => {
   const { id } = useParams();
@@ -71,7 +72,7 @@ const UpdateJobDetails = () => {
     }
   };
 
-  const image = theme === "light" ? updateImg : updateImgDark;
+  const data = theme === "light" ? updateGIF : updateGIFDark;
 
   if (productLoading) {
     return <FetchSpinner />;
@@ -164,7 +165,7 @@ const UpdateJobDetails = () => {
               </div>
 
               <div className="flex-1/2 hidden lg:inline-block">
-                <img src={image} alt="Post a Job" />
+                <Lottie animationData={data} loop={true} />
               </div>
             </div>
           </div>

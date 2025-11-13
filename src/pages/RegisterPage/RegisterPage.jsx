@@ -3,8 +3,6 @@ import { toast } from "react-toastify";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router";
 import useAuthInfo from "../../hooks/useAuthInfo";
-import registerImg from "../../assets/auth_sign-up.svg";
-import registerImgDark from "../../assets/auth_sign-up_dark.svg";
 import useGoogleLogin from "../../hooks/useGoogleLogin";
 import MyLabel from "../../components/MyLabel/MyLabel";
 import MyInput from "../../components/MyInput/MyInput";
@@ -16,8 +14,11 @@ import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import MyContainer from "../../components/MyContainer/MyContainer";
 import MyTitle from "../../components/MyTitle/MyTitle";
 import useThemeContext from "../../hooks/useThemeContext";
+import regiterGIF from "../../../lotties/register.json";
+import regiterGIFDark from "../../../lotties/register_dark.json";
 // eslint-disable-next-line no-unused-vars
 import * as motion from "motion/react-client";
+import Lottie from "lottie-react";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -85,7 +86,7 @@ const RegisterPage = () => {
     }
   };
 
-  const image = theme === "light" ? registerImg : registerImgDark;
+  const data = theme === "light" ? regiterGIF : regiterGIFDark;
 
   return (
     <>
@@ -185,7 +186,7 @@ const RegisterPage = () => {
               </div>
 
               <div className="flex-1/2 hidden lg:inline-block">
-                <img src={image} alt="Register here" />
+                <Lottie animationData={data} loop={true} />
               </div>
             </div>
           </div>

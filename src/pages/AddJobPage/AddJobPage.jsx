@@ -2,18 +2,19 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import useMySwal from "../../hooks/useMySwal";
 import useAuthInfo from "../../hooks/useAuthInfo";
-import postImg from "../../assets/add_job_post.svg";
 import MyInput from "../../components/MyInput/MyInput";
 import MyLabel from "../../components/MyLabel/MyLabel";
 import MyTitle from "../../components/MyTitle/MyTitle";
 import useSecureAxios from "../../hooks/useSecureAxios";
 import useThemeContext from "../../hooks/useThemeContext";
 import MyButton from "../../components/MyButton/MyButton";
-import postImgDark from "../../assets/add_job_post_dark.svg";
 import MyContainer from "../../components/MyContainer/MyContainer";
 import ActionSpinner from "../../components/ActionSpinner/ActionSpinner";
+import addJobGIF from "../../../lotties/add_job.json";
+import addJobGIFDark from "../../../lotties/add_job_dark.json";
 // eslint-disable-next-line no-unused-vars
 import * as motion from "motion/react-client";
+import Lottie from "lottie-react";
 
 const AddJobPage = () => {
   const mySwal = useMySwal();
@@ -63,7 +64,7 @@ const AddJobPage = () => {
     }
   };
 
-  const image = theme === "light" ? postImg : postImgDark;
+  const data = theme === "light" ? addJobGIF : addJobGIFDark;
 
   return (
     <>
@@ -73,7 +74,7 @@ const AddJobPage = () => {
         className="py-8 my-5"
         initial={{ opacity: 0, x: "-100vw" }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ type: 'spring', delay: 0.3, bounce: 0.4}}
+        transition={{ type: "spring", delay: 0.3, bounce: 0.4 }}
       >
         <MyContainer>
           <div className="space-y-10 max-w-4xl mx-auto">
@@ -82,7 +83,7 @@ const AddJobPage = () => {
             </div>
             <div className="p-4 md:p-8 rounded-md shadow-md bg-primary/7 dark:bg-info/30 lg:flex lg:items-center lg:justify-between lg:gap-8 max-w-md lg:max-w-full mx-auto">
               <div className="flex-1/2 hidden lg:inline-block">
-                <img src={image} alt="Post a Job" />
+                <Lottie animationData={data} loop={true} />
               </div>
 
               <div className="lg:flex-1/2">
