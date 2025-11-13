@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { FcGoogle } from "react-icons/fc";
 import { Link, useLocation, useNavigate } from "react-router";
 import useAuthInfo from "../../hooks/useAuthInfo";
 import useGoogleLogin from "../../hooks/useGoogleLogin";
@@ -19,6 +18,7 @@ import Lottie from "lottie-react";
 // eslint-disable-next-line no-unused-vars
 import * as motion from "motion/react-client";
 import { loginSuccessMessage } from "../../utilities/getLoginMessage";
+import GoogleButton from "../../components/GoogleButton/GoogleButton";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ const LoginPage = () => {
   const { loginUser } = useAuthInfo();
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { handleGoogleLogin, googleLoading } = useGoogleLogin();
+  const { googleLoading } = useGoogleLogin();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -128,23 +128,10 @@ const LoginPage = () => {
 
                   <div className="divider">OR</div>
 
-                  <button
-                    type="button"
-                    disabled={googleLoading || loading}
-                    onClick={() =>
-                      handleGoogleLogin((state && state.path) || "/")
-                    }
-                    className="btn btn-sm md:btn-md btn-block bg-white text-neutral dark:bg-neutral dark:border-neutral dark:shadow-white/20 dark:hover:shadow-md transition-shadow duration-300 dark:shadow dark:text-white border-[#e5e5e5]"
-                  >
-                    {googleLoading ? (
-                      <ActionSpinner />
-                    ) : (
-                      <>
-                        <FcGoogle size={22} />
-                        Login with Google
-                      </>
-                    )}
-                  </button>
+                  <GoogleButton
+                    to={(state && state.path) || "/"}
+                    disabled={loading}
+                  />
                 </form>
               </div>
             </div>

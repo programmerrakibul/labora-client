@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router";
 import useAuthInfo from "../../hooks/useAuthInfo";
 import useGoogleLogin from "../../hooks/useGoogleLogin";
@@ -19,6 +18,7 @@ import regiterGIFDark from "../../../lotties/register_dark.json";
 import * as motion from "motion/react-client";
 import Lottie from "lottie-react";
 import { loginSuccessMessage } from "../../utilities/getLoginMessage";
+import GoogleButton from "../../components/GoogleButton/GoogleButton";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ const RegisterPage = () => {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
   const { createUser, updateUserProfile } = useAuthInfo();
-  const { handleGoogleLogin, googleLoading } = useGoogleLogin();
+  const { googleLoading } = useGoogleLogin();
 
   const handleCreateUser = async (e) => {
     e.preventDefault();
@@ -166,21 +166,7 @@ const RegisterPage = () => {
 
                   <div className="divider divider-neutral">OR</div>
 
-                  <button
-                    type="button"
-                    disabled={googleLoading || loading}
-                    onClick={() => handleGoogleLogin()}
-                    className="btn btn-sm md:btn-md btn-block bg-white text-neutral dark:bg-neutral dark:border-neutral dark:shadow-white/20 dark:hover:shadow-md transition-shadow duration-300 dark:shadow dark:text-white border-[#e5e5e5]"
-                  >
-                    {googleLoading ? (
-                      <ActionSpinner />
-                    ) : (
-                      <>
-                        <FcGoogle size={22} />
-                        Login with Google
-                      </>
-                    )}
-                  </button>
+                  <GoogleButton disabled={loading} />
                 </form>
               </div>
 
