@@ -112,10 +112,12 @@ const JobDetailsPage = () => {
                 <Badge>{job_category}</Badge>
               </div>
 
-              <p className="space-x-1.5">
-                <strong className="underline">Status:</strong>
-                <span className="capitalize">{status}</span>
-              </p>
+              {status === "completed" && (
+                <p className="space-x-1.5">
+                  <strong className="underline">Status:</strong>
+                  <span className="capitalize">{status}</span>
+                </p>
+              )}
 
               <div className="flex items-center flex-wrap justify-between gap-1.5">
                 <div className="space-y-1.5">
