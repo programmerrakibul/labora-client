@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import useMySwal from "../../hooks/useMySwal";
 import useAuthInfo from "../../hooks/useAuthInfo";
 import MyInput from "../../components/MyInput/MyInput";
 import MyLabel from "../../components/MyLabel/MyLabel";
@@ -15,9 +14,9 @@ import addJobGIFDark from "../../../lotties/add_job_dark.json";
 // eslint-disable-next-line no-unused-vars
 import * as motion from "motion/react-client";
 import Lottie from "lottie-react";
+import { getAlert } from "../../utilities/getAlert";
 
 const AddJobPage = () => {
-  const mySwal = useMySwal();
   const secureAxios = useSecureAxios();
   const { currentUser } = useAuthInfo();
   const [loading, setLoading] = useState(false);
@@ -50,13 +49,12 @@ const AddJobPage = () => {
     try {
       const { data } = await secureAxios.post("/jobs", formData);
 
-      form.reset();
-      mySwal.fire({
-        icon: "success",
-        title: data.message,
-        timer: 2000,
-        showConfirmButton: false,
-      });
+      if (data.success) {
+        form.reset();
+        getAlert({
+          title: data.message,
+        });
+      }
     } catch {
       toast.error("Job post failed");
     } finally {

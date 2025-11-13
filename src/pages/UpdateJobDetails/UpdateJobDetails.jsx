@@ -6,7 +6,6 @@ import MyButton from "../../components/MyButton/MyButton";
 import ActionSpinner from "../../components/ActionSpinner/ActionSpinner";
 import MyContainer from "../../components/MyContainer/MyContainer";
 import { useParams } from "react-router";
-import useMySwal from "../../hooks/useMySwal";
 import { toast } from "react-toastify";
 import MyTitle from "../../components/MyTitle/MyTitle";
 import useThemeContext from "../../hooks/useThemeContext";
@@ -16,10 +15,10 @@ import updateGIFDark from "../../../lotties/update_dark.json";
 // eslint-disable-next-line no-unused-vars
 import * as motion from "motion/react-client";
 import Lottie from "lottie-react";
+import { getAlert } from "../../utilities/getAlert";
 
 const UpdateJobDetails = () => {
   const { id } = useParams();
-  const mySwal = useMySwal();
   const { theme } = useThemeContext();
   const secureAxios = useSecureAxios();
   const [productLoading, setProductLoading] = useState(true);
@@ -58,11 +57,8 @@ const UpdateJobDetails = () => {
       const { data } = await secureAxios.put(`/jobs/${id}`, formData);
 
       if (data.success) {
-        mySwal.fire({
-          icon: "success",
+        getAlert({
           title: data.message,
-          timer: 2000,
-          showConfirmButton: false,
         });
       }
     } catch {

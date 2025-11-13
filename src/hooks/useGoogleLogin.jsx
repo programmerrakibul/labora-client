@@ -2,13 +2,12 @@ import { useState } from "react";
 import useAuthInfo from "./useAuthInfo";
 import getAuthErrorMessage from "../utilities/getAuthErrorMessage";
 import { toast } from "react-toastify";
-import useLoginSuccessMessage from "./useLoginSuccessMessage";
 import { useNavigate } from "react-router";
+import { loginSuccessMessage } from "../utilities/getLoginMessage";
 
 const useGoogleLogin = () => {
   const navigate = useNavigate();
   const { loginUserWithGoogle } = useAuthInfo();
-  const loginSuccessMessage = useLoginSuccessMessage();
   const [googleLoading, setGoogleLoading] = useState(false);
 
   const handleGoogleLogin = async (to = "/") => {

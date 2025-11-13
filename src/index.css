@@ -60,7 +60,7 @@ section {
 }
 
 .select {
-  @apply focus:select-primary;
+  @apply focus:select-primary bg-base-300!;
 }
 
 .input {
@@ -100,6 +100,6 @@ section {
   @apply dark:bg-[#2D3250] dark:text-white;
 }
 
-.select {
-  @apply bg-base-300!;
+.swal2-styled {
+  @apply bg-linear-to-r from-primary/60 dark:from-primary/80  to-secondary/60 dark:to-secondary/80 transition-colors duration-300 hover:from-primary/70  dark:hover:from-primary hover:to-secondary/70 dark:hover:to-secondary;
 }

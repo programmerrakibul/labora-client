@@ -9,7 +9,6 @@ import MyInput from "../../components/MyInput/MyInput";
 import MyButton from "../../components/MyButton/MyButton";
 import ActionSpinner from "../../components/ActionSpinner/ActionSpinner";
 import getAuthErrorMessage from "../../utilities/getAuthErrorMessage";
-import useLoginSuccessMessage from "../../hooks/useLoginSuccessMessage";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import MyContainer from "../../components/MyContainer/MyContainer";
 import MyTitle from "../../components/MyTitle/MyTitle";
@@ -19,13 +18,13 @@ import regiterGIFDark from "../../../lotties/register_dark.json";
 // eslint-disable-next-line no-unused-vars
 import * as motion from "motion/react-client";
 import Lottie from "lottie-react";
+import { loginSuccessMessage } from "../../utilities/getLoginMessage";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
   const { theme } = useThemeContext();
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
-  const loginSuccessMessage = useLoginSuccessMessage();
   const { createUser, updateUserProfile } = useAuthInfo();
   const { handleGoogleLogin, googleLoading } = useGoogleLogin();
 

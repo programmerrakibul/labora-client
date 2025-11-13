@@ -9,15 +9,14 @@ import MyContainer from "../../components/MyContainer/MyContainer";
 import { SiMinutemailer } from "react-icons/si";
 import MyButton from "../../components/MyButton/MyButton";
 import useAuthInfo from "../../hooks/useAuthInfo";
-import useMySwal from "../../hooks/useMySwal";
 import ActionSpinner from "../../components/ActionSpinner/ActionSpinner";
 import FetchSpinner from "../../components/FetchSpinner/FetchSpinner";
 // eslint-disable-next-line no-unused-vars
 import * as motion from "motion/react-client";
+import { getAlert } from "../../utilities/getAlert";
 
 const JobDetailsPage = () => {
   const { id } = useParams();
-  const mySwal = useMySwal();
   const secureAxios = useSecureAxios();
   const [loading, setLoading] = useState(true);
   const [acceptLoading, setAcceptLoading] = useState(false);
@@ -73,11 +72,8 @@ const JobDetailsPage = () => {
         const { data } = await secureAxios.post("/added-tasks", newTask);
 
         if (data.success) {
-          mySwal.fire({
-            icon: "success",
+          getAlert({
             title: "Job accepted successfully",
-            showConfirmButton: false,
-            timer: 2000,
           });
         }
       }

@@ -2,7 +2,6 @@ import { toast } from "react-toastify";
 import { VscEye } from "react-icons/vsc";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
-import useMySwal from "../../hooks/useMySwal";
 import { FaRegCheckCircle } from "react-icons/fa";
 import useAuthInfo from "../../hooks/useAuthInfo";
 import { FaRegCircleXmark } from "react-icons/fa6";
@@ -13,6 +12,7 @@ import FetchSpinner from "../../components/FetchSpinner/FetchSpinner";
 import DataNotFound from "../../components/DataNotFound/DataNotFound";
 // eslint-disable-next-line no-unused-vars
 import * as motion from "motion/react-client";
+import { getAlert } from "../../utilities/getAlert";
 
 const MyAcceptedTasksPage = () => {
   const [taskLoading, setTaskLoading] = useState(true);
@@ -20,7 +20,6 @@ const MyAcceptedTasksPage = () => {
   const { currentUser } = useAuthInfo();
   const secureAxios = useSecureAxios();
   const navigate = useNavigate();
-  const mySwal = useMySwal();
 
   useEffect(() => {
     (async () => {
@@ -55,8 +54,7 @@ const MyAcceptedTasksPage = () => {
           const updated = tasks.filter((item) => item._id !== taskId);
           setTasks(updated);
 
-          mySwal.fire({
-            icon: "success",
+          getAlert({
             title: "Task completed successfully",
           });
         }
@@ -69,13 +67,10 @@ const MyAcceptedTasksPage = () => {
   const handleTerminateTask = async (id) => {
     try {
       const { data } = await secureAxios.delete(`/added-tasks/${id}`);
-
       if (data.success) {
         const updated = tasks.filter((item) => item._id !== id);
         setTasks(updated);
-
-        mySwal.fire({
-          icon: "success",
+        getAlert({
           title: "Task terminated successfully",
         });
       }
