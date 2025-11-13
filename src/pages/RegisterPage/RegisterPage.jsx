@@ -124,6 +124,7 @@ const RegisterPage = () => {
                   <div className="space-y-1.5">
                     <MyLabel htmlFor="photoURL">Photo URL</MyLabel>
                     <MyInput
+                      type="url"
                       disabled={loading}
                       name="photoURL"
                       holder="https://example.png"

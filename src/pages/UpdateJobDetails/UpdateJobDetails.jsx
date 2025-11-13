@@ -132,6 +132,7 @@ const UpdateJobDetails = () => {
                       <MyLabel htmlFor="job_image">Job Image</MyLabel>
                       <MyInput
                         disabled={loading}
+                        type="url"
                         name="job_image"
                         holder="Enter Job Photo URL"
                         required={false}

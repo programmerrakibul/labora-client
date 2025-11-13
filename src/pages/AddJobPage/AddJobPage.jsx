@@ -125,6 +125,7 @@ const AddJobPage = () => {
                     <div className="space-y-1.5 flex-1/2">
                       <MyLabel htmlFor="job_image">Job Image</MyLabel>
                       <MyInput
+                        type="url"
                         disabled={loading}
                         name="job_image"
                         holder="Enter Job Photo URL"
