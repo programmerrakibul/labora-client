@@ -3,7 +3,7 @@ import withReactContent from "sweetalert2-react-content";
 
 const MySwal = withReactContent(Swal);
 
-export const getAlert = ({
+export const getAlert = async({
   icon = "success",
   title = "Completed",
   timer = 3000,
@@ -15,4 +15,6 @@ export const getAlert = ({
     timer: timer,
     ...rest,
   });
+
+  return MySwal;
 };

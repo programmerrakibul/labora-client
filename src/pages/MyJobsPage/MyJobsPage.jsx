@@ -7,13 +7,15 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { FaRegEdit } from "react-icons/fa";
 import { VscEye } from "react-icons/vsc";
 import { useNavigate } from "react-router";
-import useMySwal from "../../hooks/useMySwal";
-import MyButton from "../../components/MyButton/MyButton";
 import { toast } from "react-toastify";
 import FetchSpinner from "../../components/FetchSpinner/FetchSpinner";
 import DataNotFound from "../../components/DataNotFound/DataNotFound";
 // eslint-disable-next-line no-unused-vars
 import * as motion from "motion/react-client";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+const mySwal = withReactContent(Swal);
 
 const MyJobsPage = () => {
   const [loading, setLoading] = useState(true);
@@ -21,7 +23,6 @@ const MyJobsPage = () => {
   const { currentUser } = useAuthInfo();
   const secureAxios = useSecureAxios();
   const navigate = useNavigate();
-  const mySwal = useMySwal();
 
   useEffect(() => {
     (async () => {
@@ -47,48 +48,43 @@ const MyJobsPage = () => {
     return <FetchSpinner />;
   }
 
-  const handleDeleteClick = (id) => {
-    mySwal.fire({
-      title: "Are you sure?",
-      icon: "warning",
-      showCancelButton: false,
-      showConfirmButton: false,
-      html: (
-        <>
-          <p className="mb-5">You won't be able to revert this!</p>
-          <div className="space-x-2.5">
-            <MyButton onClick={() => handleDelete(id)}>
-              Yes, Delete it!
-            </MyButton>
-
-            <MyButton onClick={() => mySwal.close()}>Cancel</MyButton>
-          </div>
-        </>
-      ),
-    });
-  };
-
   const handleDelete = async (id) => {
-    mySwal.showLoading();
+    const result = await mySwal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+    });
 
-    try {
-      const { data } = await secureAxios.delete(`/jobs/${id}`);
+    if (result.isConfirmed) {
+      mySwal.fire({
+        title: "Deleting...",
+        showConfirmButton: false,
+        allowOutsideClick: false,
+      });
 
-      if (data.success) {
-        const updatedJobs = userJobs.filter((item) => item._id !== id);
-        setUserJobs(updatedJobs);
+      try {
+        mySwal.showLoading();
+        const { data } = await secureAxios.delete(`/jobs/${id}`);
 
-        mySwal.fire({
-          icon: "success",
-          title: data.message,
-          showConfirmButton: false,
-          timer: 2000,
-        });
+        if (data.success) {
+          const updatedJobs = userJobs.filter((item) => item._id !== id);
+          setUserJobs(updatedJobs);
+
+          mySwal.fire({
+            icon: "success",
+            title: data.message,
+            showConfirmButton: false,
+            timer: 2000,
+          });
+        }
+      } catch {
+        toast.error("Job Data Delete Failed");
+      } finally {
+        mySwal.hideLoading();
+        mySwal.close();
       }
-    } catch {
-      toast.error("Job Data Delete Failed");
-    } finally {
-      mySwal.hideLoading();
     }
   };
 
@@ -160,7 +156,7 @@ const MyJobsPage = () => {
                           </button>
 
                           <button
-                            onClick={() => handleDeleteClick(item._id)}
+                            onClick={() => handleDelete(item._id)}
                             title="Delete"
                             className="btn shadow-none border-none bg-transparent p-1.5 text-xl md:text-2xl text-error"
                           >

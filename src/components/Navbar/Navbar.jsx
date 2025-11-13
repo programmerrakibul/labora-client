@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 import { LuSun } from "react-icons/lu";
 import { BsMoon } from "react-icons/bs";
 import MyButton from "../MyButton/MyButton";
-import useMySwal from "../../hooks/useMySwal";
 import useAuthInfo from "../../hooks/useAuthInfo";
 import { HiOutlineMenuAlt1 } from "react-icons/hi";
 import { NavLink, useNavigate } from "react-router";
@@ -12,13 +11,13 @@ import MyContainer from "../MyContainer/MyContainer";
 import useThemeContext from "../../hooks/useThemeContext";
 import ActionSpinner from "../ActionSpinner/ActionSpinner";
 import getAuthErrorMessage from "../../utilities/getAuthErrorMessage";
+import { getAlert } from "../../utilities/getAlert";
 
 const Navbar = () => {
   const { currentUser, logoutUser } = useAuthInfo();
   const [loading, setLoading] = useState(false);
   const { toggleTheme, theme } = useThemeContext();
   const navigate = useNavigate();
-  const mySwal = useMySwal();
   const navLinks = [
     "home",
     "all jobs",
@@ -42,8 +41,7 @@ const Navbar = () => {
     try {
       await logoutUser();
 
-      mySwal.fire({
-        icon: "success",
+      getAlert({
         title: "Logged out successfully",
         showConfirmButton: false,
         timer: 2000,

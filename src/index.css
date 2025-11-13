@@ -101,5 +101,9 @@ section {
 }
 
 .swal2-styled {
-  @apply bg-linear-to-r from-primary/60 dark:from-primary/80  to-secondary/60 dark:to-secondary/80 transition-colors duration-300 hover:from-primary/70  dark:hover:from-primary hover:to-secondary/70 dark:hover:to-secondary;
+  @apply bg-linear-to-r from-primary/60 dark:from-primary/80  to-secondary/60 dark:to-secondary/80;
+}
+
+.swal2-loader {
+  @apply border-primary border-x-0;
 }
