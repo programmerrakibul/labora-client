@@ -27,7 +27,7 @@ const LoginPage = () => {
   const { loginUser } = useAuthInfo();
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { googleLoading } = useGoogleLogin();
+  const { googleLoading, handleGoogleLogin } = useGoogleLogin();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -42,7 +42,7 @@ const LoginPage = () => {
       const user = userCreds.user;
 
       loginSuccessMessage(user.displayName);
-      navigate((state && state.path) || "/");
+      navigate((state && state.path) || "/", { replace: true });
     } catch (err) {
       const errorMessage = getAuthErrorMessage(err.code);
       toast.error(errorMessage);
@@ -129,8 +129,8 @@ const LoginPage = () => {
                   <div className="divider">OR</div>
 
                   <GoogleButton
-                    to={(state && state.path) || "/"}
-                    disabled={loading}
+                    onClick={handleGoogleLogin}
+                    disabled={loading || googleLoading}
                   />
                 </form>
               </div>

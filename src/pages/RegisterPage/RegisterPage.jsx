@@ -26,7 +26,7 @@ const RegisterPage = () => {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
   const { createUser, updateUserProfile } = useAuthInfo();
-  const { googleLoading } = useGoogleLogin();
+  const { googleLoading, handleGoogleLogin } = useGoogleLogin();
 
   const handleCreateUser = async (e) => {
     e.preventDefault();
@@ -76,7 +76,7 @@ const RegisterPage = () => {
       await updateUserProfile({ ...user, photoURL, displayName });
 
       loginSuccessMessage(user.displayName);
-      navigate("/");
+      navigate("/", { replace: true });
     } catch (err) {
       const errorMessage = getAuthErrorMessage(err.code);
       toast.error(errorMessage);
@@ -167,7 +167,10 @@ const RegisterPage = () => {
 
                   <div className="divider divider-neutral">OR</div>
 
-                  <GoogleButton disabled={loading} />
+                  <GoogleButton
+                    disabled={loading || googleLoading}
+                    onClick={handleGoogleLogin}
+                  />
                 </form>
               </div>
 

@@ -2,15 +2,16 @@ import { useState } from "react";
 import useAuthInfo from "./useAuthInfo";
 import getAuthErrorMessage from "../utilities/getAuthErrorMessage";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { loginSuccessMessage } from "../utilities/getLoginMessage";
 
 const useGoogleLogin = () => {
   const navigate = useNavigate();
   const { loginUserWithGoogle } = useAuthInfo();
   const [googleLoading, setGoogleLoading] = useState(false);
+  const { state } = useLocation();
 
-  const handleGoogleLogin = async (to = "/") => {
+  const handleGoogleLogin = async () => {
     setGoogleLoading(true);
 
     try {
@@ -18,7 +19,7 @@ const useGoogleLogin = () => {
       const user = userCreds.user;
 
       loginSuccessMessage(user.displayName);
-      navigate(to);
+      navigate((state && state.path) || "/", { replace: true });
     } catch (err) {
       const errorMessage = getAuthErrorMessage(err.code);
       toast.error(errorMessage);
