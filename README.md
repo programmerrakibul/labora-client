@@ -1,120 +1,219 @@
 # 👩‍💻 Labora
 
-## Where talent meets opportunity
+> **Where talent meets opportunity** - A modern freelance job marketplace
+> connecting skilled professionals with clients worldwide.
 
-Labora is a modern freelance job platform connecting skilled professionals with
-clients worldwide.
+<div align="center">
 
-## 🚀 Features
+[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Visit_Site-4F46E5?style=for-the-badge&logoColor=white)](https://labora-7a232.web.app/)
 
-- Light/dark mode toggle
+[![React](https://img.shields.io/badge/React-19.1.1-61DAFB?style=for-the-badge&logo=react&logoColor=white)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-7.1.7-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Firebase](https://img.shields.io/badge/Firebase-12.5.0-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)](https://firebase.google.com/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1.17-06B6D4?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Database-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
 
-- Browse all available job postings with intuitive filtering
+</div>
 
-- Seamlessly optimized for mobile, tablet, and desktop devices.
+## 📋 Overview
 
-- Post new jobs quickly with a user-friendly submission interface.
+Labora is a full-stack freelance job platform that enables users to post job
+opportunities, browse available tasks, and accept projects. Built with modern
+web technologies, it offers a seamless experience with real-time updates, secure
+authentication, and an intuitive interface.
 
-- Access comprehensive information for each job listing.
+## ✨ Key Features
 
-- Real-time database with MongoDB
+### 🎨 User Experience
 
-- Fast, dynamic, and interactive UI built with React.
+- **Dark/Light Mode** - Seamless theme switching for comfortable viewing
+- **Responsive Design** - Fully optimized for mobile, tablet, and desktop
+  devices
+- **Interactive Animations** - Smooth transitions with Lottie animations and
+  Motion
+- **Modern UI** - Clean interface built with Tailwind CSS and DaisyUI
 
-- Robust user authentication with Firebase, including Google login.
+### 🔐 Authentication & Security
 
-- Users can post jobs, update details, and delete listings.
+- **Firebase Authentication** - Secure user registration and login
+- **Google OAuth** - Quick sign-in with Google accounts
+- **Protected Routes** - Private routes for authenticated users only
+- **JWT Token Management** - Secure session handling
 
-- Users can accept jobs posted by others
+### 💼 Job Management
 
-## ⚙️ Tech Stack
+- **Post Jobs** - Create new job listings with detailed information
+- **Browse Jobs** - View all available opportunities with filtering options
+- **Job Details** - Access comprehensive information for each listing
+- **Update & Delete** - Full CRUD operations for job owners
+- **Accept Tasks** - Apply for jobs posted by other users
+- **My Jobs** - Manage your posted jobs
+- **Accepted Tasks** - Track jobs you've accepted
 
-**Client:** HTML5, React, React Router, Tailwind CSS
+### 🛠️ Technical Features
 
-**Server:** NodeJS, ExpressJS, MongoDB
+- **Real-time Updates** - Dynamic data synchronization
+- **API Integration** - RESTful API communication with Axios
+- **Date Formatting** - Human-readable dates with date-fns
+- **Toast Notifications** - User feedback with React Toastify
+- **Sweet Alerts** - Beautiful confirmation dialogs
+- **Image Sliders** - Engaging carousels with Swiper
 
-## 📦 Environment Variables
+## 🏗️ Tech Stack
 
-To run this project, you will need to add the following firebase auth
-environment variables to your .env file
+### Frontend
 
-`VITE_APP_apiKey`
+- **React 19.1.1** - Modern UI library with latest features
+- **React Router 7.9.5** - Client-side routing
+- **Tailwind CSS 4.1.17** - Utility-first CSS framework
+- **DaisyUI 5.4.7** - Tailwind CSS component library
+- **Vite 7.1.7** - Next-generation frontend tooling
 
-`VITE_APP_authDomain`
+### Backend Integration
 
-`VITE_APP_projectId`
+- **Node.js & Express.js** - Server-side runtime and framework
+- **MongoDB** - NoSQL database for data persistence
+- **Axios 1.13.2** - HTTP client for API requests
 
-`VITE_APP_storageBucket`
+### Authentication & Hosting
 
-`VITE_APP_messagingSenderId`
+- **Firebase 12.5.0** - Authentication and hosting platform
+- **Firebase Hosting** - Fast and secure web hosting
 
-`VITE_APP_appId`
+### UI/UX Libraries
 
-## 🖥️ Run Locally
+- **Motion 12.23.24** - Animation library
+- **Lottie React 2.4.1** - Lightweight animations
+- **React Icons 5.5.0** - Icon library
+- **Swiper 12.0.3** - Modern slider component
+- **React Spinners 0.17.0** - Loading indicators
+- **SweetAlert2 11.26.3** - Beautiful popup boxes
 
-Clone the project
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js (v18 or higher)
+- npm or yarn
+- Firebase account
+- MongoDB database (for backend)
+
+### Installation
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/programmerrakibul/labora-client.git
+   cd labora-client
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   ```
+
+3. **Configure environment variables**
+
+   Create a `.env.local` file in the root directory:
+
+   ```env
+   VITE_APP_apiKey=your_firebase_api_key
+   VITE_APP_authDomain=your_firebase_auth_domain
+   VITE_APP_projectId=your_firebase_project_id
+   VITE_APP_storageBucket=your_firebase_storage_bucket
+   VITE_APP_messagingSenderId=your_firebase_messaging_sender_id
+   VITE_APP_appId=your_firebase_app_id
+   ```
+
+4. **Start the development server**
+
+   ```bash
+   npm run dev
+   ```
+
+5. **Open your browser**
+
+   Navigate to `http://localhost:5173`
+
+## 📜 Available Scripts
 
 ```bash
-  git clone https://github.com/programmerrakibul/labora-client.git
+npm run dev      # Start development server
+npm run build    # Build for production
+npm run preview  # Preview production build
+npm run lint     # Run ESLint
 ```
 
-Go to the project directory
+## 📁 Project Structure
+
+```
+labora-client/
+├── src/
+│   ├── assets/          # Images and static files
+│   ├── components/      # Reusable UI components
+│   ├── contexts/        # React contexts
+│   ├── firebase/        # Firebase configuration
+│   ├── hooks/           # Custom React hooks
+│   ├── layouts/         # Layout components
+│   ├── pages/           # Page components
+│   ├── providers/       # Context providers
+│   ├── routes/          # Route configuration
+│   ├── utilities/       # Helper functions
+│   ├── App.jsx          # Root component
+│   ├── main.jsx         # Entry point
+│   └── index.css        # Global styles
+├── lotties/             # Lottie animation files
+├── public/              # Public assets
+├── .env.local           # Environment variables
+├── firebase.json        # Firebase configuration
+├── vite.config.js       # Vite configuration
+└── package.json         # Dependencies
+```
+
+## 🎯 Core Pages
+
+- **Homepage** - Landing page with featured jobs and categories
+- **All Jobs** - Browse all available job listings
+- **Job Details** - Detailed view of individual jobs
+- **Add Job** - Create new job postings (authenticated)
+- **My Jobs** - Manage your posted jobs (authenticated)
+- **My Accepted Tasks** - View jobs you've accepted (authenticated)
+- **Update Job** - Edit job details (authenticated)
+- **Login/Register** - User authentication pages
+
+## 🔒 Environment Variables
+
+| Variable                     | Description                  |
+| ---------------------------- | ---------------------------- |
+| `VITE_APP_apiKey`            | Firebase API key             |
+| `VITE_APP_authDomain`        | Firebase auth domain         |
+| `VITE_APP_projectId`         | Firebase project ID          |
+| `VITE_APP_storageBucket`     | Firebase storage bucket      |
+| `VITE_APP_messagingSenderId` | Firebase messaging sender ID |
+| `VITE_APP_appId`             | Firebase app ID              |
+
+## 🌐 Deployment
+
+The project is configured for Firebase Hosting:
 
 ```bash
-  cd labora-client
+npm run build
+firebase deploy
 ```
 
-Install dependencies
+## 🤝 Contributing
 
-```bash
-  npm install
-```
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-Start the server
+## 📧 Contact
 
-```bash
-  npm run dev
-```
+For any inquiries or feedback, reach out at:
+[rakibul00206@gmail.com](mailto:rakibul00206@gmail.com)
 
-## 📦 Dependencies
+---
 
-```json
-"dependencies": {
-    "@tailwindcss/vite": "^4.1.17",
-    "axios": "^1.13.2",
-    "daisyui": "^5.4.7",
-    "date-fns": "^4.1.0",
-    "firebase": "^12.5.0",
-    "lottie-react": "^2.4.1",
-    "motion": "^12.23.24",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
-    "react-icons": "^5.5.0",
-    "react-router": "^7.9.5",
-    "react-spinners": "^0.17.0",
-    "react-toastify": "^11.0.5",
-    "sweetalert2": "^11.26.3",
-    "sweetalert2-react-content": "^5.1.0",
-    "swiper": "^12.0.3",
-    "tailwindcss": "^4.1.17"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.36.0",
-    "@types/react": "^19.1.16",
-    "@types/react-dom": "^19.1.9",
-    "@vitejs/plugin-react": "^5.0.4",
-    "eslint": "^9.36.0",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.22",
-    "globals": "^16.4.0",
-    "vite": "^7.1.7"
-  }
-```
-
-## 💬 Feedback
-
-If you have any feedback, please reach out to us at rakibul00206@gmail.com
-
-## 🔗 Project Link
-
-[![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge)](https://labora-7a232.web.app/)
+<div align="center">
+  <p>Built with ❤️ by <a href="https://github.com/programmerrakibul">Rakibul</a></p>
+  <p>⭐ Star this repo if you find it helpful!</p>
+</div>
