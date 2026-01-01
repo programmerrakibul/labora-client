@@ -6,6 +6,7 @@ const MyInput = ({
   required = true,
   disabled = false,
   defaultValue = "",
+  ...props
 }) => {
   return (
     <>
@@ -18,6 +19,7 @@ const MyInput = ({
         disabled={disabled}
         defaultValue={defaultValue}
         required={required}
+        {...props}
       />
     </>
   );

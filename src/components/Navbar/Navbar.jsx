@@ -15,8 +15,9 @@ import { getAlert } from "../../utilities/getAlert";
 
 const navItems = [
   { label: "Home", path: "/" },
-  { label: "About Us", path: "/about-us" },
   { label: "All Jobs", path: "/all-jobs" },
+  { label: "About Us", path: "/about-us" },
+  { label: "Contact Us", path: "/contact-us" },
   { label: "Add Job", path: "/add-job" },
   { label: "My Added Jobs", path: "/my-added-jobs" },
   { label: "My Accepted Tasks", path: "/my-accepted-tasks" },
