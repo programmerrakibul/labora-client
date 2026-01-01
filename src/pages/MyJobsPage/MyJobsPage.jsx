@@ -147,9 +147,7 @@ const MyJobsPage = () => {
 
                           <button
                             title="Edit"
-                            onClick={() =>
-                              navigate(`/update-job-details/${item._id}`)
-                            }
+                            onClick={() => navigate(`update/${item._id}`)}
                             className="btn shadow-none border-none bg-transparent p-1.5 text-xl md:text-2xl text-success"
                           >
                             <FaRegEdit />

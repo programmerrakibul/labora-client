@@ -1,5 +1,5 @@
 import Logo from "../Logo/Logo";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import { LuSun } from "react-icons/lu";
 import { BsMoon } from "react-icons/bs";
@@ -13,29 +13,37 @@ import ActionSpinner from "../ActionSpinner/ActionSpinner";
 import getAuthErrorMessage from "../../utilities/getAuthErrorMessage";
 import { getAlert } from "../../utilities/getAlert";
 
-const navItems = [
-  { label: "Home", path: "/" },
-  { label: "All Jobs", path: "/all-jobs" },
-  { label: "About Us", path: "/about-us" },
-  { label: "Contact Us", path: "/contact-us" },
-  { label: "Add Job", path: "/add-job" },
-  { label: "My Added Jobs", path: "/my-added-jobs" },
-  { label: "My Accepted Tasks", path: "/my-accepted-tasks" },
-];
-
 const Navbar = () => {
   const { currentUser, logoutUser } = useAuthInfo();
   const [loading, setLoading] = useState(false);
   const { toggleTheme, theme } = useThemeContext();
   const navigate = useNavigate();
 
-  const navLinks = navItems.map(({ label, path }, index) => (
-    <li key={index + 1}>
-      <NavLink to={path} className="nav_links">
-        {label}
-      </NavLink>
-    </li>
-  ));
+  const navLinks = useMemo(() => {
+    const navItems = [
+      { label: "Home", path: "/" },
+      { label: "All Jobs", path: "/all-jobs" },
+      { label: "About Us", path: "/about-us" },
+      { label: "Contact Us", path: "/contact-us" },
+    ];
+
+    if (currentUser) {
+      const dashboard = {
+        label: "Dashboard",
+        path: "/dashboard",
+      };
+      
+      navItems.splice(2, 0, dashboard);
+    }
+
+    return navItems.map(({ label, path }, index) => (
+      <li key={index + 1}>
+        <NavLink to={path} className="nav_links">
+          {label}
+        </NavLink>
+      </li>
+    ));
+  }, [currentUser]);
 
   const handleLogoutUser = async () => {
     setLoading(true);

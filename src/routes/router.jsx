@@ -13,6 +13,8 @@ import MyAcceptedTasksPage from "../pages/MyAcceptedTasksPage/MyAcceptedTasksPag
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import AboutUs from "../pages/AboutUs/AboutUs";
 import ContactUs from "../pages/ContactUs/ContactUs";
+import DashboardLayout from "../layouts/DashboardLayout";
+import Overview from "../pages/Dashboard/Overview/Overview";
 
 const router = createBrowserRouter([
   {
@@ -37,28 +39,6 @@ const router = createBrowserRouter([
         element: <ContactUs />,
       },
       {
-        path: "",
-        element: <PrivateRoute />,
-        children: [
-          {
-            path: "add-job",
-            element: <AddJobPage />,
-          },
-          {
-            path: "my-added-jobs",
-            element: <MyJobsPage />,
-          },
-          {
-            path: "update-job-details/:id",
-            element: <UpdateJobDetails />,
-          },
-          {
-            path: "my-accepted-tasks",
-            element: <MyAcceptedTasksPage />,
-          },
-        ],
-      },
-      {
         path: "all-jobs",
         element: <AllJobsPage />,
       },
@@ -69,6 +49,38 @@ const router = createBrowserRouter([
       {
         path: "auth/login",
         element: <LoginPage />,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: <PrivateRoute />,
+    children: [
+      {
+        path: "",
+        element: <DashboardLayout />,
+        children: [
+          {
+            index: true,
+            element: <Overview />,
+          },
+          {
+            path: "add-job",
+            element: <AddJobPage />,
+          },
+          {
+            path: "my-jobs",
+            element: <MyJobsPage />,
+          },
+          {
+            path: "my-jobs/update/:id",
+            element: <UpdateJobDetails />,
+          },
+          {
+            path: "my-accepted-tasks",
+            element: <MyAcceptedTasksPage />,
+          },
+        ],
       },
     ],
   },

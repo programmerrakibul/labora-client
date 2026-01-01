@@ -4,13 +4,15 @@ import MyContainer from "../../components/MyContainer/MyContainer";
 import MyInput from "../../components/MyInput/MyInput";
 import MyLabel from "../../components/MyLabel/MyLabel";
 import useThemeContext from "../../hooks/useThemeContext";
-import { FiMail, FiSend, FiCheckCircle } from "react-icons/fi";
+import { FiSend, FiCheckCircle } from "react-icons/fi";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "motion/react";
 import gsap from "gsap";
 import { faqData } from "../../data/faqData";
 import { contactInfo } from "../../data/contactInfo";
 import MyButton from "../../components/MyButton/MyButton";
+
+import contactImage from "../../assets/slider2.jpg";
 
 const ContactUs = () => {
   const { theme } = useThemeContext();
@@ -342,7 +344,7 @@ const ContactUs = () => {
                 }`}
               >
                 <img
-                  src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=600&fit=crop"
+                  src={contactImage}
                   alt="Contact us illustration"
                   className="w-full h-full object-cover"
                 />
