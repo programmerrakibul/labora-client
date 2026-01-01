@@ -1,10 +1,9 @@
 import { format } from "date-fns";
 import Badge from "../../components/Badge/Badge";
 import { toast } from "react-toastify";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
 import { CiCalendarDate } from "react-icons/ci";
-import useSecureAxios from "../../hooks/useSecureAxios";
 import MyContainer from "../../components/MyContainer/MyContainer";
 import { SiMinutemailer } from "react-icons/si";
 import MyButton from "../../components/MyButton/MyButton";
@@ -14,9 +13,13 @@ import FetchSpinner from "../../components/FetchSpinner/FetchSpinner";
 // eslint-disable-next-line no-unused-vars
 import * as motion from "motion/react-client";
 import { getAlert } from "../../utilities/getAlert";
+import usePublicAxios from "../../hooks/usePublicAxios";
+import useSecureAxios from "../../hooks/useSecureAxios";
 
 const JobDetailsPage = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const publicAxios = usePublicAxios();
   const secureAxios = useSecureAxios();
   const [loading, setLoading] = useState(true);
   const [acceptLoading, setAcceptLoading] = useState(false);
@@ -38,7 +41,7 @@ const JobDetailsPage = () => {
       setLoading(true);
 
       try {
-        const { data } = await secureAxios.get(`/jobs/${id}`);
+        const { data } = await publicAxios.get(`/jobs/${id}`);
 
         if (data.success) {
           setSingleJob(data.single_job);
@@ -47,9 +50,14 @@ const JobDetailsPage = () => {
         setLoading(false);
       }
     })();
-  }, [secureAxios, id]);
+  }, [publicAxios, id]);
 
   const handleAcceptJob = async () => {
+    if (!currentUser) {
+      navigate("/auth/login");
+      return;
+    }
+
     setAcceptLoading(true);
 
     const status = {
@@ -90,7 +98,7 @@ const JobDetailsPage = () => {
 
   return (
     <>
-      <title>{`${job_title || "Job Details"} - Labora`}</title>
+      <title>{`${job_title || "Job Details"} | Labora`}</title>
 
       <section className="py-6 my-8">
         <MyContainer className="space-y-3.5">
@@ -168,7 +176,7 @@ const JobDetailsPage = () => {
             <p className="text-justify max-w-4xl w-full">{job_summery}</p>
           </motion.div>
 
-          {currentUser.email !== creator_email && (
+          {currentUser?.email !== creator_email && (
             <motion.div
               className="card-actions"
               initial={{ opacity: 0, y: 50 }}
