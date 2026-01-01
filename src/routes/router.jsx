@@ -11,6 +11,7 @@ import MyJobsPage from "../pages/MyJobsPage/MyJobsPage";
 import UpdateJobDetails from "../pages/UpdateJobDetails/UpdateJobDetails";
 import MyAcceptedTasksPage from "../pages/MyAcceptedTasksPage/MyAcceptedTasksPage";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
+import AboutUs from "../pages/AboutUs/AboutUs";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       {
         path: "job-details/:id",
         element: <JobDetailsPage />,
+      },
+      {
+        path: "about-us",
+        element: <AboutUs />,
       },
       {
         path: "",

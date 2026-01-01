@@ -13,18 +13,20 @@ import ActionSpinner from "../ActionSpinner/ActionSpinner";
 import getAuthErrorMessage from "../../utilities/getAuthErrorMessage";
 import { getAlert } from "../../utilities/getAlert";
 
+const navItems = [
+  { label: "Home", path: "/" },
+  { label: "About Us", path: "/about-us" },
+  { label: "All Jobs", path: "/all-jobs" },
+  { label: "Add Job", path: "/add-job" },
+  { label: "My Added Jobs", path: "/my-added-jobs" },
+  { label: "My Accepted Tasks", path: "/my-accepted-tasks" },
+];
+
 const Navbar = () => {
   const { currentUser, logoutUser } = useAuthInfo();
   const [loading, setLoading] = useState(false);
   const { toggleTheme, theme } = useThemeContext();
   const navigate = useNavigate();
-  const navItems = [
-    { label: "Home", path: "/" },
-    { label: "All Jobs", path: "/all-jobs" },
-    { label: "Add Job", path: "/add-job" },
-    { label: "My Added Jobs", path: "/my-added-jobs" },
-    { label: "My Accepted Tasks", path: "/my-accepted-tasks" },
-  ];
 
   const navLinks = navItems.map(({ label, path }, index) => (
     <li key={index + 1}>
