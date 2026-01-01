@@ -18,19 +18,18 @@ const Navbar = () => {
   const [loading, setLoading] = useState(false);
   const { toggleTheme, theme } = useThemeContext();
   const navigate = useNavigate();
-  const navLinks = [
-    "home",
-    "all jobs",
-    "add job",
-    "my added jobs",
-    "my accepted tasks",
-  ].map((link) => (
-    <li key={link}>
-      <NavLink
-        to={link === "home" ? "/" : link.replaceAll(" ", "-")}
-        className="nav_links"
-      >
-        {link}
+  const navItems = [
+    { label: "Home", path: "/" },
+    { label: "All Jobs", path: "/all-jobs" },
+    { label: "Add Job", path: "/add-job" },
+    { label: "My Added Jobs", path: "/my-added-jobs" },
+    { label: "My Accepted Tasks", path: "/my-accepted-tasks" },
+  ];
+
+  const navLinks = navItems.map(({ label, path }, index) => (
+    <li key={index + 1}>
+      <NavLink to={path} className="nav_links">
+        {label}
       </NavLink>
     </li>
   ));
@@ -55,7 +54,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="backdrop-blur-sm bg-primary/2 dark:shadow-white/30 dark:bg-primary/10 shadow-sm">
+    <nav className="backdrop-blur-sm bg-primary/17 dark:shadow-white/30 dark:bg-primary/10 shadow-sm">
       <MyContainer>
         <div className="navbar p-0">
           <div className="navbar-start gap-1.5">
