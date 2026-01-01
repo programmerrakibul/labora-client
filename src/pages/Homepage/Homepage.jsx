@@ -50,7 +50,7 @@ const Homepage = () => {
       <title>Home - Labora</title>
 
       <motion.section
-        className="mt-10"
+        className="mt-5"
         initial={{ opacity: 0, x: "-100vw" }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ type: "spring", delay: 0.3, bounce: 0.4 }}

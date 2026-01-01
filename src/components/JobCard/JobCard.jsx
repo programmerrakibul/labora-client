@@ -1,5 +1,4 @@
 import { MdOutlineVerifiedUser } from "react-icons/md";
-import MyButton from "../MyButton/MyButton";
 import { useNavigate } from "react-router";
 import Badge from "../Badge/Badge";
 // eslint-disable-next-line no-unused-vars
