@@ -2,8 +2,6 @@ import { Outlet } from "react-router";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
 import { ToastContainer } from "react-toastify";
-import useRouteLoader from "../hooks/useRouteLoader";
-import PageSpinner from "../components/PageSpinner/PageSpinner";
 // eslint-disable-next-line no-unused-vars
 import * as motion from "motion/react-client";
 import useThemeContext from "../hooks/useThemeContext";
@@ -24,12 +22,7 @@ const layoutVariants = {
 };
 
 const RootLayout = () => {
-  const loading = useRouteLoader();
   const { theme } = useThemeContext();
-
-  if (loading) {
-    return <PageSpinner />;
-  }
 
   return (
     <>

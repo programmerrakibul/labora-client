@@ -23,16 +23,16 @@ const router = createBrowserRouter([
         element: <Homepage />,
       },
       {
+        path: "job-details/:id",
+        element: <JobDetailsPage />,
+      },
+      {
         path: "",
         element: <PrivateRoute />,
         children: [
           {
             path: "add-job",
             element: <AddJobPage />,
-          },
-          {
-            path: "job-details/:id",
-            element: <JobDetailsPage />,
           },
           {
             path: "my-added-jobs",
