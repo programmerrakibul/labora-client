@@ -11,9 +11,9 @@
 
 @plugin "daisyui/theme" {
   name: "night";
-  default: true;
-  --color-primary: #00F7FF;
-  --color-secondary: #B0FFFA;
+  default: false;
+  --color-primary: #00f7ff;
+  --color-secondary: #b0fffa;
 }
 
 @custom-variant dark (&:where([data-theme=night], [data-theme=night] *));

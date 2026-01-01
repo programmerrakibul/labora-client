@@ -4,7 +4,7 @@ import useThemeContext from "../../hooks/useThemeContext";
 const PageSpinner = () => {
   const { theme } = useThemeContext();
 
-  const color = theme === "light" ? "#E56BB3" : "#54B2F8";
+  const color = theme === "light" ? "#086972" : "#00f7ff";
 
   return (
     <div className="w-full min-h-dvh grid place-items-center">

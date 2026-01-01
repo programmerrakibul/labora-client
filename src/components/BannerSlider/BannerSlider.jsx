@@ -40,7 +40,7 @@ const BannerSlider = () => {
                 alt={item.alt}
                 className="w-full h-[75dvh] object-cover overflow-hidden"
               />
-              <div className="absolute top-0 left-0 w-full h-full bg-[#1111113f] grid place-items-center p-3">
+              <div className="absolute top-0 left-0 w-full h-full bg-primary/21 grid place-items-center p-3 backdrop-blur-xs">
                 <div className="text-center space-y-3.5 max-w-2xl">
                   <h1 className="font-bold md:font-extrabold text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white!">
                     {item.title}
