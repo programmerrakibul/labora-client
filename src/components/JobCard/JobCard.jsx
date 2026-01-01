@@ -16,18 +16,19 @@ const JobCard = ({ singleJob }) => {
       whileInView={{ opacity: 1, scale: 1, y: 0 }}
       whileHover={{ scale: 1.1, y: -10 }}
       transition={{ duration: 0.4, delay: 0.1 }}
-      className="bg-base-300 dark:border-2 border-white/20 rounded-lg shadow-lg dark:shadow-white/30 dark:shadow-md overflow-hidden"
+      onClick={() => navigate(`/job-details/${_id}`)}
+      className="bg-base-300 dark:border-2 border-white/20 rounded-lg shadow-lg dark:shadow-white/30 dark:shadow-md overflow-hidden cursor-pointer flex flex-row sm:flex-col"
     >
-      <figure className="relative">
+      <figure className="relative flex-1">
         <img
           src={job_image}
           alt={job_title}
-          className="aspect-3/2 object-cover w-full max-h-52"
+          className="aspect-3/2 object-cover w-full h-full sm:max-h-32 lg:max-h-44"
         />
-        <Badge className="absolute bottom-5 right-5">{job_category}</Badge>
+        <Badge className="absolute bottom-3 right-5">{job_category}</Badge>
       </figure>
 
-      <div className="space-y-2 p-4">
+      <div className="space-y-2 p-4 flex-2">
         <div className="flex items-center gap-1.5 text-sm text-primary/60 dark:text-primary">
           <span>
             <MdOutlineVerifiedUser />
@@ -44,12 +45,6 @@ const JobCard = ({ singleJob }) => {
           </h4>
         </div>
         <p className="line-clamp-2">{job_summery}</p>
-
-        <div className="card-actions justify-end">
-          <MyButton onClick={() => navigate(`/job-details/${_id}`)}>
-            View Details
-          </MyButton>
-        </div>
       </div>
     </motion.div>
   );

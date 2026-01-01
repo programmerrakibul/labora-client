@@ -82,7 +82,7 @@ const AllJobsPage = () => {
           {loading ? (
             <FetchSpinner />
           ) : (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-7">
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-7">
               {jobCardElements}
             </div>
           )}
