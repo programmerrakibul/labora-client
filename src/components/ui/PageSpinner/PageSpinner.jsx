@@ -1,5 +1,5 @@
 import { RotateLoader } from "react-spinners";
-import useThemeContext from "../../hooks/useThemeContext";
+import useThemeContext from "../../../hooks/useThemeContext";
 
 const PageSpinner = () => {
   const { theme } = useThemeContext();

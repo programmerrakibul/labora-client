@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import MyContainer from "../../components/MyContainer/MyContainer";
-import MyInput from "../../components/MyInput/MyInput";
-import MyLabel from "../../components/MyLabel/MyLabel";
+import MyContainer from "../../components/shared/MyContainer/MyContainer";
+import MyInput from "../../components/ui/MyInput/MyInput";
+import MyLabel from "../../components/ui/MyLabel/MyLabel";
 import useThemeContext from "../../hooks/useThemeContext";
 import { FiSend, FiCheckCircle } from "react-icons/fi";
 // eslint-disable-next-line no-unused-vars
@@ -10,7 +10,7 @@ import { motion } from "motion/react";
 import gsap from "gsap";
 import { faqData } from "../../data/faqData";
 import { contactInfo } from "../../data/contactInfo";
-import MyButton from "../../components/MyButton/MyButton";
+import MyButton from "../../components/ui/MyButton/MyButton";
 
 import contactImage from "../../assets/slider2.jpg";
 

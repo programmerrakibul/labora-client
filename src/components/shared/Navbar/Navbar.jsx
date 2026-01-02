@@ -3,15 +3,15 @@ import { useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import { LuSun } from "react-icons/lu";
 import { BsMoon } from "react-icons/bs";
-import MyButton from "../MyButton/MyButton";
-import useAuthInfo from "../../hooks/useAuthInfo";
+import MyButton from "../../ui/MyButton/MyButton";
+import useAuthInfo from "../../../hooks/useAuthInfo";
 import { HiOutlineMenuAlt1 } from "react-icons/hi";
 import { NavLink, useNavigate } from "react-router";
 import MyContainer from "../MyContainer/MyContainer";
-import useThemeContext from "../../hooks/useThemeContext";
-import ActionSpinner from "../ActionSpinner/ActionSpinner";
-import getAuthErrorMessage from "../../utilities/getAuthErrorMessage";
-import { getAlert } from "../../utilities/getAlert";
+import useThemeContext from "../../../hooks/useThemeContext";
+import ActionSpinner from "../../ui/ActionSpinner/ActionSpinner";
+import getAuthErrorMessage from "../../../utilities/getAuthErrorMessage";
+import { getAlert } from "../../../utilities/getAlert";
 
 const Navbar = () => {
   const { currentUser, logoutUser } = useAuthInfo();
@@ -32,7 +32,7 @@ const Navbar = () => {
         label: "Dashboard",
         path: "/dashboard",
       };
-      
+
       navItems.splice(2, 0, dashboard);
     }
 

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import MyButton from "../../components/MyButton/MyButton";
+import MyButton from "../../components/ui/MyButton/MyButton";
 import useThemeContext from "../../hooks/useThemeContext";
 import GIF404 from "../../../lotties/page_not_found.json";
 import GIF404Dark from "../../../lotties/page_not_found_dark.json";

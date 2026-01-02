@@ -1,5 +1,5 @@
 import { PropagateLoader } from "react-spinners";
-import useThemeContext from "../../hooks/useThemeContext";
+import useThemeContext from "../../../hooks/useThemeContext";
 
 const FetchSpinner = ({ className = "min-h-[30dvh]" }) => {
   const { theme } = useThemeContext();

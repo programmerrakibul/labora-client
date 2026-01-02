@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router";
-import useThemeContext from "../../hooks/useThemeContext";
+import useThemeContext from "../../../hooks/useThemeContext";
 import MyButton from "../MyButton/MyButton";
-import emptyBox from "../../../lotties/empty_box.json";
-import emptyBoxDark from "../../../lotties/empty_box_dark.json";
+import emptyBox from "../../../../lotties/empty_box.json";
+import emptyBoxDark from "../../../../lotties/empty_box_dark.json";
 import Lottie from "lottie-react";
 
 const DataNotFound = ({ children, value }) => {

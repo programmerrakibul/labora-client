@@ -1,4 +1,4 @@
-import MyContainer from "../../../components/MyContainer/MyContainer";
+import MyContainer from "../../../components/shared/MyContainer/MyContainer";
 
 const Overview = () => {
   return (

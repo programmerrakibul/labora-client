@@ -1,20 +1,20 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import useAuthInfo from "../../hooks/useAuthInfo";
-import MyInput from "../../components/MyInput/MyInput";
-import MyLabel from "../../components/MyLabel/MyLabel";
-import MyTitle from "../../components/MyTitle/MyTitle";
-import useSecureAxios from "../../hooks/useSecureAxios";
-import useThemeContext from "../../hooks/useThemeContext";
-import MyButton from "../../components/MyButton/MyButton";
-import MyContainer from "../../components/MyContainer/MyContainer";
-import ActionSpinner from "../../components/ActionSpinner/ActionSpinner";
-import addJobGIF from "../../../lotties/add_job.json";
-import addJobGIFDark from "../../../lotties/add_job_dark.json";
+import useAuthInfo from "../../../hooks/useAuthInfo";
+import MyInput from "../../../components/ui/MyInput/MyInput";
+import MyLabel from "../../../components/ui/MyLabel/MyLabel";
+import MyTitle from "../../../components/ui/MyTitle/MyTitle";
+import useSecureAxios from "../../../hooks/useSecureAxios";
+import useThemeContext from "../../../hooks/useThemeContext";
+import MyButton from "../../../components/ui/MyButton/MyButton";
+import MyContainer from "../../../components/shared/MyContainer/MyContainer";
+import ActionSpinner from "../../../components/ui/ActionSpinner/ActionSpinner";
+import addJobGIF from "../../../../lotties/add_job.json";
+import addJobGIFDark from "../../../../lotties/add_job_dark.json";
 // eslint-disable-next-line no-unused-vars
 import * as motion from "motion/react-client";
 import Lottie from "lottie-react";
-import { getAlert } from "../../utilities/getAlert";
+import { getAlert } from "../../../utilities/getAlert";
 
 const AddJobPage = () => {
   const secureAxios = useSecureAxios();

@@ -10,7 +10,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../firebase/firebase.init";
-import PageSpinner from "../components/PageSpinner/PageSpinner";
+import PageSpinner from "../components/ui/PageSpinner/PageSpinner";
 
 const googleProvider = new GoogleAuthProvider();
 

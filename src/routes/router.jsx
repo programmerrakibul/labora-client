@@ -1,20 +1,20 @@
 import { createBrowserRouter } from "react-router";
 import RootLayout from "../layouts/RootLayout";
 import Homepage from "../pages/Homepage/Homepage";
-import AddJobPage from "../pages/AddJobPage/AddJobPage";
-import RegisterPage from "../pages/RegisterPage/RegisterPage";
-import LoginPage from "../pages/LoginPage/LoginPage";
 import PrivateRoute from "./PrivateRoute";
 import AllJobsPage from "../pages/AllJobsPage/AllJobsPage";
 import JobDetailsPage from "../pages/JobDetailsPage/JobDetailsPage";
-import MyJobsPage from "../pages/MyJobsPage/MyJobsPage";
-import UpdateJobDetails from "../pages/UpdateJobDetails/UpdateJobDetails";
-import MyAcceptedTasksPage from "../pages/MyAcceptedTasksPage/MyAcceptedTasksPage";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import AboutUs from "../pages/AboutUs/AboutUs";
 import ContactUs from "../pages/ContactUs/ContactUs";
 import DashboardLayout from "../layouts/DashboardLayout";
 import Overview from "../pages/Dashboard/Overview/Overview";
+import AddJobPage from "../pages/Dashboard/AddJobPage/AddJobPage";
+import MyJobsPage from "../pages/Dashboard/MyJobsPage/MyJobsPage";
+import UpdateJobDetails from "../pages/Dashboard/UpdateJobDetails/UpdateJobDetails";
+import MyAcceptedTasksPage from "../pages/Dashboard/MyAcceptedTasksPage/MyAcceptedTasksPage";
+import LoginPage from "../pages/auth/LoginPage/LoginPage";
+import RegisterPage from "../pages/auth/RegisterPage/RegisterPage";
 
 const router = createBrowserRouter([
   {

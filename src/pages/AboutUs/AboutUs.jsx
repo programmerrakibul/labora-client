@@ -1,7 +1,7 @@
-import MyContainer from "../../components/MyContainer/MyContainer";
-import MyTitle from "../../components/MyTitle/MyTitle";
-import MyButton from "../../components/MyButton/MyButton";
-import CountUpNumber from "../../components/CountUpNumber/CountUpNumber";
+import MyContainer from "../../components/shared/MyContainer/MyContainer";
+import MyTitle from "../../components/ui/MyTitle/MyTitle";
+import MyButton from "../../components/ui/MyButton/MyButton";
+import CountUpNumber from "../../components/ui/CountUpNumber/CountUpNumber";
 
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
@@ -234,7 +234,7 @@ const AboutUs = () => {
               </MyButton>
               <motion.button
                 whileHover={{ scale: 1.1 }}
-                onClick={() => navigate("/add-job")}
+                onClick={() => navigate("/dashboard/add-job")}
                 className="btn btn-sm md:btn-md btn-outline text-primary dark:text-secondary border-primary dark:border-secondary hover:bg-primary/10 dark:hover:bg-secondary/10"
               >
                 Post a Job

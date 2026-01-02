@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import MyTitle from "../../components/MyTitle/MyTitle";
-import JobCard from "../../components/JobCard/JobCard";
+import MyTitle from "../../components/ui/MyTitle/MyTitle";
+import JobCard from "../../components/shared/JobCard/JobCard";
 import usePublicAxios from "../../hooks/usePublicAxios";
-import MyContainer from "../../components/MyContainer/MyContainer";
-import FetchSpinner from "../../components/FetchSpinner/FetchSpinner";
+import MyContainer from "../../components/shared/MyContainer/MyContainer";
+import FetchSpinner from "../../components/ui/FetchSpinner/FetchSpinner";
 // eslint-disable-next-line no-unused-vars
 import * as motion from "motion/react-client";
 

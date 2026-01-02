@@ -1,24 +1,24 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router";
-import useAuthInfo from "../../hooks/useAuthInfo";
-import useGoogleLogin from "../../hooks/useGoogleLogin";
-import MyLabel from "../../components/MyLabel/MyLabel";
-import MyInput from "../../components/MyInput/MyInput";
-import MyButton from "../../components/MyButton/MyButton";
-import ActionSpinner from "../../components/ActionSpinner/ActionSpinner";
-import getAuthErrorMessage from "../../utilities/getAuthErrorMessage";
+import useAuthInfo from "../../../hooks/useAuthInfo";
+import useGoogleLogin from "../../../hooks/useGoogleLogin";
+import MyButton from "../../../components/ui/MyButton/MyButton";
+import ActionSpinner from "../../../components/ui/ActionSpinner/ActionSpinner";
+import getAuthErrorMessage from "../../../utilities/getAuthErrorMessage";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
-import MyContainer from "../../components/MyContainer/MyContainer";
-import MyTitle from "../../components/MyTitle/MyTitle";
-import useThemeContext from "../../hooks/useThemeContext";
-import regiterGIF from "../../../lotties/register.json";
-import regiterGIFDark from "../../../lotties/register_dark.json";
+import MyContainer from "../../../components/shared/MyContainer/MyContainer";
+import MyTitle from "../../../components/ui/MyTitle/MyTitle";
+import useThemeContext from "../../../hooks/useThemeContext";
+import regiterGIF from "../../../../lotties/register.json";
+import regiterGIFDark from "../../../../lotties/register_dark.json";
 // eslint-disable-next-line no-unused-vars
 import * as motion from "motion/react-client";
 import Lottie from "lottie-react";
-import { loginSuccessMessage } from "../../utilities/getLoginMessage";
-import GoogleButton from "../../components/GoogleButton/GoogleButton";
+import { loginSuccessMessage } from "../../../utilities/getLoginMessage";
+import GoogleButton from "../../../components/ui/GoogleButton/GoogleButton";
+import MyLabel from "../../../components/ui/MyLabel/MyLabel";
+import MyInput from "../../../components/ui/MyInput/MyInput";
 
 const RegisterPage = () => {
   const navigate = useNavigate();

@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
-import MyLabel from "../../components/MyLabel/MyLabel";
-import MyInput from "../../components/MyInput/MyInput";
-import useSecureAxios from "../../hooks/useSecureAxios";
-import MyButton from "../../components/MyButton/MyButton";
-import ActionSpinner from "../../components/ActionSpinner/ActionSpinner";
-import MyContainer from "../../components/MyContainer/MyContainer";
+import MyLabel from "../../../components/ui/MyLabel/MyLabel";
+import MyInput from "../../../components/ui/MyInput/MyInput";
+import useSecureAxios from "../../../hooks/useSecureAxios";
+import MyButton from "../../../components/ui/MyButton/MyButton";
+import ActionSpinner from "../../../components/ui/ActionSpinner/ActionSpinner";
+import MyContainer from "../../../components/shared/MyContainer/MyContainer";
 import { useParams } from "react-router";
 import { toast } from "react-toastify";
-import MyTitle from "../../components/MyTitle/MyTitle";
-import useThemeContext from "../../hooks/useThemeContext";
-import FetchSpinner from "../../components/FetchSpinner/FetchSpinner";
-import updateGIF from "../../../lotties/update.json";
-import updateGIFDark from "../../../lotties/update_dark.json";
+import MyTitle from "../../../components/ui/MyTitle/MyTitle";
+import useThemeContext from "../../../hooks/useThemeContext";
+import FetchSpinner from "../../../components/ui/FetchSpinner/FetchSpinner";
+import updateGIF from "../../../../lotties/update.json";
+import updateGIFDark from "../../../../lotties/update_dark.json";
 // eslint-disable-next-line no-unused-vars
 import * as motion from "motion/react-client";
 import Lottie from "lottie-react";
-import { getAlert } from "../../utilities/getAlert";
+import { getAlert } from "../../../utilities/getAlert";
 
 const UpdateJobDetails = () => {
   const { id } = useParams();

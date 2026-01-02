@@ -1,8 +1,8 @@
 import { MdOutlineVerifiedUser } from "react-icons/md";
 import { useNavigate } from "react-router";
-import Badge from "../Badge/Badge";
 // eslint-disable-next-line no-unused-vars
 import * as motion from "motion/react-client";
+import Badge from "../../ui/Badge/Badge";
 
 const JobCard = ({ singleJob }) => {
   const navigate = useNavigate();

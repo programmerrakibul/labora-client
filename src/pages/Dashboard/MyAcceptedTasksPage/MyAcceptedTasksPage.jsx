@@ -3,16 +3,16 @@ import { VscEye } from "react-icons/vsc";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { FaRegCheckCircle } from "react-icons/fa";
-import useAuthInfo from "../../hooks/useAuthInfo";
+import useAuthInfo from "../../../hooks/useAuthInfo";
 import { FaRegCircleXmark } from "react-icons/fa6";
-import MyTitle from "../../components/MyTitle/MyTitle";
-import useSecureAxios from "../../hooks/useSecureAxios";
-import MyContainer from "../../components/MyContainer/MyContainer";
-import FetchSpinner from "../../components/FetchSpinner/FetchSpinner";
-import DataNotFound from "../../components/DataNotFound/DataNotFound";
+import MyTitle from "../../../components/ui/MyTitle/MyTitle";
+import useSecureAxios from "../../../hooks/useSecureAxios";
+import MyContainer from "../../../components/shared/MyContainer/MyContainer";
+import FetchSpinner from "../../../components/ui/FetchSpinner/FetchSpinner";
+import DataNotFound from "../../../components/ui/DataNotFound/DataNotFound";
 // eslint-disable-next-line no-unused-vars
 import * as motion from "motion/react-client";
-import { getAlert } from "../../utilities/getAlert";
+import { getAlert } from "../../../utilities/getAlert";
 
 const MyAcceptedTasksPage = () => {
   const [taskLoading, setTaskLoading] = useState(true);

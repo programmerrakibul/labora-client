@@ -5,7 +5,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css";
 import { useNavigate } from "react-router";
-import bannerSliderData from "../../data/bannerSliderData";
+import bannerSliderData from "../../../data/bannerSliderData";
 import MyButton from "../MyButton/MyButton";
 
 const BannerSlider = () => {
@@ -55,7 +55,7 @@ const BannerSlider = () => {
                       Explore Jobs
                     </MyButton>
 
-                    <MyButton onClick={() => navigate("/add-job")}>
+                    <MyButton onClick={() => navigate("/dashboard/add-job")}>
                       Add Job
                     </MyButton>
                   </div>

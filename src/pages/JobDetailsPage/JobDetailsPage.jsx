@@ -1,15 +1,15 @@
 import { format } from "date-fns";
-import Badge from "../../components/Badge/Badge";
+import Badge from "../../components/ui/Badge/Badge";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
 import { CiCalendarDate } from "react-icons/ci";
-import MyContainer from "../../components/MyContainer/MyContainer";
+import MyContainer from "../../components/shared/MyContainer/MyContainer";
 import { SiMinutemailer } from "react-icons/si";
-import MyButton from "../../components/MyButton/MyButton";
+import MyButton from "../../components/ui/MyButton/MyButton";
 import useAuthInfo from "../../hooks/useAuthInfo";
-import ActionSpinner from "../../components/ActionSpinner/ActionSpinner";
-import FetchSpinner from "../../components/FetchSpinner/FetchSpinner";
+import ActionSpinner from "../../components/ui/ActionSpinner/ActionSpinner";
+import FetchSpinner from "../../components/ui/FetchSpinner/FetchSpinner";
 // eslint-disable-next-line no-unused-vars
 import * as motion from "motion/react-client";
 import { getAlert } from "../../utilities/getAlert";

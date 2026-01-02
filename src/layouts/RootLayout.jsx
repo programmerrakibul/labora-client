@@ -1,6 +1,6 @@
 import { Outlet } from "react-router";
-import Navbar from "../components/Navbar/Navbar";
-import Footer from "../components/Footer/Footer";
+import Navbar from "../components/shared/Navbar/Navbar";
+import Footer from "../components/shared/Footer/Footer";
 import { ToastContainer } from "react-toastify";
 // eslint-disable-next-line no-unused-vars
 import * as motion from "motion/react-client";

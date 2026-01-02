@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react";
-import JobCard from "../../components/JobCard/JobCard";
-import MyTitle from "../../components/MyTitle/MyTitle";
+import JobCard from "../../components/shared/JobCard/JobCard";
+import MyTitle from "../../components/ui/MyTitle/MyTitle";
 import usePublicAxios from "../../hooks/usePublicAxios";
-import MyContainer from "../../components/MyContainer/MyContainer";
+import MyContainer from "../../components/shared/MyContainer/MyContainer";
 import useCategoryData from "../../hooks/useCategoryData";
 import useFeaturesData from "../../hooks/useFeaturesData";
-import BannerSlider from "../../components/BannerSlider/BannerSlider";
-import Badge from "../../components/Badge/Badge";
-import FetchSpinner from "../../components/FetchSpinner/FetchSpinner";
+import BannerSlider from "../../components/ui/BannerSlider/BannerSlider";
+import Badge from "../../components/ui/Badge/Badge";
+import FetchSpinner from "../../components/ui/FetchSpinner/FetchSpinner";
 // eslint-disable-next-line no-unused-vars
 import * as motion from "motion/react-client";
+import MyButton from "../../components/ui/MyButton/MyButton";
+import { useNavigate } from "react-router";
 
 const Homepage = () => {
+  const navigate = useNavigate();
   const publicAxios = usePublicAxios();
   const [loading, setLoading] = useState(true);
   const [latestJobs, setLatestJobs] = useState([]);
@@ -49,6 +52,7 @@ const Homepage = () => {
     <>
       <title>Home - Labora</title>
 
+      {/* Hero Banner */}
       <motion.section
         className="mt-5"
         initial={{ opacity: 0, x: "-100vw" }}
@@ -60,8 +64,9 @@ const Homepage = () => {
         </MyContainer>
       </motion.section>
 
+      {/* Latest Jobs */}
       <section className="bg-secondary/3 py-10">
-        <MyContainer className="space-y-7">
+        <MyContainer className="space-y-16 md:space-y-20">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -89,9 +94,16 @@ const Homepage = () => {
               {jobCardElements}
             </div>
           )}
+
+          <div className="flex items-center justify-center">
+            <MyButton onClick={() => navigate("/all-jobs")}>
+              Explore All Jobs
+            </MyButton>
+          </div>
         </MyContainer>
       </section>
 
+      {/* Categories */}
       <section>
         <MyContainer className="space-y-14">
           <motion.div
@@ -153,29 +165,7 @@ const Homepage = () => {
         </MyContainer>
       </section>
 
-      <section>
-        <MyContainer>
-          <div className="text-center">
-            <div className="flex flex-wrap justify-center items-center shadow-lg bg-base-200 mx-auto max-w-4xl w-full rounded-lg">
-              <div className="stat border-none w-fit">
-                <div className="stat-title text-xl">Happy Clients</div>
-                <div className="stat-value text-5xl text-primary">10K+</div>
-              </div>
-
-              <div className="stat border-none w-fit">
-                <div className="stat-title text-xl">Projects Done</div>
-                <div className="stat-value text-5xl text-secondary">25K+</div>
-              </div>
-
-              <div className="stat border-none w-fit">
-                <div className="stat-title text-xl">Freelancers</div>
-                <div className="stat-value text-5xl text-accent">5K+</div>
-              </div>
-            </div>
-          </div>
-        </MyContainer>
-      </section>
-
+      {/* Opportunity */}
       <section className="mt-6 py-8 bg-info/4 dark:bg-info/20">
         <MyContainer className="space-y-9">
           <motion.div
