@@ -11,6 +11,7 @@ import {
   HiOutlineHome,
   HiOutlineLogout,
   HiOutlineBriefcase,
+  HiOutlineUser,
 } from "react-icons/hi";
 import Avatar from "../components/shared/Avatar/Avatar";
 import useAuthInfo from "../hooks/useAuthInfo";
@@ -43,6 +44,11 @@ const sidebarItems = [
     label: "My Accepted Tasks",
     slug: "/dashboard/my-accepted-tasks",
     icon: HiOutlineCheckCircle,
+  },
+  {
+    label: "Profile",
+    slug: "/dashboard/profile",
+    icon: HiOutlineUser,
   },
 ];
 

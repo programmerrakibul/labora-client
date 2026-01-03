@@ -15,6 +15,8 @@ import UpdateJobDetails from "../pages/Dashboard/UpdateJobDetails/UpdateJobDetai
 import MyAcceptedTasksPage from "../pages/Dashboard/MyAcceptedTasksPage/MyAcceptedTasksPage";
 import LoginPage from "../pages/auth/LoginPage/LoginPage";
 import RegisterPage from "../pages/auth/RegisterPage/RegisterPage";
+import Profile from "../pages/Dashboard/Profile/Profile";
+import EditProfile from "../pages/Dashboard/Profile/EditProfile";
 
 const router = createBrowserRouter([
   {
@@ -79,6 +81,14 @@ const router = createBrowserRouter([
           {
             path: "my-accepted-tasks",
             element: <MyAcceptedTasksPage />,
+          },
+          {
+            path: "profile",
+            element: <Profile />,
+          },
+          {
+            path: "update-profile",
+            element: <EditProfile />,
           },
         ],
       },
