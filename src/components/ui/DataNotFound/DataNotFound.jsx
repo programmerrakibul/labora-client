@@ -19,11 +19,15 @@ const DataNotFound = ({ children, value }) => {
       </div>
       <h3 className="text-xl sm:text-2xl md:text-3xl font-bold">{children}</h3>
       {value === "jobs" && (
-        <MyButton onClick={() => navigate("/all-jobs")}>Explore Jobs</MyButton>
+        <MyButton onClick={() => navigate("/all-jobs")}>
+          Explore Jobs
+        </MyButton>
       )}
 
       {value === "tasks" && (
-        <MyButton onClick={() => navigate("/add-job")}>Post Your Job</MyButton>
+        <MyButton onClick={() => navigate("/dashboard/add-job")}>
+          Post Your Job
+        </MyButton>
       )}
     </div>
   );
