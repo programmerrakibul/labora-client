@@ -1,56 +1,81 @@
-import { format } from "date-fns";
-import Badge from "../../components/ui/Badge/Badge";
-import { toast } from "react-toastify";
-import { useNavigate, useParams } from "react-router";
-import { useEffect, useState } from "react";
-import { CiCalendarDate } from "react-icons/ci";
-import MyContainer from "../../components/shared/MyContainer/MyContainer";
-import { SiMinutemailer } from "react-icons/si";
-import MyButton from "../../components/ui/MyButton/MyButton";
-import useAuthInfo from "../../hooks/useAuthInfo";
-import ActionSpinner from "../../components/ui/ActionSpinner/ActionSpinner";
-import FetchSpinner from "../../components/ui/FetchSpinner/FetchSpinner";
+// src/pages/JobDetailsPage.jsx
+import { useEffect, useState, useRef } from "react";
 // eslint-disable-next-line no-unused-vars
-import * as motion from "motion/react-client";
-import { getAlert } from "../../utilities/getAlert";
+import { motion, AnimatePresence } from "framer-motion";
+import { gsap } from "gsap";
+import { format } from "date-fns";
+import { useParams, useNavigate } from "react-router";
+import {
+  HiOutlineBriefcase,
+  HiOutlineCalendar,
+  HiOutlineCurrencyDollar,
+  HiOutlineClock,
+  HiOutlineMail,
+  HiOutlineCheckCircle,
+  HiOutlineUserGroup,
+  HiOutlineStar,
+  HiOutlineDocumentText,
+  HiOutlineSparkles,
+} from "react-icons/hi";
+import { HiOutlineMapPin } from "react-icons/hi2";
+
+import MyContainer from "../../components/shared/MyContainer/MyContainer";
+import MyButton from "../../components/ui/MyButton/MyButton";
+import Badge from "../../components/ui/Badge/Badge";
+import FetchSpinner from "../../components/ui/FetchSpinner/FetchSpinner";
+import ActionSpinner from "../../components/ui/ActionSpinner/ActionSpinner";
+import useAuthInfo from "../../hooks/useAuthInfo";
 import usePublicAxios from "../../hooks/usePublicAxios";
 import useSecureAxios from "../../hooks/useSecureAxios";
+import { getAlert } from "../../utilities/getAlert";
+import { toast } from "react-toastify";
 
 const JobDetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { currentUser } = useAuthInfo();
   const publicAxios = usePublicAxios();
   const secureAxios = useSecureAxios();
+
+  const [job, setJob] = useState({});
   const [loading, setLoading] = useState(true);
   const [acceptLoading, setAcceptLoading] = useState(false);
-  const [singleJob, setSingleJob] = useState({});
-  const { currentUser } = useAuthInfo();
-  const {
-    job_title,
-    job_image,
-    job_category,
-    job_summery,
-    posted_by,
-    created_at,
-    creator_email,
-    status,
-  } = singleJob;
+
+  const contentRef = useRef(null);
 
   useEffect(() => {
-    (async () => {
+    const fetchJob = async () => {
       setLoading(true);
-
       try {
         const { data } = await publicAxios.get(`/jobs/${id}`);
-
         if (data.success) {
-          setSingleJob(data.single_job);
+          setJob(data.single_job);
         }
+      } catch {
+        toast.error("Failed to load job details");
       } finally {
         setLoading(false);
       }
-    })();
-  }, [publicAxios, id]);
+    };
+    fetchJob();
+  }, [id, publicAxios]);
+
+  // GSAP stagger animation on content load
+  useEffect(() => {
+    if (!loading && contentRef.current) {
+      gsap.fromTo(
+        contentRef.current.querySelectorAll(".stagger-item"),
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          stagger: 0.1,
+          ease: "power3.out",
+        }
+      );
+    }
+  }, [loading]);
 
   const handleAcceptJob = async () => {
     if (!currentUser) {
@@ -59,11 +84,7 @@ const JobDetailsPage = () => {
     }
 
     setAcceptLoading(true);
-
-    const status = {
-      status: "accepted",
-    };
-
+    const updatedStatus = { status: "accepted" };
     const newTask = {
       job_id: id,
       accepted_user_name: currentUser.displayName,
@@ -72,129 +93,261 @@ const JobDetailsPage = () => {
     };
 
     try {
-      const { data } = await secureAxios.put(`/jobs/${id}`, status);
+      const { data: updateData } = await secureAxios.put(
+        `/jobs/${id}`,
+        updatedStatus
+      );
+      if (updateData.success) {
+        setJob((prev) => ({ ...prev, status: "accepted" }));
 
-      if (data.success) {
-        setSingleJob({ ...singleJob, ...status });
-
-        const { data } = await secureAxios.post("/added-tasks", newTask);
-
-        if (data.success) {
-          getAlert({
-            title: "Job accepted successfully",
-          });
-        }
+        await secureAxios.post("/added-tasks", newTask);
+        getAlert({ title: "Job accepted successfully!" });
       }
     } catch {
-      toast.error("Job Accepted failed");
+      toast.error("Failed to accept job. Try again.");
     } finally {
       setAcceptLoading(false);
     }
   };
 
-  if (loading) {
-    return <FetchSpinner />;
-  }
+  if (loading) return <FetchSpinner className="min-h-dvh" />;
+
+  const {
+    job_title,
+    job_image,
+    job_category,
+    job_summary,
+    posted_by,
+    creator_email,
+    created_at,
+    status,
+    salary_min,
+    salary_max,
+    currency,
+    salary_period,
+    job_type,
+    location,
+    experience_level,
+    application_deadline,
+    requirements = [],
+    responsibilities = [],
+    benefits = [],
+    company_description,
+  } = job;
+
+  const isOwner = currentUser?.email === creator_email;
+  const isAccepted = status === "accepted";
+  const isCompleted = status === "completed";
 
   return (
     <>
-      <title>{`${job_title || "Job Details"} | Labora`}</title>
+      <title>
+        {job_title ? `${job_title} | Labora` : "Job Details | Labora"}
+      </title>
 
-      <section className="py-6 my-8">
-        <MyContainer className="space-y-3.5">
-          <div className="flex flex-col-reverse md:flex-row justify-between gap-7">
-            <motion.div
-              className="flex-2/3 space-y-3.5"
-              initial={{ opacity: 0, y: "-100vh" }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ type: "spring", delay: 0.3, bounce: 0.4 }}
-            >
-              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold">
-                {job_title}
-              </h1>
-              <div className="flex flex-col-reverse sm:flex-row sm:items-center justify-between gap-2.5">
-                <p className="flex items-center gap-1.5">
-                  <strong>Posted By:</strong> <span>{posted_by}</span>
-                </p>
-
-                <Badge>{job_category}</Badge>
-              </div>
-
-              {status === "completed" && (
-                <p className="space-x-1.5">
-                  <strong className="underline">Status:</strong>
-                  <span className="capitalize">{status}</span>
-                </p>
-              )}
-
-              <div className="flex items-center flex-wrap justify-between gap-1.5">
-                <div className="space-y-1.5">
-                  <strong className="underline">Contact:</strong>
-                  <p className="flex items-center gap-1.5">
-                    <span>
-                      <SiMinutemailer />
-                    </span>
-                    <span>{creator_email}</span>
-                  </p>
+      <section className="py-12 lg:py-20">
+        <MyContainer ref={contentRef}>
+          {/* Hero Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="grid lg:grid-cols-3 gap-8 mb-12"
+          >
+            {/* Job Info */}
+            <div className="lg:col-span-2 space-y-8">
+              <div className="stagger-item">
+                <div className="flex flex-wrap items-start justify-between gap-4">
+                  <div>
+                    <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-linear-to-r from-primary to-secondary bg-clip-text! text-transparent!">
+                      {job_title}
+                    </h1>
+                    <p className="mt-3 text-xl text-base-content/80 dark:text-gray-300">
+                      {posted_by}
+                    </p>
+                  </div>
+                  <Badge variant="primary" size="lg">
+                    {job_category}
+                  </Badge>
                 </div>
 
-                <p className="flex items-center gap-1.5">
-                  <span>
-                    <CiCalendarDate size={20} />
-                  </span>
+                {/* Quick Info Grid */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+                  {[
+                    { icon: HiOutlineBriefcase, label: job_type },
+                    { icon: HiOutlineMapPin, label: location },
+                    { icon: HiOutlineClock, label: experience_level },
+                    {
+                      icon: HiOutlineCurrencyDollar,
+                      label: `${salary_min?.toLocaleString()} - ${salary_max?.toLocaleString()} ${currency} / ${salary_period}`,
+                    },
+                  ].map((item, i) => (
+                    <div
+                      key={i}
+                      className="stagger-item flex items-center gap-3 bg-base-200/50 dark:bg-gray-800/50 p-4 rounded-xl"
+                    >
+                      <item.icon className="size-6 text-primary" />
+                      <span className="text-sm font-medium">{item.label}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
 
-                  {created_at && (
-                    <span>{format(new Date(created_at), "do MMMM, yyyy")}</span>
-                  )}
+              {/* Summary */}
+              <div className="stagger-item">
+                <h2 className="text-2xl font-bold mb-4 flex items-center gap-3">
+                  <HiOutlineDocumentText className="text-primary" />
+                  Job Summary
+                </h2>
+                <p className="text-base-content/80 dark:text-gray-300 leading-relaxed text-lg">
+                  {job_summary}
                 </p>
               </div>
-            </motion.div>
+            </div>
 
-            <motion.div
-              className="flex-1/3 mx-auto"
-              initial={{ opacity: 0, x: "100vw" }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ type: "spring", delay: 0.3, bounce: 0.4 }}
-            >
-              <div className="p-3 rounded-lg h-fit shadow-lg bg-base-300">
-                <img
-                  src={job_image}
-                  alt={job_title}
-                  className="rounded-lg aspect-3/2 w-full object-cover"
-                />
+            {/* Image + CTA */}
+            <div className="stagger-item lg:col-span-1">
+              <div className="sticky top-24 space-y-6">
+                <div className="overflow-hidden rounded-2xl shadow-2xl border border-base-300 dark:border-gray-700">
+                  <img
+                    src={job_image}
+                    alt={job_title}
+                    className="w-full aspect-video object-cover transition-transform duration-700 hover:scale-105"
+                  />
+                </div>
+
+                {!isOwner && (
+                  <MyButton
+                    size="lg"
+                    className="w-full"
+                    disabled={acceptLoading || isAccepted || isCompleted}
+                    onClick={handleAcceptJob}
+                  >
+                    {acceptLoading ? (
+                      <ActionSpinner />
+                    ) : isCompleted ? (
+                      "Job Completed"
+                    ) : isAccepted ? (
+                      <>
+                        Accepted <HiOutlineCheckCircle className="ml-2" />
+                      </>
+                    ) : (
+                      "Accept This Job"
+                    )}
+                  </MyButton>
+                )}
+
+                <div className="bg-base-200 dark:bg-gray-800 rounded-xl p-6 space-y-4">
+                  <div className="flex items-center gap-3">
+                    <HiOutlineCalendar className="size-5 text-primary" />
+                    <div>
+                      <p className="text-sm text-base-content/60">Posted on</p>
+                      <p className="font-medium">
+                        {format(new Date(created_at), "MMMM d, yyyy")}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <HiOutlineMail className="size-5 text-primary" />
+                    <div>
+                      <p className="text-sm text-base-content/60">Contact</p>
+                      <p className="font-medium truncate">{creator_email}</p>
+                    </div>
+                  </div>
+                  {application_deadline && (
+                    <div className="flex items-center gap-3">
+                      <HiOutlineSparkles className="size-5 text-primary" />
+                      <div>
+                        <p className="text-sm text-base-content/60">Deadline</p>
+                        <p className="font-medium">
+                          {format(
+                            new Date(application_deadline),
+                            "MMMM d, yyyy"
+                          )}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
-            </motion.div>
-          </div>
-
-          <motion.div
-            className="space-y-1.5"
-            initial={{ opacity: 0, x: "-100vw" }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ type: "spring", delay: 0.3, bounce: 0.4 }}
-          >
-            <strong className="underline">Summery:</strong>
-            <p className="text-justify max-w-4xl w-full">{job_summery}</p>
+            </div>
           </motion.div>
 
-          {currentUser?.email !== creator_email && (
+          {/* Detailed Sections */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Requirements */}
+            {requirements.length > 0 && (
+              <div className="stagger-item">
+                <h2 className="text-2xl font-bold mb-5 flex items-center gap-3">
+                  <HiOutlineStar className="text-primary" />
+                  Requirements
+                </h2>
+                <ul className="space-y-3">
+                  {requirements.map((req, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <HiOutlineCheckCircle className="size-5 text-success mt-0.5 shrink-0" />
+                      <span className="text-base-content/80 dark:text-gray-300">
+                        {req}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Responsibilities */}
+            {responsibilities.length > 0 && (
+              <div className="stagger-item">
+                <h2 className="text-2xl font-bold mb-5 flex items-center gap-3">
+                  <HiOutlineDocumentText className="text-primary" />
+                  Responsibilities
+                </h2>
+                <ul className="space-y-3">
+                  {responsibilities.map((res, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <div className="w-2 h-2 rounded-full bg-primary mt-2 shrink-0" />
+                      <span className="text-base-content/80 dark:text-gray-300">
+                        {res}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Benefits */}
+            {benefits.length > 0 && (
+              <div className="stagger-item">
+                <h2 className="text-2xl font-bold mb-5 flex items-center gap-3">
+                  <HiOutlineUserGroup className="text-primary" />
+                  Benefits
+                </h2>
+                <ul className="space-y-3">
+                  {benefits.map((benefit, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <HiOutlineSparkles className="size-5 text-warning mt-0.5 shrink-0" />
+                      <span className="text-base-content/80 dark:text-gray-300">
+                        {benefit}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+
+          {/* Company Description */}
+          {company_description && (
             <motion.div
-              className="card-actions"
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ type: "spring", delay: 0.3, bounce: 0.4 }}
+              className="stagger-item mt-12 bg-base-200 dark:bg-gray-800/50 rounded-2xl p-8 border border-base-300 dark:border-gray-700"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
             >
-              <MyButton
-                disabled={acceptLoading || status === "completed"}
-                onClick={handleAcceptJob}
-              >
-                {acceptLoading ? (
-                  <ActionSpinner />
-                ) : status === "completed" ? (
-                  "Completed"
-                ) : (
-                  "Accept Job"
-                )}
-              </MyButton>
+              <h2 className="text-2xl font-bold mb-4">About the Company</h2>
+              <p className="text-lg text-base-content/80 dark:text-gray-300 leading-relaxed">
+                {company_description}
+              </p>
             </motion.div>
           )}
         </MyContainer>

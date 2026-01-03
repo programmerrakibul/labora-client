@@ -134,10 +134,10 @@ const AddJobPage = () => {
                   </div>
 
                   <div className="space-y-1.5">
-                    <MyLabel htmlFor="job_summery">Summery</MyLabel>
+                    <MyLabel htmlFor="job_summary">Summery</MyLabel>
                     <textarea
-                      name="job_summery"
-                      id="job_summery"
+                      name="job_summary"
+                      id="job_summary"
                       className="textarea"
                       placeholder="Enter Job Summery"
                       required

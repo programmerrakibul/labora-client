@@ -6,7 +6,7 @@ import Badge from "../../ui/Badge/Badge";
 
 const JobCard = ({ singleJob }) => {
   const navigate = useNavigate();
-  const { _id, job_title, job_image, job_category, job_summery, posted_by } =
+  const { _id, job_title, job_image, job_category, job_summary, posted_by } =
     singleJob || {};
 
   return (
@@ -43,7 +43,7 @@ const JobCard = ({ singleJob }) => {
             {job_title}
           </h4>
         </div>
-        <p className="line-clamp-2">{job_summery}</p>
+        <p className="line-clamp-2">{job_summary}</p>
       </div>
     </motion.div>
   );

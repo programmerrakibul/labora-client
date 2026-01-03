@@ -24,7 +24,7 @@ const UpdateJobDetails = () => {
   const [productLoading, setProductLoading] = useState(true);
   const [loading, setLoading] = useState(false);
   const [singleJob, setSingleJob] = useState({});
-  const { job_title, job_image, job_category, job_summery } = singleJob;
+  const { job_title, job_image, job_category, job_summary } = singleJob;
 
   useEffect(() => {
     (async () => {
@@ -142,13 +142,13 @@ const UpdateJobDetails = () => {
                   </div>
 
                   <div className="space-y-1.5">
-                    <MyLabel htmlFor="job_summery">Summery</MyLabel>
+                    <MyLabel htmlFor="job_summary">Summery</MyLabel>
                     <textarea
-                      name="job_summery"
-                      id="job_summery"
+                      name="job_summary"
+                      id="job_summary"
                       className="textarea"
                       placeholder="Enter Job Summery"
-                      defaultValue={job_summery}
+                      defaultValue={job_summary}
                       disabled={loading}
                     ></textarea>
                   </div>
