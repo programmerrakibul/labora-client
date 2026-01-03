@@ -12,6 +12,7 @@ import useThemeContext from "../../../hooks/useThemeContext";
 import ActionSpinner from "../../ui/ActionSpinner/ActionSpinner";
 import getAuthErrorMessage from "../../../utilities/getAuthErrorMessage";
 import { getAlert } from "../../../utilities/getAlert";
+import Avatar from "../Avatar/Avatar";
 
 const Navbar = () => {
   const { currentUser, logoutUser } = useAuthInfo();
@@ -51,6 +52,7 @@ const Navbar = () => {
     try {
       await logoutUser();
 
+      navigate("/");
       getAlert({
         title: "Logged out successfully",
         showConfirmButton: false,
@@ -126,15 +128,13 @@ const Navbar = () => {
             {currentUser ? (
               <>
                 <div
-                  className="avatar tooltip tooltip-left lg:tooltip-bottom tooltip-primary"
+                  className="tooltip tooltip-left lg:tooltip-bottom tooltip-primary"
                   data-tip={currentUser.displayName}
                 >
-                  <div className="ring-primary ring-offset-base-100 size-8 md:size-10 rounded-full ring-2">
-                    <img
-                      src={currentUser.photoURL}
-                      alt={currentUser.displayName}
-                    />
-                  </div>
+                  <Avatar
+                    src={currentUser.photoURL}
+                    alt={currentUser.displayName}
+                  />
                 </div>
 
                 <MyButton
