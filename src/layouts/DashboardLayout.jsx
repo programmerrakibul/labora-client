@@ -19,11 +19,8 @@ import getAuthErrorMessage from "../utilities/getAuthErrorMessage";
 import { toast } from "react-toastify";
 import Logo from "../components/shared/Logo/Logo";
 
-// Framer Motion imports
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
-
-// GSAP imports (optional for advanced stagger)
 import { gsap } from "gsap";
 
 const sidebarItems = [
@@ -211,7 +208,10 @@ const DashboardLayout = () => {
                   className="flex items-center gap-2 btn btn-ghost btn-circle btn-sm sm:btn-md"
                   aria-label="User menu"
                 >
-                  <Avatar src={currentUser?.photoURL} alt={currentUser?.displayName} />
+                  <Avatar
+                    src={currentUser?.photoURL}
+                    alt={currentUser?.displayName}
+                  />
                 </button>
 
                 <AnimatePresence>
@@ -316,13 +316,7 @@ const DashboardLayout = () => {
                       <NavLink
                         to={item.slug}
                         end={item.slug === "/dashboard"}
-                        className={({ isActive }) =>
-                          `flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
-                            isActive
-                              ? "bg-primary text-white"
-                              : "text-base-content dark:text-gray-300 hover:bg-base-200 dark:hover:bg-gray-700"
-                          }`
-                        }
+                        className="sidebar_links"
                         onClick={handleLinkClick}
                         ref={(el) => (sidebarLinksRef.current[i] = el)} // for GSAP
                       >
@@ -360,10 +354,8 @@ const DashboardLayout = () => {
         </AnimatePresence>
 
         {/* Main Content */}
-        <main className="flex-1 overflow-y-auto bg-linear-to-br from-base-50 to-base-100 dark:from-gray-900 dark:to-gray-800">
-          <div className="h-full">
-            <Outlet />
-          </div>
+        <main className="flex-1 overflow-y-auto bg-linear-to-br from-base-50 to-base-100 dark:from-gray-900 dark:to-gray-800 h-full">
+          <Outlet />
         </main>
       </div>
     </div>
