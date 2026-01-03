@@ -1,6 +1,5 @@
 import Logo from "../Logo/Logo";
-import { useMemo, useState } from "react";
-import { toast } from "react-toastify";
+import { useMemo } from "react";
 import { LuSun } from "react-icons/lu";
 import { BsMoon } from "react-icons/bs";
 import MyButton from "../../ui/MyButton/MyButton";
@@ -9,16 +8,12 @@ import { HiOutlineMenuAlt1 } from "react-icons/hi";
 import { NavLink, useNavigate } from "react-router";
 import MyContainer from "../MyContainer/MyContainer";
 import useThemeContext from "../../../hooks/useThemeContext";
-import ActionSpinner from "../../ui/ActionSpinner/ActionSpinner";
-import getAuthErrorMessage from "../../../utilities/getAuthErrorMessage";
-import { getAlert } from "../../../utilities/getAlert";
-import Avatar from "../Avatar/Avatar";
+import AvatarDropdown from "../AvatarDropdown/AvatarDropdown";
 
 const Navbar = () => {
-  const { currentUser, logoutUser } = useAuthInfo();
-  const [loading, setLoading] = useState(false);
-  const { toggleTheme, theme } = useThemeContext();
+  const { currentUser } = useAuthInfo();
   const navigate = useNavigate();
+  const { toggleTheme, theme } = useThemeContext();
 
   const navLinks = useMemo(() => {
     const navItems = [
@@ -46,26 +41,6 @@ const Navbar = () => {
     ));
   }, [currentUser]);
 
-  const handleLogoutUser = async () => {
-    setLoading(true);
-
-    try {
-      await logoutUser();
-
-      navigate("/");
-      getAlert({
-        title: "Logged out successfully",
-        showConfirmButton: false,
-        timer: 2000,
-      });
-    } catch (err) {
-      const errorMessage = getAuthErrorMessage(err.code);
-      toast.error(errorMessage);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <nav className="backdrop-blur-sm bg-primary/17 dark:shadow-white/30 dark:bg-primary/10 shadow-sm">
       <MyContainer>
@@ -85,22 +60,6 @@ const Navbar = () => {
                 className="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-52 p-2 shadow"
               >
                 {navLinks}
-
-                <li className="gap-1.5 mt-4 sm:hidden">
-                  {currentUser ? (
-                    <>
-                      <MyButton disabled={loading} onClick={handleLogoutUser}>
-                        {loading ? <ActionSpinner /> : "Logout"}
-                      </MyButton>
-                    </>
-                  ) : (
-                    <>
-                      <MyButton onClick={() => navigate("/auth/register")}>
-                        Register
-                      </MyButton>
-                    </>
-                  )}
-                </li>
               </ul>
             </div>
 
@@ -127,23 +86,7 @@ const Navbar = () => {
 
             {currentUser ? (
               <>
-                <div
-                  className="tooltip tooltip-left lg:tooltip-bottom tooltip-primary"
-                  data-tip={currentUser.displayName}
-                >
-                  <Avatar
-                    src={currentUser.photoURL}
-                    alt={currentUser.displayName}
-                  />
-                </div>
-
-                <MyButton
-                  disabled={loading}
-                  onClick={handleLogoutUser}
-                  className="hidden sm:inline-flex"
-                >
-                  {loading ? <ActionSpinner /> : "Logout"}
-                </MyButton>
+                <AvatarDropdown />
               </>
             ) : (
               <>

@@ -1,4 +1,4 @@
-import { NavLink, Outlet, useNavigate } from "react-router";
+import { NavLink, Outlet } from "react-router";
 import { useEffect, useState, useRef } from "react";
 import MyContainer from "../components/shared/MyContainer/MyContainer";
 import {
@@ -13,16 +13,12 @@ import {
   HiOutlineBriefcase,
   HiOutlineUser,
 } from "react-icons/hi";
-import Avatar from "../components/shared/Avatar/Avatar";
-import useAuthInfo from "../hooks/useAuthInfo";
-import { getAlert } from "../utilities/getAlert";
-import getAuthErrorMessage from "../utilities/getAuthErrorMessage";
-import { toast } from "react-toastify";
 import Logo from "../components/shared/Logo/Logo";
 
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
 import { gsap } from "gsap";
+import AvatarDropdown from "../components/shared/AvatarDropdown/AvatarDropdown";
 
 const sidebarItems = [
   {
@@ -53,11 +49,9 @@ const sidebarItems = [
 ];
 
 const DashboardLayout = () => {
-  const { currentUser, logoutUser } = useAuthInfo();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const navigate = useNavigate();
   const sidebarRef = useRef(null);
   const dropdownRef = useRef(null);
   const sidebarLinksRef = useRef([]); // for GSAP stagger
@@ -122,21 +116,6 @@ const DashboardLayout = () => {
     }
   }, [sidebarOpen, isMobile]);
 
-  const handleLogout = async () => {
-    try {
-      await logoutUser();
-      navigate("/");
-      getAlert({
-        title: "Logged out successfully",
-        showConfirmButton: false,
-        timer: 2000,
-      });
-    } catch (err) {
-      const errorMessage = getAuthErrorMessage(err.code);
-      toast.error(errorMessage);
-    }
-  };
-
   const handleLinkClick = () => {
     if (isMobile) setSidebarOpen(false);
   };
@@ -150,21 +129,6 @@ const DashboardLayout = () => {
   const backdropVariants = {
     open: { opacity: 1 },
     closed: { opacity: 0 },
-  };
-
-  const dropdownVariants = {
-    open: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: { duration: 0.2, ease: "easeOut" },
-    },
-    closed: {
-      opacity: 0,
-      y: -10,
-      scale: 0.95,
-      transition: { duration: 0.15, ease: "easeIn" },
-    },
   };
 
   const linkVariants = {
@@ -207,80 +171,7 @@ const DashboardLayout = () => {
             </div>
 
             {/* User Dropdown */}
-            <div className="flex items-center gap-2 sm:gap-4">
-              <div className="relative" ref={dropdownRef}>
-                <button
-                  onClick={() => setDropdownOpen(!dropdownOpen)}
-                  className="flex items-center gap-2 btn btn-ghost btn-circle btn-sm sm:btn-md"
-                  aria-label="User menu"
-                >
-                  <Avatar
-                    src={currentUser?.photoURL}
-                    alt={currentUser?.displayName}
-                  />
-                </button>
-
-                <AnimatePresence>
-                  {dropdownOpen && (
-                    <motion.div
-                      variants={dropdownVariants}
-                      initial="closed"
-                      animate="open"
-                      exit="closed"
-                      className="absolute right-0 mt-2 w-56 sm:w-64 rounded-lg shadow-lg bg-base-100 dark:bg-gray-800 border border-base-300 dark:border-gray-700 overflow-hidden z-50"
-                    >
-                      <div className="p-4 border-b border-base-300 dark:border-gray-700">
-                        <div className="flex items-center gap-3">
-                          <Avatar
-                            src={currentUser?.photoURL}
-                            alt={currentUser?.displayName}
-                            size="size-10 md:size-12"
-                          />
-                          <div className="flex-1 min-w-0">
-                            <p className="font-semibold text-sm truncate text-base-content dark:text-white">
-                              {currentUser?.displayName || "User"}
-                            </p>
-                            <p className="text-xs text-base-content/60 dark:text-gray-400 truncate">
-                              {currentUser?.email || ""}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="py-1">
-                        <NavLink
-                          to="/"
-                          className="flex items-center gap-3 px-4 py-3 text-sm hover:bg-base-200 dark:hover:bg-gray-700 text-base-content dark:text-gray-300"
-                          onClick={() => setDropdownOpen(false)}
-                        >
-                          <HiOutlineHome className="size-4 shrink-0" />
-                          <span>Home</span>
-                        </NavLink>
-
-                        <NavLink
-                          to="/all-jobs"
-                          className="flex items-center gap-3 px-4 py-3 text-sm hover:bg-base-200 dark:hover:bg-gray-700 text-base-content dark:text-gray-300"
-                          onClick={() => setDropdownOpen(false)}
-                        >
-                          <HiOutlineBriefcase className="size-4 shrink-0" />
-                          <span>All Jobs</span>
-                        </NavLink>
-
-                        <div className="border-t border-base-300 dark:border-gray-700 my-1"></div>
-
-                        <button
-                          onClick={handleLogout}
-                          className="flex items-center gap-3 w-full px-4 py-3 text-sm hover:bg-base-200 dark:hover:bg-gray-700 text-error dark:text-red-400"
-                        >
-                          <HiOutlineLogout className="size-4 shrink-0" />
-                          <span>Logout</span>
-                        </button>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            </div>
+            <AvatarDropdown />
           </div>
         </MyContainer>
       </header>
