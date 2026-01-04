@@ -236,7 +236,7 @@ const Overview = () => {
                     <YAxis allowDecimals={false} stroke="#94a3b8" />
                     <Tooltip
                       contentStyle={{
-                        backgroundColor: "hsl(var(--b1))",
+                        backgroundColor: "#2fd4bf2b",
                         border: "1px solid hsl(var(--bc) / 0.2)",
                         borderRadius: "8px",
                       }}
@@ -244,9 +244,9 @@ const Overview = () => {
                     <Line
                       type="monotone"
                       dataKey="jobs"
-                      stroke="hsl(var(--p))"
+                      stroke="#01a9b4"
                       strokeWidth={3}
-                      dot={{ r: 5, fill: "hsl(var(--p))" }}
+                      dot={{ r: 5, fill: "#086972" }}
                       activeDot={{ r: 7 }}
                     />
                   </LineChart>
