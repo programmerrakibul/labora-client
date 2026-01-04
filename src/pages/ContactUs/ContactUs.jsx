@@ -201,7 +201,7 @@ const ContactUs = () => {
                   <MyLabel htmlFor="name">Full Name</MyLabel>
                   <MyInput
                     type="text"
-                    holder="John Doe"
+                    placeholder="John Doe"
                     {...register("name", {
                       required: "Name is required",
                     })}
@@ -223,7 +223,7 @@ const ContactUs = () => {
                   <MyLabel htmlFor="email">Email</MyLabel>
                   <MyInput
                     type="email"
-                    holder="john@example.com"
+                    placeholder="john@example.com"
                     {...register("email", {
                       required: "Email is required",
                       pattern: {
@@ -248,7 +248,7 @@ const ContactUs = () => {
                   <MyLabel htmlFor="phone">Phone (Optional)</MyLabel>
                   <MyInput
                     type="tel"
-                    holder="+1 (555) 123-4567"
+                    placeholder="+1 (555) 123-4567"
                     required={false}
                     {...register("phone")}
                   />
@@ -263,7 +263,7 @@ const ContactUs = () => {
                   <MyLabel htmlFor="subject">Subject</MyLabel>
                   <MyInput
                     type="text"
-                    holder="How can we help?"
+                    placeholder="How can we help?"
                     {...register("subject", {
                       required: "Subject is required",
                     })}

@@ -620,7 +620,7 @@ const Homepage = () => {
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                // Handle subscription logic here (e.g., send to backend or Mailchimp)
+
                 const email = e.target.email.value;
                 if (email) {
                   toast.success("Successfully subscribed");

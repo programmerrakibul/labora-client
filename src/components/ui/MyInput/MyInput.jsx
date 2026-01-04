@@ -1,11 +1,10 @@
 const MyInput = ({
   type = "text",
-  holder,
+  placeholder = "",
   name = "",
   className = "",
   required = true,
   disabled = false,
-  defaultValue = "",
   ...props
 }) => {
   return (
@@ -14,10 +13,9 @@ const MyInput = ({
         id={name}
         name={name}
         type={type}
-        placeholder={holder}
+        placeholder={placeholder}
         className={`input ${className}`}
         disabled={disabled}
-        defaultValue={defaultValue}
         required={required}
         {...props}
       />

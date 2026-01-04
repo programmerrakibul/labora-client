@@ -103,7 +103,11 @@ const RegisterPage = () => {
                 <form onSubmit={handleCreateUser} className="space-y-3.5">
                   <div className="space-y-1.5">
                     <MyLabel htmlFor="name">Name</MyLabel>
-                    <MyInput disabled={loading} name="name" holder="John Doe" />
+                    <MyInput
+                      disabled={loading}
+                      name="name"
+                      placeholder="John Doe"
+                    />
                   </div>
 
                   <div className="space-y-1.5">
@@ -112,7 +116,7 @@ const RegisterPage = () => {
                       name="email"
                       type="email"
                       disabled={loading}
-                      holder="john-doe@gmail.com"
+                      placeholder="john-doe@gmail.com"
                     />
                   </div>
 
@@ -122,7 +126,7 @@ const RegisterPage = () => {
                       type="url"
                       disabled={loading}
                       name="photoURL"
-                      holder="https://example.png"
+                      placeholder="https://example.png"
                     />
                   </div>
 
@@ -133,7 +137,7 @@ const RegisterPage = () => {
                         disabled={loading}
                         name="password"
                         type={show ? "text" : "password"}
-                        holder="••••••••"
+                        placeholder="••••••••"
                       />
                       <span
                         onClick={() => setShow(!show)}

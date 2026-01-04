@@ -104,7 +104,6 @@ const EditProfile = () => {
                   Display Name
                 </MyLabel>
                 <MyInput
-                  type="text"
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
                   placeholder="Enter your display name"
