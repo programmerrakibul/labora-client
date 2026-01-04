@@ -11,9 +11,7 @@ import getAuthErrorMessage from "../../../utilities/getAuthErrorMessage";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import MyContainer from "../../../components/shared/MyContainer/MyContainer";
 import MyTitle from "../../../components/ui/MyTitle/MyTitle";
-import useThemeContext from "../../../hooks/useThemeContext";
 import loginGIF from "../../../../lotties/login.json";
-import loginGIFDark from "../../../../lotties/login_dark.json";
 import Lottie from "lottie-react";
 // eslint-disable-next-line no-unused-vars
 import * as motion from "motion/react-client";
@@ -23,7 +21,6 @@ import GoogleButton from "../../../components/ui/GoogleButton/GoogleButton";
 const LoginPage = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { theme } = useThemeContext();
   const { loginUser } = useAuthInfo();
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -51,8 +48,6 @@ const LoginPage = () => {
     }
   };
 
-  const data = theme === "light" ? loginGIF : loginGIFDark;
-
   return (
     <>
       <title>Login in to your account - Labora</title>
@@ -71,7 +66,7 @@ const LoginPage = () => {
 
             <div className="p-4 md:p-8 rounded-md shadow-md bg-primary/7 dark:bg-info/15 flex md:items-center md:justify-between md:gap-8 max-w-md md:max-w-full mx-auto">
               <div className="flex-1/2 hidden md:inline-block">
-                <Lottie animationData={data} />
+                <Lottie animationData={loginGIF} />
               </div>
 
               <div className="flex-1/2">
@@ -119,7 +114,9 @@ const LoginPage = () => {
                     >
                       {loading ? <ActionSpinner /> : "Login"}
                     </MyButton>
-                    <span className="text-green-500 text-sm block text-center">Filled with demo credentials.</span>
+                    <span className="text-green-500 text-sm block text-center">
+                      Filled with demo credentials.
+                    </span>
                   </div>
 
                   <div className="text-center">

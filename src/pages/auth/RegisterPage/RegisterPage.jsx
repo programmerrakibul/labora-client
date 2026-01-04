@@ -9,9 +9,7 @@ import getAuthErrorMessage from "../../../utilities/getAuthErrorMessage";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import MyContainer from "../../../components/shared/MyContainer/MyContainer";
 import MyTitle from "../../../components/ui/MyTitle/MyTitle";
-import useThemeContext from "../../../hooks/useThemeContext";
-import regiterGIF from "../../../../lotties/register.json";
-import regiterGIFDark from "../../../../lotties/register_dark.json";
+import registerGIF from "../../../../lotties/register.json";
 // eslint-disable-next-line no-unused-vars
 import * as motion from "motion/react-client";
 import Lottie from "lottie-react";
@@ -22,7 +20,6 @@ import MyInput from "../../../components/ui/MyInput/MyInput";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
-  const { theme } = useThemeContext();
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
   const { createUser, updateUserProfile } = useAuthInfo();
@@ -84,8 +81,6 @@ const RegisterPage = () => {
       setLoading(false);
     }
   };
-
-  const data = theme === "light" ? regiterGIF : regiterGIFDark;
 
   return (
     <>
@@ -175,7 +170,7 @@ const RegisterPage = () => {
               </div>
 
               <div className="flex-1/2 hidden lg:inline-block">
-                <Lottie animationData={data} loop={true} />
+                <Lottie animationData={registerGIF} loop={true} />
               </div>
             </div>
           </div>
