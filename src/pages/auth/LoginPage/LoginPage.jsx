@@ -82,7 +82,8 @@ const LoginPage = () => {
                       name="email"
                       type="email"
                       disabled={loading}
-                      holder="john-doe@gmail.com"
+                      placeholder="john-doe@gmail.com"
+                      defaultValue="demo@gmail.com"
                     />
                   </div>
 
@@ -93,7 +94,8 @@ const LoginPage = () => {
                         disabled={loading}
                         name="password"
                         type={show ? "text" : "password"}
-                        holder="••••••••"
+                        placeholder="••••••••"
+                        defaultValue="Rakibul206#"
                       />
                       <span
                         onClick={() => setShow(!show)}
@@ -110,13 +112,14 @@ const LoginPage = () => {
                     </a>
                   </div>
 
-                  <div>
+                  <div className="space-y-1.5">
                     <MyButton
                       disabled={loading || googleLoading}
                       className="btn-block"
                     >
                       {loading ? <ActionSpinner /> : "Login"}
                     </MyButton>
+                    <span className="text-green-500 text-sm block text-center">Filled with demo credentials.</span>
                   </div>
 
                   <div className="text-center">
