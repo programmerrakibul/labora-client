@@ -1,173 +1,315 @@
-import { useEffect, useState } from "react";
+// src/pages/Dashboard/UpdateJobDetails.jsx
+import { useEffect, useState, useRef } from "react";
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
+import { gsap } from "gsap";
+import { useNavigate, useParams } from "react-router";
+import { toast } from "react-toastify";
+
+import MyContainer from "../../../components/shared/MyContainer/MyContainer";
+import MyButton from "../../../components/ui/MyButton/MyButton";
+import MyTitle from "../../../components/ui/MyTitle/MyTitle";
+import ActionSpinner from "../../../components/ui/ActionSpinner/ActionSpinner";
+import FetchSpinner from "../../../components/ui/FetchSpinner/FetchSpinner";
+import useSecureAxios from "../../../hooks/useSecureAxios";
+import { getAlert } from "../../../utilities/getAlert";
 import MyLabel from "../../../components/ui/MyLabel/MyLabel";
 import MyInput from "../../../components/ui/MyInput/MyInput";
-import useSecureAxios from "../../../hooks/useSecureAxios";
-import MyButton from "../../../components/ui/MyButton/MyButton";
-import ActionSpinner from "../../../components/ui/ActionSpinner/ActionSpinner";
-import MyContainer from "../../../components/shared/MyContainer/MyContainer";
-import { useParams } from "react-router";
-import { toast } from "react-toastify";
-import MyTitle from "../../../components/ui/MyTitle/MyTitle";
-import useThemeContext from "../../../hooks/useThemeContext";
-import FetchSpinner from "../../../components/ui/FetchSpinner/FetchSpinner";
-import updateGIF from "../../../../lotties/update.json";
-import updateGIFDark from "../../../../lotties/update_dark.json";
-// eslint-disable-next-line no-unused-vars
-import * as motion from "motion/react-client";
-import Lottie from "lottie-react";
-import { getAlert } from "../../../utilities/getAlert";
+
+const categories = [
+  "AI & Machine Learning",
+  "Graphics Design",
+  "Scriptwriting",
+  "Video Editing",
+  "UI/UX Design",
+  "Game Design",
+  "3D Modeling",
+  "Web Design",
+  "Data Entry",
+];
+
+const jobTypes = ["Full-time", "Part-time", "Freelance", "Contract"];
+const experienceLevels = [
+  "Entry-Level",
+  "Junior",
+  "Mid-Level",
+  "Senior",
+  "Lead",
+];
 
 const UpdateJobDetails = () => {
   const { id } = useParams();
-  const { theme } = useThemeContext();
   const secureAxios = useSecureAxios();
-  const [productLoading, setProductLoading] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const [singleJob, setSingleJob] = useState({});
-  const { job_title, job_image, job_category, job_summary } = singleJob;
+  const [loading, setLoading] = useState(true);
+  const [updating, setUpdating] = useState(false);
+  const [job, setJob] = useState({});
+  const containerRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    (async () => {
-      setProductLoading(true);
-
+    const fetchJob = async () => {
+      setLoading(true);
       try {
         const { data } = await secureAxios.get(`/jobs/${id}`);
-
         if (data.success) {
-          setSingleJob(data.single_job);
+          setJob(data.single_job);
         }
+      } catch {
+        toast.error("Failed to load job details");
       } finally {
-        setProductLoading(false);
+        setLoading(false);
       }
-    })();
-  }, [secureAxios, id]);
+    };
+    fetchJob();
+  }, [id, secureAxios]);
 
-  const handleUpdateJob = async (e) => {
+  // GSAP stagger animation
+  useEffect(() => {
+    if (!loading && containerRef.current) {
+      gsap.fromTo(
+        containerRef.current.querySelectorAll(".stagger-item"),
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "power3.out",
+        }
+      );
+    }
+  }, [loading]);
+
+  const handleUpdate = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setUpdating(true);
 
-    const form = e.currentTarget;
-    const formData = Object.fromEntries(new FormData(form));
+    const formData = new FormData(e.target);
+    const updatedData = Object.fromEntries(formData);
 
-    Object.entries(formData).forEach(([key, value]) => {
-      formData[key] = value.trim();
+    // Trim all values
+    Object.keys(updatedData).forEach((key) => {
+      if (typeof updatedData[key] === "string") {
+        updatedData[key] = updatedData[key].trim();
+      }
     });
 
     try {
-      const { data } = await secureAxios.put(`/jobs/${id}`, formData);
+      const { data } = await secureAxios.put(`/jobs/${id}`, updatedData);
 
       if (data.success) {
+        setJob((prev) => ({ ...prev, ...updatedData }));
+
         getAlert({
-          title: data.message,
+          title: "Job updated successfully!",
+          icon: "success",
+          timer: 3000,
         });
+
+        navigate("/dashboard/my-jobs");
       }
     } catch {
-      toast.error("Job data update failed");
+      toast.error("Failed to update job. Please try again.");
     } finally {
-      setLoading(false);
+      setUpdating(false);
     }
   };
 
-  const data = theme === "light" ? updateGIF : updateGIFDark;
-
-  if (productLoading) {
-    return <FetchSpinner />;
+  if (loading) {
+    return <FetchSpinner className="min-h-screen" />;
   }
+
+  const {
+    job_title = "",
+    job_category = "",
+    job_image = "",
+    job_summary = "",
+    job_type = "",
+    location = "",
+    experience_level = "",
+    application_deadline = "",
+  } = job;
 
   return (
     <>
-      <title>Update your job details - Labora</title>
+      <title>Update Job - Labora Dashboard</title>
 
-      <motion.section
-        className="py-8 my-5"
-        initial={{ opacity: 0, x: "-100vw" }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ type: "spring", delay: 0.3, bounce: 0.4 }}
-      >
-        <MyContainer>
-          <div className="space-y-10 max-w-4xl mx-auto">
-            <div>
-              <MyTitle>Update Your Job</MyTitle>
-            </div>
+      <section className="py-8 lg:py-12">
+        <MyContainer ref={containerRef}>
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-10 stagger-item"
+          >
+            <MyTitle>Update Job Posting</MyTitle>
+            <p className="mt-4 text-lg text-base-content/70 dark:text-gray-400">
+              Edit the details of your job listing
+            </p>
+          </motion.div>
 
-            <div className="p-4 md:p-8 rounded-md shadow-md bg-primary/7 dark:bg-info/30 lg:flex lg:items-center lg:justify-between lg:gap-8 max-w-md lg:max-w-full mx-auto">
-              <div className="lg:flex-1/2">
-                <form onSubmit={handleUpdateJob} className="space-y-3.5">
-                  <div className="space-y-1.5">
-                    <MyLabel htmlFor="job_title">Title</MyLabel>
+          {/* Form Card */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2 }}
+            className="stagger-item bg-base-100 dark:bg-gray-800 rounded-2xl shadow-2xl border border-base-300 dark:border-gray-700 overflow-hidden"
+          >
+            <div className="p-6 sm:p-8 lg:p-12">
+              <form onSubmit={handleUpdate} className="space-y-10">
+                {/* Basic Information */}
+                <div className="space-y-6">
+                  <h3 className="text-2xl font-bold font-['Raleway'] text-primary">
+                    Basic Information
+                  </h3>
+                  <div className="grid sm:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <MyLabel htmlFor="job_title">Job Title</MyLabel>
+                      <MyInput
+                        name="job_title"
+                        defaultValue={job_title}
+                        placeholder="Enter job title"
+                        disabled={updating}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <MyLabel htmlFor="job_category">Category</MyLabel>
+                      <select
+                        name="job_category"
+                        defaultValue={job_category}
+                        className="select select-bordered select-primary w-full"
+                        disabled={updating}
+                        required
+                      >
+                        <option value="" disabled>
+                          Select category
+                        </option>
+                        {categories.map((cat) => (
+                          <option key={cat} value={cat}>
+                            {cat}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <MyLabel htmlFor="job_image">Job Image URL</MyLabel>
                     <MyInput
-                      disabled={loading}
-                      name="job_title"
-                      holder="Enter Job Title"
-                      defaultValue={job_title}
-                      required={false}
+                      type="url"
+                      name="job_image"
+                      defaultValue={job_image}
+                      placeholder="https://example.com/image.jpg"
+                      disabled={updating}
                     />
                   </div>
 
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div className="space-y-1.5 flex-1/2">
-                      <MyLabel htmlFor="job_category">Category</MyLabel>
+                  <div className="space-y-2">
+                    <MyLabel htmlFor="job_summary">Job Summary</MyLabel>
+                    <textarea
+                      name="job_summary"
+                      rows="4"
+                      defaultValue={job_summary}
+                      placeholder="Brief description of the job..."
+                      className="textarea textarea-bordered textarea-primary w-full resize-none"
+                      disabled={updating}
+                      required
+                    />
+                  </div>
+                </div>
 
+                {/* Job Details */}
+                <div className="space-y-6">
+                  <h3 className="text-2xl font-bold font-['Raleway'] text-primary">
+                    Job Details
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="space-y-2">
+                      <MyLabel htmlFor="job_type">Job Type</MyLabel>
                       <select
-                        defaultValue={job_category}
-                        className="select"
-                        name="job_category"
-                        id="job_category"
-                        disabled={loading}
+                        name="job_type"
+                        defaultValue={job_type}
+                        className="select select-bordered w-full"
+                        disabled={updating}
+                        required
                       >
-                        <option disabled={true}>Enter Job Category</option>
-                        <option>AI & Machine Learning</option>
-                        <option>Graphics Design</option>
-                        <option>Scriptwriting</option>
-                        <option>Video Editing</option>
-                        <option>UI/UX Design</option>
-                        <option>Game Design</option>
-                        <option>3D Modeling</option>
-                        <option>Web Design</option>
-                        <option>Data Entry</option>
+                        <option value="" disabled>
+                          Select type
+                        </option>
+                        {jobTypes.map((type) => (
+                          <option key={type} value={type}>
+                            {type}
+                          </option>
+                        ))}
                       </select>
                     </div>
 
-                    <div className="space-y-1.5 flex-1/2">
-                      <MyLabel htmlFor="job_image">Job Image</MyLabel>
+                    <div className="space-y-2">
+                      <MyLabel htmlFor="location">Location</MyLabel>
                       <MyInput
-                        disabled={loading}
-                        type="url"
-                        name="job_image"
-                        holder="Enter Job Photo URL"
-                        required={false}
-                        defaultValue={job_image}
+                        name="location"
+                        defaultValue={location}
+                        placeholder="e.g. Remote, London"
+                        disabled={updating}
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <MyLabel htmlFor="experience_level">
+                        Experience Level
+                      </MyLabel>
+                      <select
+                        name="experience_level"
+                        defaultValue={experience_level}
+                        className="select select-bordered w-full"
+                        disabled={updating}
+                        required
+                      >
+                        <option value="" disabled>
+                          Select level
+                        </option>
+                        {experienceLevels.map((level) => (
+                          <option key={level} value={level}>
+                            {level}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <MyLabel htmlFor="application_deadline">
+                        Application Deadline
+                      </MyLabel>
+                      <MyInput
+                        type="date"
+                        name="application_deadline"
+                        defaultValue={application_deadline}
+                        min={new Date().toISOString().split("T")[0]}
+                        className="input input-bordered w-full"
+                        disabled={updating}
+                        required
                       />
                     </div>
                   </div>
+                </div>
 
-                  <div className="space-y-1.5">
-                    <MyLabel htmlFor="job_summary">Summery</MyLabel>
-                    <textarea
-                      name="job_summary"
-                      id="job_summary"
-                      className="textarea"
-                      placeholder="Enter Job Summery"
-                      defaultValue={job_summary}
-                      disabled={loading}
-                    ></textarea>
-                  </div>
-
-                  <div>
-                    <MyButton disabled={loading} className="btn-block">
-                      {loading ? <ActionSpinner /> : "Update"}
-                    </MyButton>
-                  </div>
-                </form>
-              </div>
-
-              <div className="flex-1/2 hidden lg:inline-block">
-                <Lottie animationData={data} loop={true} />
-              </div>
+                {/* Submit Button */}
+                <div className="pt-8 border-t border-base-300 dark:border-gray-700">
+                  <MyButton disabled={updating} className="btn-block">
+                    {updating ? (
+                      <>
+                        <ActionSpinner />
+                      </>
+                    ) : (
+                      "Update Job"
+                    )}
+                  </MyButton>
+                </div>
+              </form>
             </div>
-          </div>
+          </motion.div>
         </MyContainer>
-      </motion.section>
+      </section>
     </>
   );
 };
