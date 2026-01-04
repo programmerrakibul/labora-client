@@ -12,6 +12,22 @@ import FetchSpinner from "../../components/ui/FetchSpinner/FetchSpinner";
 import * as motion from "motion/react-client";
 import MyButton from "../../components/ui/MyButton/MyButton";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
+import MyInput from "../../components/ui/MyInput/MyInput";
+import { howItWorksData } from "../../data/howItWorksData";
+import {
+  HiOutlineUserPlus,
+  HiOutlineMagnifyingGlassCircle,
+  HiOutlineShieldCheck,
+  HiOutlineCurrencyDollar,
+  HiOutlineDocumentText,
+  HiOutlineChatBubbleLeftRight,
+  HiOutlineBriefcase,
+} from "react-icons/hi2";
+import { testimonialsData } from "../../data/testimonialsData";
+import { HiStar } from "react-icons/hi";
+import { careerResourcesData } from "../../data/careerResourcesData";
+import { topFreelancersData } from "../../data/topFreelancersData";
 
 const Homepage = () => {
   const navigate = useNavigate();
@@ -245,6 +261,388 @@ const Homepage = () => {
               ))}
             </div>
           </div>
+        </MyContainer>
+      </section>
+
+      {/* How It Works */}
+      <section className="py-16 bg-base-200/30 dark:bg-gray-800/30">
+        <MyContainer className="space-y-12">
+          {/* Section Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center space-y-4"
+          >
+            <MyTitle>
+              How{" "}
+              <span className="primary_linear bg-clip-text text-transparent">
+                Labora
+              </span>{" "}
+              Works
+            </MyTitle>
+            <p className="text-base md:text-lg max-w-xl mx-auto">
+              Get started in just a few simple steps. Whether you're hiring top
+              talent or looking for your next project, Labora makes it easy and
+              secure.
+            </p>
+          </motion.div>
+
+          {/* Steps Grid */}
+          <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
+            {howItWorksData.map((item, index) => {
+              const IconComponent = {
+                userPlus: HiOutlineUserPlus,
+                search: HiOutlineMagnifyingGlassCircle,
+                shield: HiOutlineShieldCheck,
+              }[item.iconType];
+
+              return (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.2 }}
+                  viewport={{ once: true }}
+                  className="group relative card bg-base-100 dark:bg-gray-800 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-base-300 dark:border-gray-700"
+                >
+                  <div className="card-body text-center space-y-6 p-8">
+                    <div
+                      className={`w-16 h-16 rounded-2xl bg-${item.color}/10 text-${item.color} flex items-center justify-center mx-auto`}
+                    >
+                      <IconComponent className="w-9 h-9" />
+                    </div>
+
+                    {/* Step Number */}
+                    <span className="absolute top-4 right-6 text-6xl font-bold text-primary/5 dark:text-primary/10 select-none">
+                      {item.step}
+                    </span>
+
+                    {/* Content */}
+                    <div className="space-y-4">
+                      <h3 className="text-2xl font-bold text-base-content dark:text-white">
+                        {item.title}
+                      </h3>
+                      <p className="text-base-content/70 dark:text-gray-300 leading-relaxed">
+                        {item.description}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Connector Line */}
+                  {index < howItWorksData.length - 1 && (
+                    <div className="hidden md:block absolute top-1/2 -right-6 w-12 h-1 bg-primary/20 dark:bg-primary/30 -translate-y-1/2" />
+                  )}
+                </motion.div>
+              );
+            })}
+          </div>
+
+          {/* CTA */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center"
+          >
+            <MyButton onClick={() => navigate("/all-jobs")}>
+              Get Started Today
+            </MyButton>
+          </motion.div>
+        </MyContainer>
+      </section>
+
+      {/* Success Stories */}
+      <section className="py-16 bg-base-100 dark:bg-gray-900">
+        <MyContainer className="space-y-12">
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center space-y-4"
+          >
+            <MyTitle>
+              Success{" "}
+              <span className="primary_linear bg-clip-text text-transparent">
+                Stories
+              </span>
+            </MyTitle>
+            <p className="text-base md:text-lg max-w-xl mx-auto">
+              Real freelancers and clients share how Labora transformed their
+              work and business.
+            </p>
+          </motion.div>
+
+          {/* Testimonials Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {testimonialsData.map((testimonial, index) => (
+              <motion.div
+                key={testimonial.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.15 }}
+                viewport={{ once: true }}
+                className="card bg-base-200 dark:bg-gray-800 shadow-xl hover:shadow-2xl transition-all duration-400 border border-base-300 dark:border-gray-700"
+              >
+                <div className="card-body space-y-5">
+                  <div className="flex text-warning">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <HiStar key={i} className="w-5 h-5 fill-current" />
+                    ))}
+                  </div>
+
+                  {/* Quote */}
+                  <p className="text-base-content/80 dark:text-gray-200 italic leading-relaxed">
+                    "{testimonial.quote}"
+                  </p>
+
+                  {/* Author */}
+                  <div className="flex items-center gap-4 pt-4 border-t border-base-300 dark:border-gray-700">
+                    <div className="avatar">
+                      <div className="w-12 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                        <img
+                          src={testimonial.avatar}
+                          alt={testimonial.name}
+                          className="object-cover"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-base-content dark:text-white">
+                        {testimonial.name}
+                      </h4>
+                      <p className="text-sm text-base-content/60 dark:text-gray-400">
+                        {testimonial.role} • {testimonial.company}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </MyContainer>
+      </section>
+
+      {/* Career Resources */}
+      <section className="py-16 bg-linear-to-b from-base-200/50 to-base-100 dark:from-gray-800/50 dark:to-gray-900">
+        <MyContainer className="space-y-12">
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center space-y-4"
+          >
+            <MyTitle>
+              Career{" "}
+              <span className="primary_linear bg-clip-text text-transparent">
+                Resources
+              </span>
+            </MyTitle>
+            <p className="text-base md:text-lg max-w-xl mx-auto">
+              Level up your freelance career with expert guides, templates, and
+              tools.
+            </p>
+          </motion.div>
+
+          {/* Resources Grid */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {careerResourcesData.map((resource, index) => {
+              const IconComponent = {
+                currency: HiOutlineCurrencyDollar,
+                document: HiOutlineDocumentText,
+                chat: HiOutlineChatBubbleLeftRight,
+                briefcase: HiOutlineBriefcase,
+              }[resource.iconType];
+
+              return (
+                <motion.div
+                  key={resource.id} // Stable unique key
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  whileHover={{ y: -8, scale: 1.03 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="group cursor-pointer card bg-base-100 dark:bg-gray-800 shadow-md hover:shadow-xl transition-all duration-400 h-full border border-base-300 dark:border-gray-700"
+                  onClick={() => toast.info("Feature is in progress!")}
+                >
+                  <div className="card-body text-center space-y-4 p-6">
+                    {/* Dynamic Icon */}
+                    <div
+                      className={`mx-auto p-4 rounded-2xl bg-base-200 dark:bg-gray-700 text-${resource.color}`}
+                    >
+                      <IconComponent className="w-10 h-10" />
+                    </div>
+
+                    <h3 className="text-xl font-bold text-base-content dark:text-white">
+                      {resource.title}
+                    </h3>
+                    <p className="text-base-content/70 dark:text-gray-300 text-sm">
+                      {resource.description}
+                    </p>
+                    <span className="text-primary font-medium group-hover:text-primary-focus transition-colors">
+                      Learn More →
+                    </span>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </MyContainer>
+      </section>
+
+      {/* Top Freelancers */}
+      <section className="py-16 bg-base-200/40 dark:bg-gray-800/40">
+        <MyContainer className="space-y-12">
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center space-y-4"
+          >
+            <MyTitle>
+              Top{" "}
+              <span className="primary_linear bg-clip-text text-transparent">
+                Freelancers
+              </span>
+            </MyTitle>
+            <p className="text-base md:text-lg max-w-xl mx-auto">
+              Meet our highest-rated talent. These professionals consistently
+              deliver exceptional work and earn top client trust.
+            </p>
+          </motion.div>
+
+          {/* Freelancers Grid */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {topFreelancersData.map((freelancer, index) => (
+              <motion.div
+                key={freelancer.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ y: -8, scale: 1.02 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="group cursor-pointer"
+              >
+                <div className="card bg-base-100 dark:bg-gray-900 shadow-lg hover:shadow-2xl transition-all duration-500 border border-base-300 dark:border-gray-700 h-full">
+                  <div className="card-body text-center space-y-5 p-6">
+                    {/* Avatar */}
+                    <div className="avatar online mx-auto">
+                      <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-4">
+                        <img
+                          src={freelancer.avatar}
+                          alt={freelancer.name}
+                          className="object-cover"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Info */}
+                    <div className="space-y-2">
+                      <h3 className="text-xl font-bold text-base-content dark:text-white">
+                        {freelancer.name}
+                      </h3>
+                      <p className="text-base-content/70 dark:text-gray-300">
+                        {freelancer.title}
+                      </p>
+
+                      {/* Rating & Jobs */}
+                      <div className="flex items-center justify-center gap-4 text-sm">
+                        <div className="flex items-center gap-1">
+                          <HiStar className="w-5 h-5 text-warning fill-current" />
+                          <span className="font-semibold">
+                            {freelancer.rating}
+                          </span>
+                        </div>
+                        <span className="text-base-content/50 dark:text-gray-500">
+                          {freelancer.jobs} jobs
+                        </span>
+                      </div>
+
+                      {/* Earnings Badge */}
+                      <div className="badge badge-lg badge-primary font-bold">
+                        Earned ${freelancer.earnings}
+                      </div>
+                    </div>
+
+                    {/* Skills */}
+                    <div className="flex flex-wrap gap-2 justify-center">
+                      {freelancer.skills.map((skill) => (
+                        <div
+                          key={skill}
+                          className="badge badge-outline badge-sm text-base-content/70 dark:text-gray-400"
+                        >
+                          {skill}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </MyContainer>
+      </section>
+
+      {/* Newsletter Section */}
+      <section className="py-16 bg-linear-to-br from-primary/10 via-base-100 to-secondary/10 dark:from-primary/20 dark:via-gray-900 dark:to-secondary/20">
+        <MyContainer>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            viewport={{ once: true }}
+            className="text-center space-y-8"
+          >
+            {/* Headline */}
+            <div className="space-y-4">
+              <MyTitle>
+                Stay Ahead with{" "}
+                <span className="primary_linear bg-clip-text text-transparent">
+                  Labora Updates
+                </span>
+              </MyTitle>
+              <p className="text-base md:text-lg max-w-xl mx-auto">
+                Get the latest job opportunities, freelance tips, platform
+                updates, and exclusive insights delivered straight to your
+                inbox.
+              </p>
+            </div>
+
+            {/* Subscribe Form */}
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                // Handle subscription logic here (e.g., send to backend or Mailchimp)
+                const email = e.target.email.value;
+                if (email) {
+                  toast.success("Successfully subscribed");
+                  e.target.reset();
+                }
+              }}
+              className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto"
+            >
+              <MyInput
+                type="email"
+                name="email"
+                placeholder="Enter your email address"
+              />
+
+              <MyButton>Subscribe Now</MyButton>
+            </form>
+
+            {/* Trust & Privacy Note */}
+            <p className="text-sm text-base-content/60 dark:text-gray-400">
+              We respect your privacy. Unsubscribe at any time. No spam, ever.
+            </p>
+          </motion.div>
         </MyContainer>
       </section>
     </>
