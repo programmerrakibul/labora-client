@@ -71,7 +71,7 @@ const AllJobsPage = () => {
 
         if (data.success) {
           setJobs(data.jobs);
-          setTotalPages(Math.ceil(data.pagination.totalJobs / limit) || 1); // ← This was the bug
+          setTotalPages(Math.ceil(data.pagination.totalJobs / limit) || 1);
         }
       } catch (err) {
         console.error(err);
@@ -80,7 +80,7 @@ const AllJobsPage = () => {
       }
     };
 
-    const timer = setTimeout(() => fetchJobs(), 400); // debounce search
+    const timer = setTimeout(() => fetchJobs(), 400); 
     return () => clearTimeout(timer);
   }, [
     search,
