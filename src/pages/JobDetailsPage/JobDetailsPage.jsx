@@ -179,7 +179,12 @@ const JobDetailsPage = () => {
                     { icon: HiOutlineClock, label: experience_level },
                     {
                       icon: HiOutlineCurrencyDollar,
-                      label: `${salary_min?.toLocaleString()} - ${salary_max?.toLocaleString()} ${currency} / ${salary_period}`,
+                      label:
+                        salary_min &&
+                        salary_max &&
+                        currency &&
+                        salary_period &&
+                        `${salary_min?.toLocaleString()} - ${salary_max?.toLocaleString()} ${currency} / ${salary_period}`,
                     },
                   ].map((item, i) => (
                     <div
@@ -337,19 +342,18 @@ const JobDetailsPage = () => {
           </div>
 
           {/* Company Description */}
-          {company_description && (
-            <motion.div
-              className="stagger-item mt-12 bg-base-200 dark:bg-gray-800/50 rounded-2xl p-8 border border-base-300 dark:border-gray-700"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-2xl font-bold mb-4">About the Company</h2>
-              <p className="text-lg text-base-content/80 dark:text-gray-300 leading-relaxed">
-                {company_description}
-              </p>
-            </motion.div>
-          )}
+
+          <motion.div
+            className="stagger-item mt-12 bg-base-200 dark:bg-gray-800/50 rounded-2xl p-8 border border-base-300 dark:border-gray-700"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-2xl font-bold mb-4">About the Company</h2>
+            <p className="text-lg text-base-content/80 dark:text-gray-300 leading-relaxed">
+              {company_description}
+            </p>
+          </motion.div>
         </MyContainer>
       </section>
     </>
