@@ -85,8 +85,6 @@ const AddJobPage = () => {
     // Auto-fill
     jobData.posted_by = currentUser?.displayName || "Anonymous";
     jobData.creator_email = currentUser?.email;
-    jobData.created_at = new Date().toISOString();
-    jobData.status = "pending";
 
     // Handle list fields (one per line)
     ["requirements", "responsibilities", "benefits"].forEach((field) => {
