@@ -255,7 +255,7 @@ const AllJobsPage = () => {
                   <button
                     onClick={() => setPage((p) => Math.max(1, p - 1))}
                     disabled={page === 1}
-                    className="btn btn-outline btn-sm"
+                    className="btn btn-outline btn-sm disabled:text-neutral/80"
                   >
                     Previous
                   </button>
@@ -275,7 +275,7 @@ const AllJobsPage = () => {
                   <button
                     onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                     disabled={page === totalPages}
-                    className="btn btn-outline btn-sm"
+                    className="btn btn-outline btn-sm disabled:text-neutral/80"
                   >
                     Next
                   </button>

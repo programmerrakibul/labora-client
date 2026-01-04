@@ -8,9 +8,6 @@ import {
   HiOutlinePlusCircle,
   HiOutlineFolder,
   HiOutlineCheckCircle,
-  HiOutlineHome,
-  HiOutlineLogout,
-  HiOutlineBriefcase,
   HiOutlineUser,
 } from "react-icons/hi";
 import Logo from "../components/shared/Logo/Logo";
@@ -144,36 +141,34 @@ const DashboardLayout = () => {
     <div className="flex h-screen flex-col bg-base-100 dark:bg-gray-900 overflow-hidden">
       {/* Header/Navbar */}
       <header className="sticky top-0 z-40 border-b border-base-300 bg-base-100 dark:bg-gray-800 shadow-sm">
-        <MyContainer>
-          <div className="flex items-center justify-between h-16">
-            {/* Mobile Menu Toggle */}
-            <button
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="mobile-menu-toggle lg:hidden btn btn-ghost btn-circle btn-sm"
-              aria-label="Toggle menu"
-              aria-expanded={sidebarOpen}
+        <div className="flex items-center justify-between h-16 px-5">
+          {/* Mobile Menu Toggle */}
+          <button
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            className="mobile-menu-toggle lg:hidden btn btn-ghost btn-circle btn-sm"
+            aria-label="Toggle menu"
+            aria-expanded={sidebarOpen}
+          >
+            <motion.div
+              animate={{ rotate: sidebarOpen ? 180 : 0 }}
+              transition={{ duration: 0.3 }}
             >
-              <motion.div
-                animate={{ rotate: sidebarOpen ? 180 : 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                {sidebarOpen ? (
-                  <HiOutlineX className="size-5" />
-                ) : (
-                  <HiOutlineMenu className="size-5" />
-                )}
-              </motion.div>
-            </button>
+              {sidebarOpen ? (
+                <HiOutlineX className="size-5" />
+              ) : (
+                <HiOutlineMenu className="size-5" />
+              )}
+            </motion.div>
+          </button>
 
-            {/* Logo */}
-            <div className="flex items-center gap-2">
-              <Logo />
-            </div>
-
-            {/* User Dropdown */}
-            <AvatarDropdown />
+          {/* Logo */}
+          <div className="flex items-center gap-2">
+            <Logo />
           </div>
-        </MyContainer>
+
+          {/* User Dropdown */}
+          <AvatarDropdown />
+        </div>
       </header>
 
       <div className="flex flex-1 overflow-hidden">
@@ -191,7 +186,7 @@ const DashboardLayout = () => {
               } bg-base-100 dark:bg-gray-800 border-r border-base-300 dark:border-gray-700 shadow-lg overflow-y-auto h-full`}
               aria-label="Sidebar navigation"
             >
-              <nav className="p-4 space-y-2">
+              <nav className="p-5 space-y-2">
                 <div className="px-4 py-3 mb-4 border-b border-base-300 dark:border-gray-700">
                   <p className="text-xs font-bold uppercase text-base-content/50 dark:text-gray-400">
                     Menu

@@ -265,7 +265,7 @@ const Homepage = () => {
       </section>
 
       {/* How It Works */}
-      <section className="py-16 bg-base-200/30 dark:bg-gray-800/30">
+      <section className="py-16">
         <MyContainer className="space-y-12">
           {/* Section Header */}
           <motion.div
@@ -428,7 +428,7 @@ const Homepage = () => {
       </section>
 
       {/* Career Resources */}
-      <section className="py-16 bg-linear-to-b from-base-200/50 to-base-100 dark:from-gray-800/50 dark:to-gray-900">
+      <section className="py-16">
         <MyContainer className="space-y-12">
           {/* Header */}
           <motion.div
@@ -497,7 +497,7 @@ const Homepage = () => {
       </section>
 
       {/* Top Freelancers */}
-      <section className="py-16 bg-base-200/40 dark:bg-gray-800/40">
+      <section className="py-16">
         <MyContainer className="space-y-12">
           {/* Header */}
           <motion.div
