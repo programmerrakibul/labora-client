@@ -1,5 +1,5 @@
 // src/pages/Dashboard/UpdateJobDetails.jsx
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
@@ -7,14 +7,14 @@ import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 
 import MyContainer from "../../../components/shared/MyContainer/MyContainer";
-import MyButton from "../../../components/ui/MyButton/MyButton";
-import MyTitle from "../../../components/ui/MyTitle/MyTitle";
 import ActionSpinner from "../../../components/ui/ActionSpinner/ActionSpinner";
 import FetchSpinner from "../../../components/ui/FetchSpinner/FetchSpinner";
-import useSecureAxios from "../../../hooks/useSecureAxios";
-import { getAlert } from "../../../utilities/getAlert";
-import MyLabel from "../../../components/ui/MyLabel/MyLabel";
+import MyButton from "../../../components/ui/MyButton/MyButton";
 import MyInput from "../../../components/ui/MyInput/MyInput";
+import MyLabel from "../../../components/ui/MyLabel/MyLabel";
+import MyTitle from "../../../components/ui/MyTitle/MyTitle";
+import useSecureAxios from "../../../hooks/useSecureAxios";
+import { getAlert } from "../../../lib/getAlert";
 
 const categories = [
   "AI & Machine Learning",
@@ -75,7 +75,7 @@ const UpdateJobDetails = () => {
           duration: 0.8,
           stagger: 0.1,
           ease: "power3.out",
-        }
+        },
       );
     }
   }, [loading]);

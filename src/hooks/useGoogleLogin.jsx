@@ -1,9 +1,9 @@
 import { useState } from "react";
-import useAuthInfo from "./useAuthInfo";
-import getAuthErrorMessage from "../utilities/getAuthErrorMessage";
-import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router";
-import { loginSuccessMessage } from "../utilities/getLoginMessage";
+import { toast } from "react-toastify";
+import getAuthErrorMessage from "../lib/getAuthErrorMessage";
+import { loginSuccessMessage } from "../lib/getLoginMessage";
+import useAuthInfo from "./useAuthInfo";
 
 const useGoogleLogin = () => {
   const navigate = useNavigate();

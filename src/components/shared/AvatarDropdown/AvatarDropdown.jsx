@@ -1,18 +1,18 @@
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 // eslint-disable-next-line no-unused-vars
-import { motion, AnimatePresence } from "framer-motion";
-import { NavLink, useNavigate } from "react-router";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   HiOutlineHome,
+  HiOutlineLogout,
   HiOutlinePlusCircle,
   HiOutlineUser,
-  HiOutlineLogout,
 } from "react-icons/hi";
-import useAuthInfo from "../../../hooks/useAuthInfo";
-import Avatar from "../Avatar/Avatar";
+import { NavLink, useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import { getAlert } from "../../../utilities/getAlert";
-import getAuthErrorMessage from "../../../utilities/getAuthErrorMessage";
+import useAuthInfo from "../../../hooks/useAuthInfo";
+import { getAlert } from "../../../lib/getAlert";
+import getAuthErrorMessage from "../../../lib/getAuthErrorMessage";
+import Avatar from "../Avatar/Avatar";
 
 const menuItems = [
   {

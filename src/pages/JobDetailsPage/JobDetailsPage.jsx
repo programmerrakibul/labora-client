@@ -1,34 +1,34 @@
 // src/pages/JobDetailsPage.jsx
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 // eslint-disable-next-line no-unused-vars
-import { motion, AnimatePresence } from "framer-motion";
-import { gsap } from "gsap";
 import { format } from "date-fns";
-import { useParams, useNavigate } from "react-router";
+import { motion } from "framer-motion";
+import { gsap } from "gsap";
 import {
   HiOutlineBriefcase,
   HiOutlineCalendar,
-  HiOutlineCurrencyDollar,
-  HiOutlineClock,
-  HiOutlineMail,
   HiOutlineCheckCircle,
-  HiOutlineUserGroup,
-  HiOutlineStar,
+  HiOutlineClock,
+  HiOutlineCurrencyDollar,
   HiOutlineDocumentText,
+  HiOutlineMail,
   HiOutlineSparkles,
+  HiOutlineStar,
+  HiOutlineUserGroup,
 } from "react-icons/hi";
 import { HiOutlineMapPin } from "react-icons/hi2";
+import { useNavigate, useParams } from "react-router";
 
+import { toast } from "react-toastify";
 import MyContainer from "../../components/shared/MyContainer/MyContainer";
-import MyButton from "../../components/ui/MyButton/MyButton";
+import ActionSpinner from "../../components/ui/ActionSpinner/ActionSpinner";
 import Badge from "../../components/ui/Badge/Badge";
 import FetchSpinner from "../../components/ui/FetchSpinner/FetchSpinner";
-import ActionSpinner from "../../components/ui/ActionSpinner/ActionSpinner";
+import MyButton from "../../components/ui/MyButton/MyButton";
 import useAuthInfo from "../../hooks/useAuthInfo";
 import usePublicAxios from "../../hooks/usePublicAxios";
 import useSecureAxios from "../../hooks/useSecureAxios";
-import { getAlert } from "../../utilities/getAlert";
-import { toast } from "react-toastify";
+import { getAlert } from "../../lib/getAlert";
 
 const JobDetailsPage = () => {
   const { id } = useParams();
@@ -72,7 +72,7 @@ const JobDetailsPage = () => {
           duration: 0.7,
           stagger: 0.1,
           ease: "power3.out",
-        }
+        },
       );
     }
   }, [loading]);
@@ -95,7 +95,7 @@ const JobDetailsPage = () => {
     try {
       const { data: updateData } = await secureAxios.put(
         `/jobs/${id}`,
-        updatedStatus
+        updatedStatus,
       );
       if (updateData.success) {
         setJob((prev) => ({ ...prev, status: "accepted" }));
@@ -267,7 +267,7 @@ const JobDetailsPage = () => {
                         <p className="font-medium">
                           {format(
                             new Date(application_deadline),
-                            "MMMM d, yyyy"
+                            "MMMM d, yyyy",
                           )}
                         </p>
                       </div>

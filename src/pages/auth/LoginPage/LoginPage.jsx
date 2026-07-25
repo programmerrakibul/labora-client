@@ -1,22 +1,22 @@
+import Lottie from "lottie-react";
 import { useState } from "react";
-import { toast } from "react-toastify";
+import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { Link, useLocation, useNavigate } from "react-router";
+import { toast } from "react-toastify";
+import loginGIF from "../../../../lotties/login.json";
+import MyContainer from "../../../components/shared/MyContainer/MyContainer";
+import ActionSpinner from "../../../components/ui/ActionSpinner/ActionSpinner";
+import MyButton from "../../../components/ui/MyButton/MyButton";
+import MyInput from "../../../components/ui/MyInput/MyInput";
+import MyLabel from "../../../components/ui/MyLabel/MyLabel";
+import MyTitle from "../../../components/ui/MyTitle/MyTitle";
 import useAuthInfo from "../../../hooks/useAuthInfo";
 import useGoogleLogin from "../../../hooks/useGoogleLogin";
-import MyLabel from "../../../components/ui/MyLabel/MyLabel";
-import MyInput from "../../../components/ui/MyInput/MyInput";
-import MyButton from "../../../components/ui/MyButton/MyButton";
-import ActionSpinner from "../../../components/ui/ActionSpinner/ActionSpinner";
-import getAuthErrorMessage from "../../../utilities/getAuthErrorMessage";
-import { VscEye, VscEyeClosed } from "react-icons/vsc";
-import MyContainer from "../../../components/shared/MyContainer/MyContainer";
-import MyTitle from "../../../components/ui/MyTitle/MyTitle";
-import loginGIF from "../../../../lotties/login.json";
-import Lottie from "lottie-react";
+import getAuthErrorMessage from "../../../lib/getAuthErrorMessage";
 // eslint-disable-next-line no-unused-vars
 import * as motion from "motion/react-client";
+import GoogleButton from "../../../co../../../lib/getLoginMessageton";
 import { loginSuccessMessage } from "../../../utilities/getLoginMessage";
-import GoogleButton from "../../../components/ui/GoogleButton/GoogleButton";
 
 const LoginPage = () => {
   const navigate = useNavigate();
