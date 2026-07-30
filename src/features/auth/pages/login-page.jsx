@@ -1,0 +1,129 @@
+import {
+  Field,
+  FieldError,
+  FieldInput,
+  FieldLabel,
+} from "@/components/forms/form-field";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import GoogleSignInButton from "@/features/auth/components/google-sign-in-button";
+import { login } from "@/stores/auth";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router";
+import { loginSchema } from "../validation/auth";
+
+const LoginPage = () => {
+  const navigate = useNavigate();
+  const [error, setError] = useState("");
+
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm({
+    resolver: zodResolver(loginSchema),
+    defaultValues: { email: "", password: "" },
+  });
+
+  const onSubmit = async (values) => {
+    setError("");
+    try {
+      await login(values.email, values.password);
+      navigate("/");
+    } catch (err) {
+      setError(err?.message || "Login failed. Please try again.");
+    }
+  };
+
+  return (
+    <div className="flex min-h-[calc(100vh-200px)] items-center justify-center px-4">
+      <div className="w-full max-w-md space-y-6">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold tracking-tight">Welcome back</h1>
+          <p className="text-muted-foreground">
+            Sign in to your account to continue
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          {error && (
+            <div className="rounded-md bg-destructive/10 p-3 text-sm text-destructive">
+              {error}
+            </div>
+          )}
+
+          <Controller
+            name="email"
+            control={control}
+            render={({ field, fieldState }) => (
+              <Field>
+                <FieldLabel required>Email</FieldLabel>
+                <FieldInput
+                  type="email"
+                  placeholder="you@example.com"
+                  {...field}
+                  error={fieldState.error}
+                />
+                <FieldError error={fieldState.error} />
+              </Field>
+            )}
+          />
+
+          <Controller
+            name="password"
+            control={control}
+            render={({ field, fieldState }) => (
+              <Field>
+                <FieldLabel required>Password</FieldLabel>
+                <FieldInput
+                  type="password"
+                  placeholder="Enter your password"
+                  {...field}
+                  error={fieldState.error}
+                />
+                <FieldError error={fieldState.error} />
+              </Field>
+            )}
+          />
+
+          <Button type="submit" className="w-full" disabled={isSubmitting}>
+            {isSubmitting ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Signing in...
+              </>
+            ) : (
+              "Sign In"
+            )}
+          </Button>
+        </form>
+
+        <div className="relative">
+          <div className="absolute inset-0 flex items-center">
+            <Separator />
+          </div>
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="bg-background px-2 text-muted-foreground">Or</span>
+          </div>
+        </div>
+
+        <GoogleSignInButton className="w-full" />
+
+        <p className="text-center text-sm text-muted-foreground">
+          Don&apos;t have an account?{" "}
+          <Link
+            to="/auth/register"
+            className="font-medium text-primary hover:underline"
+          >
+            Sign up
+          </Link>
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default LoginPage;

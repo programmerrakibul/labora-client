@@ -1,0 +1,6 @@
+allowBuilds:
+  '@firebase/util': false
+  dtrace-provider: set this to true or false
+  esbuild: true
+  odbc: set this to true or false
+  protobufjs: false
