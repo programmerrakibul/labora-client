@@ -1,25 +1,17 @@
-import { useEffect, useState } from "react";
-import ThemeContext from "../contexts/ThemeContext";
+import { ThemeProvider as NextThemesProvider } from "next-themes";
+import { AnimatedThemeToggle } from "@/components/shared/animated-theme-toggle";
 
-const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
-
-  useEffect(() => {
-    const html = document.documentElement;
-    html.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
-
-  const toggleTheme = (e) => {
-    const checked = e.currentTarget.checked;
-    setTheme(checked ? "night" : "light");
-  };
-
+export const ThemeProvider = ({ children }) => {
   return (
-    <>
-      <ThemeContext value={{ theme, toggleTheme }}>{children}</ThemeContext>
-    </>
+    <NextThemesProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange={false}
+    >
+      {children}
+    </NextThemesProvider>
   );
 };
 
-export default ThemeProvider;
+export { AnimatedThemeToggle };
