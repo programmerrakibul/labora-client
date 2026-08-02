@@ -1,29 +1,29 @@
-import { useParams, useNavigate } from "react-router";
-import { useJob } from "../hooks/use-jobs";
 import Container from "@/components/shared/container";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import {
+  EXPERIENCE_LEVEL,
   getEnumByValue,
+  JOB_STATUS,
   JOB_TYPE,
   WORK_LOCATION_TYPE,
-  EXPERIENCE_LEVEL,
-  JOB_STATUS,
 } from "@/constants/enums";
+import { useCreateApplication } from "@/features/applications/hooks/use-applications";
+import useAuth from "@/stores/auth";
+import { formatDistanceToNow } from "date-fns";
 import {
-  MapPin,
+  ArrowLeft,
   Briefcase,
+  Building2,
   Clock,
   DollarSign,
-  Building2,
-  ArrowLeft,
+  MapPin,
 } from "lucide-react";
-import { formatDistanceToNow } from "date-fns";
 import { useState } from "react";
-import useAuth from "@/stores/auth";
-import { useCreateApplication } from "@/features/applications/hooks/use-applications";
+import { useNavigate, useParams } from "react-router";
+import { useJob } from "../hooks/use-jobs";
 
 const JobDetailsPage = () => {
   const { id } = useParams();
@@ -83,7 +83,11 @@ const JobDetailsPage = () => {
 
   return (
     <Container className="py-8">
-      <Button variant="ghost" onClick={() => navigate(-1)} className="mb-6 gap-2">
+      <Button
+        variant="ghost"
+        onClick={() => navigate(-1)}
+        className="mb-6 gap-2"
+      >
         <ArrowLeft className="h-4 w-4" />
         Back
       </Button>
@@ -93,7 +97,9 @@ const JobDetailsPage = () => {
           <div>
             <div className="flex items-start justify-between gap-4">
               <div>
-                <h1 className="text-3xl font-bold tracking-tight">{job.title}</h1>
+                <h1 className="text-3xl font-bold tracking-tight">
+                  {job.title}
+                </h1>
                 <p className="mt-1 flex items-center gap-2 text-lg text-muted-foreground">
                   <Building2 className="h-5 w-5" />
                   {job.company}
@@ -185,7 +191,8 @@ const JobDetailsPage = () => {
                 <div className="flex items-center gap-2 text-sm">
                   <DollarSign className="h-4 w-4 text-muted-foreground" />
                   <span>
-                    {job.salary.currency || "BDT"} {job.salary.min.toLocaleString()}
+                    {job.salary.currency || "BDT"}{" "}
+                    {job.salary.min.toLocaleString()}
                     {job.salary.max
                       ? ` - ${job.salary.max.toLocaleString()}`
                       : ""}
@@ -206,7 +213,10 @@ const JobDetailsPage = () => {
               <div className="flex items-center gap-2 text-sm">
                 <Clock className="h-4 w-4 text-muted-foreground" />
                 <span>
-                  Posted {formatDistanceToNow(new Date(job.createdAt), { addSuffix: true })}
+                  Posted{" "}
+                  {formatDistanceToNow(new Date(job.createdAt), {
+                    addSuffix: true,
+                  })}
                 </span>
               </div>
               {job.postedBy && (
@@ -248,7 +258,7 @@ const JobDetailsPage = () => {
                       value={coverLetter}
                       onChange={(e) => setCoverLetter(e.target.value)}
                       rows={3}
-                      className="mt-1 flex min-h-[80px] w-full rounded-md border bg-background px-3 py-2 text-sm"
+                      className="mt-1 flex min-h-20 w-full rounded-md border bg-background px-3 py-2 text-sm"
                     />
                   </div>
                   <div>
@@ -264,8 +274,13 @@ const JobDetailsPage = () => {
                     />
                   </div>
                   <div className="flex gap-2">
-                    <Button type="submit" disabled={createApplication.isPending}>
-                      {createApplication.isPending ? "Submitting..." : "Submit Application"}
+                    <Button
+                      type="submit"
+                      disabled={createApplication.isPending}
+                    >
+                      {createApplication.isPending
+                        ? "Submitting..."
+                        : "Submit Application"}
                     </Button>
                     <Button
                       type="button"
