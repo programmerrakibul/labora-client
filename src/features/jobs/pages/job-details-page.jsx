@@ -12,7 +12,6 @@ import {
 } from "@/constants/enums";
 import { useCreateApplication } from "@/features/applications/hooks/use-applications";
 import useAuth from "@/stores/auth";
-import { formatDistanceToNow } from "date-fns";
 import {
   ArrowLeft,
   Briefcase,
@@ -24,6 +23,7 @@ import {
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useJob } from "../hooks/use-jobs";
+import { formatJobLocation, formatPostedAt, formatSalary } from "../utils/job";
 
 const JobDetailsPage = () => {
   const { id } = useParams();
@@ -62,6 +62,7 @@ const JobDetailsPage = () => {
   const locationType = getEnumByValue(WORK_LOCATION_TYPE, job.workLocationType);
   const experienceLevel = getEnumByValue(EXPERIENCE_LEVEL, job.experienceLevel);
   const status = getEnumByValue(JOB_STATUS, job.status);
+  const jobLocation = formatJobLocation(job.location);
 
   const handleApply = async (e) => {
     e.preventDefault();
@@ -191,33 +192,20 @@ const JobDetailsPage = () => {
                 <div className="flex items-center gap-2 text-sm">
                   <DollarSign className="h-4 w-4 text-muted-foreground" />
                   <span>
-                    {job.salary.currency || "BDT"}{" "}
-                    {job.salary.min.toLocaleString()}
-                    {job.salary.max
-                      ? ` - ${job.salary.max.toLocaleString()}`
-                      : ""}
-                    {job.salary.isNegotiable ? " (Negotiable)" : ""}
+                    {formatSalary(job.salary)}
+                    {job.salary?.isNegotiable ? " (Negotiable)" : ""}
                   </span>
                 </div>
               )}
-              {job.location?.city && (
+              {jobLocation && (
                 <div className="flex items-center gap-2 text-sm">
                   <MapPin className="h-4 w-4 text-muted-foreground" />
-                  <span>
-                    {job.location.city}
-                    {job.location.state ? `, ${job.location.state}` : ""}
-                    {job.location.country ? `, ${job.location.country}` : ""}
-                  </span>
+                  <span>{jobLocation}</span>
                 </div>
               )}
               <div className="flex items-center gap-2 text-sm">
                 <Clock className="h-4 w-4 text-muted-foreground" />
-                <span>
-                  Posted{" "}
-                  {formatDistanceToNow(new Date(job.createdAt), {
-                    addSuffix: true,
-                  })}
-                </span>
+                <span>Posted {formatPostedAt(job.createdAt)}</span>
               </div>
               {job.postedBy && (
                 <div className="flex items-center gap-2 text-sm">

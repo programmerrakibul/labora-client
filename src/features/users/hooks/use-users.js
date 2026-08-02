@@ -1,9 +1,18 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import useAuth from "@/stores/auth";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { userApi } from "../services/user";
 
+export const userQueryKeys = {
+  all: ["users"],
+  list: (filters) => ["users", filters],
+  single: (id) => ["users", id],
+};
+
 export const useUsers = (filters) => {
+  const user = useAuth((state) => state.user);
+
   return useQuery({
-    queryKey: ["users", filters],
+    queryKey: userQueryKeys.list({ ...filters, email: user?.email }),
     queryFn: () => userApi.getAll(filters),
     staleTime: 1000 * 60 * 2,
   });
@@ -11,7 +20,7 @@ export const useUsers = (filters) => {
 
 export const useUser = (id) => {
   return useQuery({
-    queryKey: ["users", id],
+    queryKey: userQueryKeys.single(id),
     queryFn: () => userApi.getById(id),
     enabled: !!id,
   });
@@ -22,7 +31,7 @@ export const useUpdateProfile = () => {
   return useMutation({
     mutationFn: userApi.updateProfile,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["users"] });
+      queryClient.invalidateQueries({ queryKey: userQueryKeys.all });
     },
   });
 };
@@ -32,7 +41,7 @@ export const useToggleUserStatus = () => {
   return useMutation({
     mutationFn: ({ id, isActive }) => userApi.toggleStatus(id, isActive),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["users"] });
+      queryClient.invalidateQueries({ queryKey: userQueryKeys.all });
     },
   });
 };
@@ -42,7 +51,7 @@ export const useDeleteUser = () => {
   return useMutation({
     mutationFn: userApi.delete,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["users"] });
+      queryClient.invalidateQueries({ queryKey: userQueryKeys.all });
     },
   });
 };

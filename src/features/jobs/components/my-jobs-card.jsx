@@ -1,11 +1,15 @@
-import { Link } from "react-router";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { getEnumByValue, JOB_TYPE, WORK_LOCATION_TYPE } from "@/constants/enums";
+import {
+  getEnumByValue,
+  JOB_TYPE,
+  WORK_LOCATION_TYPE,
+} from "@/constants/enums";
 import { Briefcase, Clock, Eye, MapPin, Pencil, Trash2 } from "lucide-react";
-import JobStatusSelect from "./job-status-select";
+import { Link } from "react-router";
 import { formatJobLocation, formatPostedAt } from "../utils/job";
+import JobStatusSelect from "./job-status-select";
 
 const MyJobsCard = ({ job, onView, onDelete }) => {
   const jobType = getEnumByValue(JOB_TYPE, job.jobType);
@@ -16,10 +20,14 @@ const MyJobsCard = ({ job, onView, onDelete }) => {
       <CardHeader className="pb-2">
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0">
-            <h3 className="truncate font-semibold leading-tight">{job.title}</h3>
-            <p className="truncate text-sm text-muted-foreground">{job.company}</p>
+            <h3 className="truncate font-semibold leading-tight">
+              {job.title}
+            </h3>
+            <p className="truncate text-sm text-muted-foreground">
+              {job.company}
+            </p>
           </div>
-          <JobStatusSelect job={job} />
+          <JobStatusSelect jobId={job._id} status={job.status} />
         </div>
       </CardHeader>
       <CardContent className="space-y-3">
@@ -41,7 +49,9 @@ const MyJobsCard = ({ job, onView, onDelete }) => {
           )}
         </div>
         <div className="flex items-center justify-between gap-2 text-xs text-muted-foreground">
-          <span className="truncate">{formatJobLocation(job.location) || "-"}</span>
+          <span className="truncate">
+            {formatJobLocation(job.location) || "-"}
+          </span>
           <span className="flex shrink-0 items-center gap-1">
             <Clock className="h-3 w-3" />
             {formatPostedAt(job.createdAt)}

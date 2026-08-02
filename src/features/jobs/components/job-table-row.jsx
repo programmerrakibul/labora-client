@@ -1,10 +1,14 @@
-import { Link } from "react-router";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { getEnumByValue, JOB_TYPE, WORK_LOCATION_TYPE } from "@/constants/enums";
+import {
+  getEnumByValue,
+  JOB_TYPE,
+  WORK_LOCATION_TYPE,
+} from "@/constants/enums";
 import { Eye, Pencil, Trash2 } from "lucide-react";
-import JobStatusSelect from "./job-status-select";
+import { Link } from "react-router";
 import { formatPostedAt } from "../utils/job";
+import JobStatusSelect from "./job-status-select";
 
 const JobTableRow = ({ job, onView, onDelete }) => {
   const jobType = getEnumByValue(JOB_TYPE, job.jobType);
@@ -36,7 +40,7 @@ const JobTableRow = ({ job, onView, onDelete }) => {
         )}
       </td>
       <td className="hidden p-4 sm:table-cell">
-        <JobStatusSelect job={job} />
+        <JobStatusSelect jobId={job._id} status={job.status} />
       </td>
       <td className="hidden p-4 text-sm text-muted-foreground lg:table-cell">
         {formatPostedAt(job.createdAt)}
