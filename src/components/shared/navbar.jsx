@@ -1,4 +1,5 @@
 import Logo from "@/components/shared/logo";
+import UserMenu from "@/components/shared/user-menu";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { AnimatedThemeToggle } from "@/providers/ThemeProvider";
@@ -6,7 +7,6 @@ import useAuth, { logout as logoutAction } from "@/stores/auth";
 import { LayoutDashboard, LogOut, Menu, User } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation } from "react-router";
-import { Spinner } from "../ui/spinner";
 const navLinks = [
   { to: "/", label: "Home" },
   { to: "/all-jobs", label: "Find Jobs" },
@@ -16,7 +16,6 @@ const navLinks = [
 
 const Navbar = () => {
   const user = useAuth((s) => s.user);
-  const isLoading = useAuth((s) => s.loading);
   const location = useLocation();
   const [open, setOpen] = useState(false);
 
@@ -44,48 +43,7 @@ const Navbar = () => {
 
         <div className="flex items-center gap-2">
           <AnimatedThemeToggle />
-
-          {isLoading ? (
-            <Spinner className="size-6" />
-          ) : user ? (
-            <>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="hidden md:inline-flex"
-              >
-                <Link
-                  to="/dashboard"
-                  className="flex items-center justify-center gap-2"
-                >
-                  <LayoutDashboard className="size-4" />
-                  <span>Dashboard</span>
-                </Link>
-              </Button>
-              <div className="hidden items-center gap-2 md:flex">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-xs font-bold text-primary">
-                  {user.name?.charAt(0)?.toUpperCase() || "U"}
-                </div>
-              </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-9 w-9"
-                onClick={logoutAction}
-              >
-                <LogOut className="h-4 w-4" />
-              </Button>
-            </>
-          ) : (
-            <div className="hidden gap-2 md:flex">
-              <Button variant="ghost" size="sm">
-                <Link to="/auth/login">Sign In</Link>
-              </Button>
-              <Button size="sm">
-                <Link to="/auth/register">Sign Up</Link>
-              </Button>
-            </div>
-          )}
+          <UserMenu />
 
           {/* Mobile Menu */}
           <Sheet open={open} onOpenChange={setOpen}>

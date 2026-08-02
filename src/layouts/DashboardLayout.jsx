@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router";
 import useAuth, { logout as logoutAction } from "@/stores/auth";
 import { AnimatedThemeToggle } from "@/providers/ThemeProvider";
 import Logo from "@/components/shared/logo";
+import UserMenu from "@/components/shared/user-menu";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useState } from "react";
@@ -102,9 +103,7 @@ const DashboardLayout = () => {
           </div>
           <div className="flex items-center gap-2">
             <AnimatedThemeToggle />
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-xs font-bold text-primary">
-              {user?.name?.charAt(0)?.toUpperCase() || "U"}
-            </div>
+            <UserMenu />
           </div>
         </header>
 
@@ -117,13 +116,7 @@ const DashboardLayout = () => {
           </div>
           <div className="flex items-center gap-3">
             <AnimatedThemeToggle />
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-xs font-bold text-primary">
-              {user?.name?.charAt(0)?.toUpperCase() || "U"}
-            </div>
-            <Button variant="ghost" size="sm" onClick={logoutAction}>
-              <LogOut className="mr-2 h-4 w-4" />
-              Sign Out
-            </Button>
+            <UserMenu />
           </div>
         </header>
 
