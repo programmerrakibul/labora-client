@@ -1,40 +1,22 @@
-import { useForm, Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { useCreateJob } from "../hooks/use-jobs";
-import { jobFormOptions } from "../utils/job-options";
-import { Button } from "@/components/ui/button";
 import {
   Field,
-  FieldLabel,
-  FieldInput,
-  FieldTextarea,
-  FieldSelect,
   FieldError,
+  FieldInput,
+  FieldLabel,
+  FieldSelect,
+  FieldTextarea,
 } from "@/components/forms/form-field";
 import Container from "@/components/shared/container";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { useNavigate } from "react-router";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, Plus, X } from "lucide-react";
 import { useState } from "react";
-
-const jobSchema = z.object({
-  title: z.string().min(1, "Title is required").max(100),
-  company: z.string().min(1, "Company is required"),
-  description: z.string().min(1, "Description is required"),
-  jobType: z.string().min(1, "Job type is required"),
-  workLocationType: z.string().min(1, "Work location type is required"),
-  experienceLevel: z.string().min(1, "Experience level is required"),
-  category: z.string().min(1, "Category is required"),
-  salaryMin: z.coerce.number().min(0).optional(),
-  salaryMax: z.coerce.number().min(0).optional(),
-  salaryCurrency: z.string().default("BDT"),
-  isNegotiable: z.boolean().default(false),
-  city: z.string().optional(),
-  state: z.string().optional(),
-  country: z.string().optional(),
-  status: z.string().default("ACTIVE"),
-});
+import { Controller, useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
+import { useCreateJob } from "../hooks/use-jobs";
+import { jobFormOptions } from "../utils/job-options";
+import { jobSchema } from "../validation/job";
 
 const AddJobPage = () => {
   const navigate = useNavigate();
@@ -126,7 +108,11 @@ const AddJobPage = () => {
                 render={({ field, fieldState }) => (
                   <Field>
                     <FieldLabel required>Job Title</FieldLabel>
-                    <FieldInput placeholder="e.g. Senior React Developer" {...field} error={fieldState.error} />
+                    <FieldInput
+                      placeholder="e.g. Senior React Developer"
+                      {...field}
+                      error={fieldState.error}
+                    />
                     <FieldError error={fieldState.error} />
                   </Field>
                 )}
@@ -137,7 +123,11 @@ const AddJobPage = () => {
                 render={({ field, fieldState }) => (
                   <Field>
                     <FieldLabel required>Company</FieldLabel>
-                    <FieldInput placeholder="e.g. Tech Corp" {...field} error={fieldState.error} />
+                    <FieldInput
+                      placeholder="e.g. Tech Corp"
+                      {...field}
+                      error={fieldState.error}
+                    />
                     <FieldError error={fieldState.error} />
                   </Field>
                 )}
@@ -149,7 +139,12 @@ const AddJobPage = () => {
               render={({ field, fieldState }) => (
                 <Field>
                   <FieldLabel required>Description</FieldLabel>
-                  <FieldTextarea rows={5} placeholder="Describe the role..." {...field} error={fieldState.error} />
+                  <FieldTextarea
+                    rows={5}
+                    placeholder="Describe the role..."
+                    {...field}
+                    error={fieldState.error}
+                  />
                   <FieldError error={fieldState.error} />
                 </Field>
               )}
@@ -172,7 +167,9 @@ const AddJobPage = () => {
                     <FieldSelect {...field} error={fieldState.error}>
                       <option value="">Select...</option>
                       {jobFormOptions.jobTypes.map((t) => (
-                        <option key={t.value} value={t.value}>{t.label}</option>
+                        <option key={t.value} value={t.value}>
+                          {t.label}
+                        </option>
                       ))}
                     </FieldSelect>
                     <FieldError error={fieldState.error} />
@@ -188,7 +185,9 @@ const AddJobPage = () => {
                     <FieldSelect {...field} error={fieldState.error}>
                       <option value="">Select...</option>
                       {jobFormOptions.locationTypes.map((t) => (
-                        <option key={t.value} value={t.value}>{t.label}</option>
+                        <option key={t.value} value={t.value}>
+                          {t.label}
+                        </option>
                       ))}
                     </FieldSelect>
                     <FieldError error={fieldState.error} />
@@ -204,7 +203,9 @@ const AddJobPage = () => {
                     <FieldSelect {...field} error={fieldState.error}>
                       <option value="">Select...</option>
                       {jobFormOptions.experienceLevels.map((t) => (
-                        <option key={t.value} value={t.value}>{t.label}</option>
+                        <option key={t.value} value={t.value}>
+                          {t.label}
+                        </option>
                       ))}
                     </FieldSelect>
                     <FieldError error={fieldState.error} />
@@ -222,7 +223,9 @@ const AddJobPage = () => {
                     <FieldSelect {...field} error={fieldState.error}>
                       <option value="">Select...</option>
                       {jobFormOptions.categories.map((c) => (
-                        <option key={c} value={c}>{c}</option>
+                        <option key={c} value={c}>
+                          {c}
+                        </option>
                       ))}
                     </FieldSelect>
                     <FieldError error={fieldState.error} />
@@ -237,7 +240,9 @@ const AddJobPage = () => {
                     <FieldLabel>Default Status</FieldLabel>
                     <FieldSelect {...field}>
                       {jobFormOptions.statuses.map((s) => (
-                        <option key={s.value} value={s.value}>{s.label}</option>
+                        <option key={s.value} value={s.value}>
+                          {s.label}
+                        </option>
                       ))}
                     </FieldSelect>
                   </Field>
@@ -259,7 +264,14 @@ const AddJobPage = () => {
                 render={({ field, fieldState }) => (
                   <Field>
                     <FieldLabel>Min Salary</FieldLabel>
-                    <FieldInput type="number" min="0" placeholder="0" {...field} value={field.value ?? ""} error={fieldState.error} />
+                    <FieldInput
+                      type="number"
+                      min="0"
+                      placeholder="0"
+                      {...field}
+                      value={field.value ?? ""}
+                      error={fieldState.error}
+                    />
                     <FieldError error={fieldState.error} />
                   </Field>
                 )}
@@ -270,7 +282,14 @@ const AddJobPage = () => {
                 render={({ field, fieldState }) => (
                   <Field>
                     <FieldLabel>Max Salary</FieldLabel>
-                    <FieldInput type="number" min="0" placeholder="0" {...field} value={field.value ?? ""} error={fieldState.error} />
+                    <FieldInput
+                      type="number"
+                      min="0"
+                      placeholder="0"
+                      {...field}
+                      value={field.value ?? ""}
+                      error={fieldState.error}
+                    />
                     <FieldError error={fieldState.error} />
                   </Field>
                 )}
@@ -324,7 +343,11 @@ const AddJobPage = () => {
                 render={({ field, fieldState }) => (
                   <Field>
                     <FieldLabel>City</FieldLabel>
-                    <FieldInput placeholder="e.g. Dhaka" {...field} error={fieldState.error} />
+                    <FieldInput
+                      placeholder="e.g. Dhaka"
+                      {...field}
+                      error={fieldState.error}
+                    />
                     <FieldError error={fieldState.error} />
                   </Field>
                 )}
@@ -335,7 +358,11 @@ const AddJobPage = () => {
                 render={({ field, fieldState }) => (
                   <Field>
                     <FieldLabel>State</FieldLabel>
-                    <FieldInput placeholder="e.g. Dhaka Division" {...field} error={fieldState.error} />
+                    <FieldInput
+                      placeholder="e.g. Dhaka Division"
+                      {...field}
+                      error={fieldState.error}
+                    />
                     <FieldError error={fieldState.error} />
                   </Field>
                 )}
@@ -346,7 +373,11 @@ const AddJobPage = () => {
                 render={({ field, fieldState }) => (
                   <Field>
                     <FieldLabel>Country</FieldLabel>
-                    <FieldInput placeholder="e.g. Bangladesh" {...field} error={fieldState.error} />
+                    <FieldInput
+                      placeholder="e.g. Bangladesh"
+                      {...field}
+                      error={fieldState.error}
+                    />
                     <FieldError error={fieldState.error} />
                   </Field>
                 )}
@@ -375,16 +406,28 @@ const AddJobPage = () => {
                   placeholder="Type and press Enter"
                   className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm"
                 />
-                <Button type="button" size="sm" onClick={() => addListItem(skillInput, skills, setSkills, setSkillInput)}>
+                <Button
+                  type="button"
+                  size="sm"
+                  onClick={() =>
+                    addListItem(skillInput, skills, setSkills, setSkillInput)
+                  }
+                >
                   <Plus className="h-4 w-4" />
                 </Button>
               </div>
               {skills.length > 0 && (
                 <div className="mt-2 flex flex-wrap gap-1">
                   {skills.map((s, i) => (
-                    <span key={i} className="inline-flex items-center gap-1 rounded-full bg-secondary px-2.5 py-0.5 text-xs">
+                    <span
+                      key={i}
+                      className="inline-flex items-center gap-1 rounded-full bg-secondary px-2.5 py-0.5 text-xs"
+                    >
                       {s}
-                      <button type="button" onClick={() => removeListItem(i, skills, setSkills)}>
+                      <button
+                        type="button"
+                        onClick={() => removeListItem(i, skills, setSkills)}
+                      >
                         <X className="h-3 w-3" />
                       </button>
                     </span>
@@ -402,13 +445,29 @@ const AddJobPage = () => {
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       e.preventDefault();
-                      addListItem(reqInput, requirements, setRequirements, setReqInput);
+                      addListItem(
+                        reqInput,
+                        requirements,
+                        setRequirements,
+                        setReqInput,
+                      );
                     }
                   }}
                   placeholder="Type and press Enter"
                   className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm"
                 />
-                <Button type="button" size="sm" onClick={() => addListItem(reqInput, requirements, setRequirements, setReqInput)}>
+                <Button
+                  type="button"
+                  size="sm"
+                  onClick={() =>
+                    addListItem(
+                      reqInput,
+                      requirements,
+                      setRequirements,
+                      setReqInput,
+                    )
+                  }
+                >
                   <Plus className="h-4 w-4" />
                 </Button>
               </div>
@@ -417,7 +476,13 @@ const AddJobPage = () => {
                   {requirements.map((r, i) => (
                     <li key={i} className="flex items-center justify-between">
                       {r}
-                      <button type="button" onClick={() => removeListItem(i, requirements, setRequirements)} className="text-destructive">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          removeListItem(i, requirements, setRequirements)
+                        }
+                        className="text-destructive"
+                      >
                         <X className="h-3 w-3" />
                       </button>
                     </li>
@@ -435,13 +500,29 @@ const AddJobPage = () => {
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       e.preventDefault();
-                      addListItem(respInput, responsibilities, setResponsibilities, setRespInput);
+                      addListItem(
+                        respInput,
+                        responsibilities,
+                        setResponsibilities,
+                        setRespInput,
+                      );
                     }
                   }}
                   placeholder="Type and press Enter"
                   className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm"
                 />
-                <Button type="button" size="sm" onClick={() => addListItem(respInput, responsibilities, setResponsibilities, setRespInput)}>
+                <Button
+                  type="button"
+                  size="sm"
+                  onClick={() =>
+                    addListItem(
+                      respInput,
+                      responsibilities,
+                      setResponsibilities,
+                      setRespInput,
+                    )
+                  }
+                >
                   <Plus className="h-4 w-4" />
                 </Button>
               </div>
@@ -450,7 +531,17 @@ const AddJobPage = () => {
                   {responsibilities.map((r, i) => (
                     <li key={i} className="flex items-center justify-between">
                       {r}
-                      <button type="button" onClick={() => removeListItem(i, responsibilities, setResponsibilities)} className="text-destructive">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          removeListItem(
+                            i,
+                            responsibilities,
+                            setResponsibilities,
+                          )
+                        }
+                        className="text-destructive"
+                      >
                         <X className="h-3 w-3" />
                       </button>
                     </li>
