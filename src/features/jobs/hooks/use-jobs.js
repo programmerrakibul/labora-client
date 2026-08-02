@@ -1,17 +1,30 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { jobApi } from "../services/job";
+import { jobApi } from "@/features/jobs/services/job";
+import queryClient from "@/lib/query-client";
+import useAuth from "@/stores/auth";
+import { useMutation, useQuery } from "@tanstack/react-query";
+
+export const jobQueryKeys = {
+  all: ["jobs"],
+  recruiter: (filters) => ["jobs", "recruiter", filters],
+  list: (filters) => ["jobs", filters],
+  single: (id) => ["jobs", id],
+};
 
 export const useJobs = (filters) => {
+  const user = useAuth((state) => state.user);
+
   return useQuery({
-    queryKey: ["jobs", filters],
+    queryKey: jobQueryKeys.list({ ...filters, email: user?.email }),
     queryFn: () => jobApi.getAll(filters),
     staleTime: 1000 * 60 * 2,
   });
 };
 
 export const useUserJobs = (filters) => {
+  const user = useAuth((state) => state.user);
+
   return useQuery({
-    queryKey: ["jobs", "user", filters],
+    queryKey: jobQueryKeys.recruiter({ ...filters, email: user?.email }),
     queryFn: () => jobApi.getUserJobs(filters),
     staleTime: 1000 * 60 * 2,
   });
@@ -19,50 +32,50 @@ export const useUserJobs = (filters) => {
 
 export const useJob = (id) => {
   return useQuery({
-    queryKey: ["jobs", id],
+    queryKey: jobQueryKeys.single(id),
     queryFn: () => jobApi.getById(id),
     enabled: !!id,
   });
 };
 
 export const useCreateJob = () => {
-  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: jobApi.create,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["jobs"] });
+      queryClient.invalidateQueries({ queryKey: jobQueryKeys.all });
     },
   });
 };
 
 export const useUpdateJob = () => {
-  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({ id, ...payload }) => jobApi.update(id, payload),
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["jobs"] });
-      queryClient.invalidateQueries({ queryKey: ["jobs", variables.id] });
+      queryClient.invalidateQueries({ queryKey: jobQueryKeys.all });
+      queryClient.invalidateQueries({
+        queryKey: jobQueryKeys.single(variables.id),
+      });
     },
   });
 };
 
 export const useUpdateJobStatus = () => {
-  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({ id, status }) => jobApi.updateStatus(id, status),
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["jobs"] });
-      queryClient.invalidateQueries({ queryKey: ["jobs", variables.id] });
+      queryClient.invalidateQueries({ queryKey: jobQueryKeys.all });
+      queryClient.invalidateQueries({
+        queryKey: jobQueryKeys.single(variables.id),
+      });
     },
   });
 };
 
 export const useDeleteJob = () => {
-  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: jobApi.delete,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["jobs"] });
+      queryClient.invalidateQueries({ queryKey: jobQueryKeys.all });
     },
   });
 };

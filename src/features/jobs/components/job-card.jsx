@@ -3,12 +3,13 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, Briefcase, Clock } from "lucide-react";
 import { getEnumByValue, JOB_TYPE, WORK_LOCATION_TYPE, EXPERIENCE_LEVEL } from "@/constants/enums";
-import { formatDistanceToNow } from "date-fns";
+import { formatJobLocation, formatPostedAt, formatSalary } from "../utils/job";
 
 const JobCard = ({ job }) => {
   const jobType = getEnumByValue(JOB_TYPE, job.jobType);
   const locationType = getEnumByValue(WORK_LOCATION_TYPE, job.workLocationType);
   const experienceLevel = getEnumByValue(EXPERIENCE_LEVEL, job.experienceLevel);
+  const jobLocation = formatJobLocation(job.location);
 
   return (
     <Link to={`/job-details/${job._id}`}>
@@ -22,8 +23,7 @@ const JobCard = ({ job }) => {
             {job.salary?.min != null && (
               <div className="text-right">
                 <p className="font-semibold text-primary">
-                  {job.salary.currency || "BDT"} {job.salary.min.toLocaleString()}
-                  {job.salary.max ? ` - ${job.salary.max.toLocaleString()}` : ""}
+                  {formatSalary(job.salary)}
                 </p>
                 {job.salary.isNegotiable && (
                   <p className="text-xs text-muted-foreground">Negotiable</p>
@@ -68,15 +68,10 @@ const JobCard = ({ job }) => {
             </div>
           )}
           <div className="flex items-center justify-between text-xs text-muted-foreground">
-            {job.location?.city && (
-              <span>
-                {job.location.city}
-                {job.location.country ? `, ${job.location.country}` : ""}
-              </span>
-            )}
-            <span className="flex items-center gap-1">
+            <span className="truncate">{jobLocation || "Location on request"}</span>
+            <span className="flex shrink-0 items-center gap-1">
               <Clock className="h-3 w-3" />
-              {formatDistanceToNow(new Date(job.createdAt), { addSuffix: true })}
+              {formatPostedAt(job.createdAt)}
             </span>
           </div>
         </CardContent>

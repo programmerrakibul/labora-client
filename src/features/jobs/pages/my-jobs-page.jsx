@@ -1,7 +1,7 @@
 import Container from "@/components/shared/container";
 import NotFound from "@/components/shared/not-found";
 import Pagination from "@/components/shared/pagination";
-import { TableSkeleton } from "@/components/shared/skeletons";
+import { CardSkeleton, TableSkeleton } from "@/components/shared/skeletons";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -15,13 +15,16 @@ import { BriefcaseBusiness, Plus } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
+import JobDetailsModal from "../components/job-details-modal";
 import JobTableRow from "../components/job-table-row";
+import MyJobsCard from "../components/my-jobs-card";
 import { useDeleteJob, useUserJobs } from "../hooks/use-jobs";
 
 const MyJobsPage = () => {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [deleteId, setDeleteId] = useState(null);
+  const [viewJob, setViewJob] = useState(null);
   const { data, isLoading } = useUserJobs({ page, limit: 10 });
   const deleteJob = useDeleteJob();
 
@@ -45,14 +48,21 @@ const MyJobsPage = () => {
           <h1 className="text-2xl font-bold tracking-tight">My Jobs</h1>
           <p className="text-muted-foreground">Manage your posted jobs</p>
         </div>
-        <Button onClick={() => navigate("/dashboard/add-job")}>
+        <Button onClick={() => navigate("/dashboard/add-job")} className="items-center">
           <Plus className="h-4 w-4" />
           Post Job
         </Button>
       </div>
 
       {isLoading ? (
-        <TableSkeleton rows={5} columns={5} />
+        <>
+          <div className="hidden md:block">
+            <TableSkeleton rows={5} columns={5} />
+          </div>
+          <div className="md:hidden">
+            <CardSkeleton count={3} />
+          </div>
+        </>
       ) : jobs.length === 0 ? (
         <NotFound
           message="No jobs posted yet"
@@ -62,7 +72,7 @@ const MyJobsPage = () => {
         />
       ) : (
         <>
-          <div className="rounded-lg border">
+          <div className="hidden rounded-lg border md:block">
             <table className="w-full">
               <thead>
                 <tr className="border-b bg-muted/50">
@@ -84,10 +94,26 @@ const MyJobsPage = () => {
               </thead>
               <tbody>
                 {jobs.map((job) => (
-                  <JobTableRow key={job._id} job={job} onDelete={setDeleteId} />
+                  <JobTableRow
+                    key={job._id}
+                    job={job}
+                    onView={setViewJob}
+                    onDelete={setDeleteId}
+                  />
                 ))}
               </tbody>
             </table>
+          </div>
+
+          <div className="space-y-3 md:hidden">
+            {jobs.map((job) => (
+              <MyJobsCard
+                key={job._id}
+                job={job}
+                onView={setViewJob}
+                onDelete={setDeleteId}
+              />
+            ))}
           </div>
 
           <div className="mt-6">
@@ -123,6 +149,12 @@ const MyJobsPage = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      <JobDetailsModal
+        job={viewJob}
+        open={!!viewJob}
+        onOpenChange={() => setViewJob(null)}
+      />
     </Container>
   );
 };
