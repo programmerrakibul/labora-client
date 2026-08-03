@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/toast";
 import urlUtils from "@/lib/url";
 import { cn } from "@/lib/utils";
 import { logInWithGoogle } from "@/stores/auth";
 import { Loader2 } from "lucide-react";
 import { useTransition } from "react";
 import { useSearchParams } from "react-router";
-import { toast } from "sonner";
 
 const GoogleIcon = () => (
   <svg className="h-4 w-4" viewBox="0 0 24 24">
@@ -28,7 +28,7 @@ const GoogleIcon = () => (
   </svg>
 );
 
-const GoogleSignInButton = ({ className }) => {
+const GoogleSignInButton = ({ className, role }) => {
   const [loading, startTransition] = useTransition();
   const [searchParams] = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || urlUtils.getFullUrl();
@@ -36,11 +36,20 @@ const GoogleSignInButton = ({ className }) => {
   const handleGoogleSignIn = async () => {
     startTransition(async () => {
       try {
-        await logInWithGoogle(callbackUrl);
+        const options = { callbackURL: callbackUrl };
+        if (role) options.additionalData = { role };
 
-        toast.success("Login successful");
+        await logInWithGoogle(options);
+
+        toast.success({
+          title: "Logged in",
+          description: "You have successfully logged in with Google.",
+        });
       } catch (error) {
-        toast.error(error.message || "Something went wrong");
+        toast.error({
+          title: "Login failed",
+          description: error?.message || "An error occurred during login.",
+        });
       }
     });
   };

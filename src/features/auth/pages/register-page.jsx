@@ -6,15 +6,20 @@ import {
 } from "@/components/forms/form-field";
 import PasswordInput from "@/components/forms/password-input";
 import { Button } from "@/components/ui/button";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
+import { USER_ROLE } from "@/constants/enums";
 import GoogleSignInButton from "@/features/auth/components/google-sign-in-button";
+import { cn } from "@/lib/utils";
 import { register as registerUser } from "@/stores/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, useWatch } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import { registerSchema } from "../validation/auth";
+
+const REGISTER_ROLE_OPTIONS = [USER_ROLE.JOB_SEEKER, USER_ROLE.RECRUITER];
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -26,13 +31,26 @@ const RegisterPage = () => {
     formState: { isSubmitting },
   } = useForm({
     resolver: zodResolver(registerSchema),
-    defaultValues: { name: "", email: "", password: "", confirmPassword: "" },
+    defaultValues: {
+      name: "",
+      email: "",
+      role: "",
+      password: "",
+      confirmPassword: "",
+    },
   });
+
+  const watchedRole = useWatch({ control, name: "role" });
 
   const onSubmit = async (values) => {
     setError("");
     try {
-      await registerUser(values.name, values.email, values.password);
+      await registerUser(
+        values.name,
+        values.email,
+        values.password,
+        values.role,
+      );
       navigate("/");
     } catch (err) {
       setError(err?.message || "Registration failed. Please try again.");
@@ -93,6 +111,39 @@ const RegisterPage = () => {
           />
 
           <Controller
+            name="role"
+            control={control}
+            render={({ field, fieldState }) => (
+              <Field>
+                <FieldLabel required>I am a</FieldLabel>
+                <RadioGroup
+                  value={field.value}
+                  onValueChange={field.onChange}
+                  onBlur={field.onBlur}
+                  name={field.name}
+                  aria-invalid={fieldState.invalid}
+                >
+                  {REGISTER_ROLE_OPTIONS.map((option) => (
+                    <label
+                      key={option.value}
+                      className={cn(
+                        "flex cursor-pointer items-center gap-3 rounded-md border px-3 py-2.5 text-sm transition-colors",
+                        field.value === option.value
+                          ? "border-primary bg-primary/5"
+                          : "border-input hover:bg-input/20",
+                      )}
+                    >
+                      <RadioGroupItem value={option.value} />
+                      <span className="font-medium">{option.label}</span>
+                    </label>
+                  ))}
+                </RadioGroup>
+                <FieldError error={fieldState.error} />
+              </Field>
+            )}
+          />
+
+          <Controller
             name="password"
             control={control}
             render={({ field, fieldState }) => (
@@ -141,7 +192,7 @@ const RegisterPage = () => {
           </div>
         </div>
 
-        <GoogleSignInButton className="w-full" />
+        <GoogleSignInButton className="w-full" role={watchedRole} />
 
         <p className="text-center text-sm text-muted-foreground">
           Already have an account?{" "}
