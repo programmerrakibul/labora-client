@@ -3,7 +3,6 @@ import Container from "@/components/shared/container";
 import DataTable from "@/components/shared/data-table";
 import NotFound from "@/components/shared/not-found";
 import SearchInput from "@/components/shared/search-input";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
@@ -14,10 +13,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { getEnumByValue, USER_ROLE } from "@/constants/enums";
+import { USER_ROLE } from "@/constants/enums";
 import { useDebouncedSearch } from "@/hooks/use-debounced-search";
 import { Trash2, Users as UsersIcon } from "lucide-react";
 import { useState } from "react";
+import UserRoleSelect from "../components/user-role-select";
 import UserStatusSelect from "../components/user-status-select";
 import { useDeleteUser, useUsers } from "../hooks/use-users";
 
@@ -55,14 +55,7 @@ const ManageUsersPage = () => {
     {
       header: "Role",
       className: "hidden md:table-cell",
-      cell: (_, u) => {
-        const role = getEnumByValue(USER_ROLE, u.role);
-        return role ? (
-          <Badge variant="secondary" className={role.color}>
-            {role.label}
-          </Badge>
-        ) : null;
-      },
+      cell: (_, u) => <UserRoleSelect userId={u._id} role={u.role} />,
     },
     {
       header: "Phone",
@@ -80,9 +73,7 @@ const ManageUsersPage = () => {
     },
     {
       header: "Status",
-      cell: (_, u) => (
-        <UserStatusSelect userId={u._id} isActive={u.isActive} />
-      ),
+      cell: (_, u) => <UserStatusSelect userId={u._id} isActive={u.isActive} />,
     },
     {
       header: "Actions",
@@ -103,12 +94,9 @@ const ManageUsersPage = () => {
 
   const handleDelete = async () => {
     if (!deleteId) return;
-    try {
-      await deleteUser.mutateAsync(deleteId);
-      setDeleteId(null);
-    } catch (err) {
-      alert(err?.response?.data?.error || "Failed to delete user");
-    }
+
+    await deleteUser.mutateAsync(deleteId);
+    setDeleteId(null);
   };
 
   return (
@@ -158,7 +146,6 @@ const ManageUsersPage = () => {
           loadingCards={3}
           onPageChange={setPage}
           mobileCard={(u) => {
-            const role = getEnumByValue(USER_ROLE, u.role);
             return (
               <Card>
                 <CardHeader className="pb-2">
@@ -167,11 +154,7 @@ const ManageUsersPage = () => {
                       <h3 className="font-semibold">{u.name}</h3>
                       <p className="text-sm text-muted-foreground">{u.email}</p>
                     </div>
-                    {role && (
-                      <Badge variant="secondary" className={role.color}>
-                        {role.label}
-                      </Badge>
-                    )}
+                    <UserRoleSelect userId={u._id} role={u.role} />
                   </div>
                 </CardHeader>
                 <CardContent className="pt-0 space-y-2">

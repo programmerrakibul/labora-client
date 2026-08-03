@@ -33,6 +33,18 @@ export const useUpdateProfile = () => {
     mutationFn: userApi.updateProfile,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: userQueryKeys.all });
+      toast.success({
+        title: "Profile updated",
+        description: "Your profile has been updated successfully.",
+      });
+    },
+    onError: (err) => {
+      toast.error({
+        title: "Error updating profile",
+        description:
+          err?.response?.data?.error ||
+          "An error occurred while updating your profile.",
+      });
     },
   });
 };
@@ -59,12 +71,45 @@ export const useToggleUserStatus = () => {
   });
 };
 
+export const useUpdateUserRole = () => {
+  return useMutation({
+    mutationFn: ({ id, role }) => userApi.updateRole(id, role),
+    onSuccess: () => {
+      toast.success({
+        title: "Role updated",
+        description: "User role has been updated successfully.",
+      });
+
+      queryClient.invalidateQueries({ queryKey: userQueryKeys.all });
+    },
+    onError: (err) => {
+      toast.error({
+        title: "Error updating role",
+        description:
+          err?.response?.data?.error ||
+          "An error occurred while updating the user role.",
+      });
+    },
+  });
+};
+
 export const useDeleteUser = () => {
   return useMutation({
     mutationFn: userApi.delete,
     onSuccess: () => {
-      toast.success("User deleted");
+      toast.success({
+        title: "User deleted",
+        description: "User has been deleted successfully.",
+      });
       queryClient.invalidateQueries({ queryKey: userQueryKeys.all });
+    },
+    onError: (err) => {
+      toast.error({
+        title: "Error deleting user",
+        description:
+          err?.response?.data?.error ||
+          "An error occurred while deleting the user.",
+      });
     },
   });
 };
