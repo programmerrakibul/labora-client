@@ -59,7 +59,7 @@ const LatestJobsSection = () => {
             opts={{ align: "start", loop: true }}
             plugins={[Autoplay({ delay: 4000, stopOnInteraction: false })]}
           >
-            <CarouselContent>
+            <CarouselContent className="h-full items-stretch">
               {isLoading
                 ? Array.from({ length: 6 }).map((_, i) => (
                     <CarouselItem
@@ -72,7 +72,7 @@ const LatestJobsSection = () => {
                 : jobs.map((job) => (
                     <CarouselItem
                       key={job._id}
-                      className="basis-full sm:basis-1/2 lg:basis-1/3 h-full"
+                      className="basis-full sm:basis-1/2 lg:basis-1/3 min-h-full"
                     >
                       <JobCard job={job} />
                     </CarouselItem>

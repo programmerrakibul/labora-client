@@ -39,8 +39,8 @@ export const fetchSession = async () => {
   }
 };
 
-export const login = async (email, password) => {
-  const { data, error } = await signIn.email({ email, password });
+export const login = async (email, password, callbackURL) => {
+  const { data, error } = await signIn.email({ email, password, callbackURL });
   if (error) throw error;
 
   await fetchSession();

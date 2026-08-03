@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
+import urlUtils from "@/lib/url";
 import { cn } from "@/lib/utils";
 import { logInWithGoogle } from "@/stores/auth";
 import { Loader2 } from "lucide-react";
 import { useTransition } from "react";
+import { useSearchParams } from "react-router";
 import { toast } from "sonner";
 
 const GoogleIcon = () => (
@@ -28,11 +30,13 @@ const GoogleIcon = () => (
 
 const GoogleSignInButton = ({ className }) => {
   const [loading, startTransition] = useTransition();
+  const [searchParams] = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || urlUtils.getFullUrl();
 
   const handleGoogleSignIn = async () => {
     startTransition(async () => {
       try {
-        await logInWithGoogle("http://localhost:3000");
+        await logInWithGoogle(callbackUrl);
 
         toast.success("Login successful");
       } catch (error) {

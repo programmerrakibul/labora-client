@@ -1,5 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { BadgeCheck, Star } from "lucide-react";
+import SkillChip from "./skill-chip";
 
 const TalentCard = ({
   name,
@@ -33,12 +34,7 @@ const TalentCard = ({
       </div>
       <div className="mt-4 flex flex-wrap gap-2">
         {skills.map((skill) => (
-          <span
-            key={skill}
-            className="rounded-full bg-secondary px-2 py-0.5 text-xs text-secondary-foreground"
-          >
-            {skill}
-          </span>
+          <SkillChip key={skill} skill={skill} />
         ))}
       </div>
       <div className="mt-4 flex flex-1 items-end justify-between gap-2 border-t pt-4">

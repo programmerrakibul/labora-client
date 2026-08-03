@@ -7,17 +7,19 @@ import {
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import GoogleSignInButton from "@/features/auth/components/google-sign-in-button";
+import urlUtils from "@/lib/url";
 import { login } from "@/stores/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router";
+import { Link, useSearchParams } from "react-router";
 import { loginSchema } from "../validation/auth";
 
 const LoginPage = () => {
-  const navigate = useNavigate();
   const [error, setError] = useState("");
+  const [searchParams] = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || urlUtils.getFullUrl();
 
   const {
     control,
@@ -31,8 +33,7 @@ const LoginPage = () => {
   const onSubmit = async (values) => {
     setError("");
     try {
-      await login(values.email, values.password);
-      navigate("/");
+      await login(values.email, values.password, callbackUrl);
     } catch (err) {
       setError(err?.message || "Login failed. Please try again.");
     }

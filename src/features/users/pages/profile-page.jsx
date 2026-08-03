@@ -1,4 +1,5 @@
 import Container from "@/components/shared/container";
+import InfoRow from "@/components/shared/info-row";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -51,26 +52,20 @@ const ProfilePage = () => {
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="flex items-center gap-3 text-sm">
-            <Mail className="h-4 w-4 text-muted-foreground" />
-            <span>{user?.email || "N/A"}</span>
-          </div>
-          <div className="flex items-center gap-3 text-sm">
-            <Phone className="h-4 w-4 text-muted-foreground" />
-            <span>{user?.phoneNumber || "Not provided"}</span>
-          </div>
-          <div className="flex items-center gap-3 text-sm">
-            <MapPin className="h-4 w-4 text-muted-foreground" />
-            <span>
-              {[user?.city, user?.country].filter(Boolean).join(", ") ||
-                "Not provided"}
-            </span>
-          </div>
+          <InfoRow icon={Mail} className="gap-3">
+            {user?.email || "N/A"}
+          </InfoRow>
+          <InfoRow icon={Phone} className="gap-3">
+            {user?.phoneNumber || "Not provided"}
+          </InfoRow>
+          <InfoRow icon={MapPin} className="gap-3">
+            {[user?.city, user?.country].filter(Boolean).join(", ") ||
+              "Not provided"}
+          </InfoRow>
           {user?.address && (
-            <div className="flex items-center gap-3 text-sm">
-              <User className="h-4 w-4 text-muted-foreground" />
-              <span>{user.address}</span>
-            </div>
+            <InfoRow icon={User} className="gap-3">
+              {user.address}
+            </InfoRow>
           )}
         </CardContent>
       </Card>
