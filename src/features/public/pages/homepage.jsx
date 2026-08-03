@@ -1,14 +1,26 @@
-import HomepageFeatures from "../components/homepage-features";
+import BlogInsightsSection from "../components/blog-insights-section";
+import CategoryExplorerSection from "../components/category-explorer-section";
+import CtaBannerSection from "../components/cta-banner-section";
 import HomepageHero from "../components/homepage-hero";
-import HomepageStats from "../components/homepage-stats";
 import LatestJobsSection from "../components/latest-jobs-section";
+import StatsSection from "../components/stats-section";
+import TalentSpotlightSection from "../components/talent-spotlight-section";
+import TestimonialsSection from "../components/testimonials-section";
+import TopCompaniesSection from "../components/top-companies-section";
+import WorkflowSection from "../components/workflow-section";
 
 const Homepage = () => (
   <>
     <HomepageHero />
-    <HomepageStats />
-    <HomepageFeatures />
+    <StatsSection />
+    <CategoryExplorerSection />
     <LatestJobsSection />
+    <WorkflowSection />
+    <TopCompaniesSection />
+    <TalentSpotlightSection />
+    <TestimonialsSection />
+    <BlogInsightsSection />
+    <CtaBannerSection />
   </>
 );
 

@@ -9,12 +9,17 @@ import { APPLICATION_STATUS, getEnumByValue } from "@/constants/enums";
 import useAuth from "@/stores/auth";
 import { ChevronDown, ChevronUp, Eye, FileText } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import ApplicationDetailsModal from "../components/application-details-modal";
 import ApplicationStatusSelect from "../components/application-status-select";
-import { useApplications, useWithdrawApplication } from "../hooks/use-applications";
+import {
+  useApplications,
+  useWithdrawApplication,
+} from "../hooks/use-applications";
 
 const ApplicationsPage = () => {
+  const navigate = useNavigate();
   const user = useAuth((s) => s.user);
   const [page, setPage] = useState(1);
   const [statusFilter, setStatusFilter] = useState("");
@@ -34,8 +39,7 @@ const ApplicationsPage = () => {
   const totalPages = data?.pagination?.totalPages || 1;
   const isRecruiter = user?.role === "RECRUITER";
   const canWithdraw = (app) =>
-    !isRecruiter &&
-    !["WITHDRAWN", "REJECTED", "HIRED"].includes(app.status);
+    !isRecruiter && !["WITHDRAWN", "REJECTED", "HIRED"].includes(app.status);
 
   const columns = [
     {
@@ -60,9 +64,7 @@ const ApplicationsPage = () => {
             </p>
           </>
         ) : (
-          <p className="text-muted-foreground">
-            {app.jobId?.company || "N/A"}
-          </p>
+          <p className="text-muted-foreground">{app.jobId?.company || "N/A"}</p>
         ),
     },
     {
@@ -89,9 +91,7 @@ const ApplicationsPage = () => {
       className: "hidden lg:table-cell",
       cell: (_, app) =>
         app.expectedSalary != null ? (
-          <span className="text-sm">
-            {app.expectedSalary.toLocaleString()}
-          </span>
+          <span className="text-sm">{app.expectedSalary.toLocaleString()}</span>
         ) : (
           "-"
         ),
@@ -166,7 +166,7 @@ const ApplicationsPage = () => {
           message="No applications found"
           icon={FileText}
           actionLabel="Browse Jobs"
-          action={() => window.location.replace("/all-jobs")}
+          action={() => navigate("/all-jobs")}
         />
       ) : (
         <DataTable

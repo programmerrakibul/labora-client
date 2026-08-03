@@ -72,7 +72,7 @@ const LatestJobsSection = () => {
                 : jobs.map((job) => (
                     <CarouselItem
                       key={job._id}
-                      className="basis-full sm:basis-1/2 lg:basis-1/3"
+                      className="basis-full sm:basis-1/2 lg:basis-1/3 h-full"
                     >
                       <JobCard job={job} />
                     </CarouselItem>

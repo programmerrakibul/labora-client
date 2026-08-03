@@ -160,7 +160,7 @@ const MyJobsPage = () => {
         <NotFound
           message="No jobs posted yet"
           icon={BriefcaseBusiness}
-          action={() => navigate("/dashboard/add-job", { replace: true })}
+          action={() => navigate("/dashboard/add-job")}
           actionLabel="Post Your First Job"
         />
       ) : (

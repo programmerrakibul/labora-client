@@ -63,6 +63,8 @@ const JobDetailsPage = () => {
   const experienceLevel = getEnumByValue(EXPERIENCE_LEVEL, job.experienceLevel);
   const status = getEnumByValue(JOB_STATUS, job.status);
   const jobLocation = formatJobLocation(job.location);
+  const isYourJob =
+    user?.role === "RECRUITER" && user?.email === job.postedBy?.email;
 
   const handleApply = async (e) => {
     e.preventDefault();
@@ -210,7 +212,7 @@ const JobDetailsPage = () => {
               {job.postedBy && (
                 <div className="flex items-center gap-2 text-sm">
                   <Building2 className="h-4 w-4 text-muted-foreground" />
-                  <span>Posted by {job.postedBy.name}</span>
+                  <span>Posted by {isYourJob ? "You" : job.postedBy.name}</span>
                 </div>
               )}
             </CardContent>
