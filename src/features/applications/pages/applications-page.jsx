@@ -2,10 +2,12 @@ import { FieldSelect } from "@/components/forms/form-field";
 import Container from "@/components/shared/container";
 import DataTable from "@/components/shared/data-table";
 import NotFound from "@/components/shared/not-found";
+import SearchInput from "@/components/shared/search-input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { APPLICATION_STATUS, getEnumByValue } from "@/constants/enums";
+import { useDebouncedSearch } from "@/hooks/use-debounced-search";
 import useAuth from "@/stores/auth";
 import { ChevronDown, ChevronUp, Eye, FileText } from "lucide-react";
 import { useState } from "react";
@@ -25,10 +27,14 @@ const ApplicationsPage = () => {
   const [statusFilter, setStatusFilter] = useState("");
   const [expandedId, setExpandedId] = useState(null);
   const [viewApp, setViewApp] = useState(null);
+  const { search, setSearch, debouncedSearch } = useDebouncedSearch(() =>
+    setPage(1),
+  );
 
   const filters = {
     page,
     limit: 10,
+    ...(debouncedSearch && { search: debouncedSearch }),
     ...(statusFilter && { status: statusFilter }),
   };
 
@@ -143,14 +149,25 @@ const ApplicationsPage = () => {
         </p>
       </div>
 
-      <div className="mb-4">
+      <div className="mb-4 flex flex-col gap-3 sm:flex-row">
+        <SearchInput
+          placeholder={
+            isRecruiter
+              ? "Search by job title or applicant..."
+              : "Search by job title or company..."
+          }
+          value={search}
+          onChange={setSearch}
+          onClear={() => setSearch("")}
+          className="max-w-sm"
+        />
         <FieldSelect
           value={statusFilter}
           onChange={(e) => {
             setStatusFilter(e.target.value);
             setPage(1);
           }}
-          className="w-full max-w-xs"
+          className="sm:w-52"
         >
           <option value="">All Statuses</option>
           {Object.values(APPLICATION_STATUS).map((s) => (

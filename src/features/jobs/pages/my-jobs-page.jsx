@@ -1,6 +1,7 @@
 import Container from "@/components/shared/container";
 import DataTable from "@/components/shared/data-table";
 import NotFound from "@/components/shared/not-found";
+import SearchInput from "@/components/shared/search-input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,6 +17,7 @@ import {
   JOB_TYPE,
   WORK_LOCATION_TYPE,
 } from "@/constants/enums";
+import { useDebouncedSearch } from "@/hooks/use-debounced-search";
 import { BriefcaseBusiness, Eye, Pencil, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
@@ -33,7 +35,14 @@ const MyJobsPage = () => {
   const [deleteId, setDeleteId] = useState(null);
   const [viewJob, setViewJob] = useState(null);
   const [editJob, setEditJob] = useState(null);
-  const { data, isLoading } = useUserJobs({ page, limit: 10 });
+  const { search, setSearch, debouncedSearch } = useDebouncedSearch(() =>
+    setPage(1),
+  );
+  const { data, isLoading } = useUserJobs({
+    page,
+    limit: 10,
+    ...(debouncedSearch && { search: debouncedSearch }),
+  });
   const deleteJob = useDeleteJob();
 
   const jobs = data?.data || [];
@@ -156,12 +165,28 @@ const MyJobsPage = () => {
         </Button>
       </div>
 
+      <div className="mb-4">
+        <SearchInput
+          placeholder="Search by title or company..."
+          value={search}
+          onChange={setSearch}
+          onClear={() => setSearch("")}
+          className="max-w-sm"
+        />
+      </div>
+
       {!isLoading && jobs.length === 0 ? (
         <NotFound
-          message="No jobs posted yet"
+          message={
+            debouncedSearch ? "No jobs match your search" : "No jobs posted yet"
+          }
           icon={BriefcaseBusiness}
-          action={() => navigate("/dashboard/add-job")}
-          actionLabel="Post Your First Job"
+          action={
+            debouncedSearch
+              ? () => setSearch("")
+              : () => navigate("/dashboard/add-job")
+          }
+          actionLabel={debouncedSearch ? "Clear Search" : "Post Your First Job"}
         />
       ) : (
         <DataTable

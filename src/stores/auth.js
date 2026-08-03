@@ -48,10 +48,11 @@ export const login = async (email, password, callbackURL) => {
   return data;
 };
 
-export const logInWithGoogle = async (callbackURL) => {
+export const logInWithGoogle = async ({ callbackURL, additionalData }) => {
   const { data, error } = await signIn.social({
     provider: "google",
     callbackURL,
+    additionalData,
   });
 
   if (error) throw error;
@@ -61,8 +62,8 @@ export const logInWithGoogle = async (callbackURL) => {
   return data;
 };
 
-export const register = async (name, email, password) => {
-  const { data, error } = await signUp.email({ name, email, password });
+export const register = async (name, email, password, role) => {
+  const { data, error } = await signUp.email({ name, email, password, role });
 
   if (error) throw error;
 
