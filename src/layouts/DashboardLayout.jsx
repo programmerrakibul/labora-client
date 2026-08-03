@@ -1,8 +1,8 @@
 import Logo from "@/components/shared/logo";
+import ThemeToggle from "@/components/shared/theme-toggle";
 import UserMenu from "@/components/shared/user-menu";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { AnimatedThemeToggle } from "@/providers/ThemeProvider";
 import useAuth, { logout as logoutAction } from "@/stores/auth";
 import {
   BriefcaseBusiness,
@@ -104,7 +104,7 @@ const DashboardLayout = () => {
             <Logo />
           </div>
           <div className="flex items-center gap-2">
-            <AnimatedThemeToggle />
+            <ThemeToggle />
             <UserMenu />
           </div>
         </header>
@@ -118,7 +118,7 @@ const DashboardLayout = () => {
             </h2>
           </div>
           <div className="flex items-center gap-3">
-            <AnimatedThemeToggle />
+            <ThemeToggle />
             <UserMenu />
           </div>
         </header>

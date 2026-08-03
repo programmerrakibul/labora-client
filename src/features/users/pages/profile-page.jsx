@@ -1,37 +1,47 @@
-import useAuth from "@/stores/auth";
 import Container from "@/components/shared/container";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { USER_ROLE } from "@/constants/enums";
-import { getEnumByValue } from "@/constants/enums";
-import { Link } from "react-router";
-import { User, Mail, Phone, MapPin, Pencil } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { getEnumByValue, USER_ROLE } from "@/constants/enums";
+import useAuth from "@/stores/auth";
+import { Mail, MapPin, Pencil, Phone, User } from "lucide-react";
+import { useState } from "react";
+import EditProfileDialog from "../components/edit-profile-dialog";
 
 const ProfilePage = () => {
   const user = useAuth((s) => s.user);
   const role = getEnumByValue(USER_ROLE, user?.role);
+  const [editOpen, setEditOpen] = useState(false);
 
   return (
     <Container className="py-8">
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-2xl font-bold tracking-tight">My Profile</h1>
-        <Button asChild>
-          <Link to="/dashboard/update-profile">
-            <Pencil className="mr-2 h-4 w-4" />
-            Edit Profile
-          </Link>
+        <Button onClick={() => setEditOpen(true)}>
+          <Pencil className="mr-2 h-4 w-4" />
+          Edit Profile
         </Button>
       </div>
 
       <Card className="max-w-2xl">
         <CardHeader>
           <div className="flex items-center gap-4">
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-xl font-bold text-primary">
-              {user?.name?.charAt(0)?.toUpperCase() || "U"}
-            </div>
+            <Avatar className="h-16 w-16 text-xl font-bold">
+              {user?.image ? (
+                <AvatarImage
+                  src={user.image}
+                  alt={user.name}
+                  referrerPolicy="no-referrer"
+                />
+              ) : (
+                <AvatarFallback>
+                  {user?.name.charAt(0)?.toUpperCase()}
+                </AvatarFallback>
+              )}
+            </Avatar>
             <div>
-              <CardTitle className="text-xl">{user?.name || "User"}</CardTitle>
+              <CardTitle className="text-xl">{user.name}</CardTitle>
               {role && (
                 <Badge variant="secondary" className={role.color}>
                   {role.label}
@@ -52,7 +62,8 @@ const ProfilePage = () => {
           <div className="flex items-center gap-3 text-sm">
             <MapPin className="h-4 w-4 text-muted-foreground" />
             <span>
-              {[user?.city, user?.country].filter(Boolean).join(", ") || "Not provided"}
+              {[user?.city, user?.country].filter(Boolean).join(", ") ||
+                "Not provided"}
             </span>
           </div>
           {user?.address && (
@@ -63,6 +74,8 @@ const ProfilePage = () => {
           )}
         </CardContent>
       </Card>
+
+      <EditProfileDialog open={editOpen} onOpenChange={setEditOpen} />
     </Container>
   );
 };

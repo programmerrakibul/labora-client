@@ -63,7 +63,7 @@ const JobForm = ({
 
   const { control, handleSubmit, reset } = useForm({
     resolver: zodResolver(jobSchema),
-    defaultValues: buildDefaultValues(initialJob),
+    defaultValues: () => buildDefaultValues(initialJob),
   });
 
   useEffect(() => {
@@ -318,10 +318,11 @@ const JobForm = ({
                 <Field>
                   <FieldLabel>Currency</FieldLabel>
                   <FieldSelect {...field}>
-                    <option value="BDT">BDT</option>
-                    <option value="USD">USD</option>
-                    <option value="EUR">EUR</option>
-                    <option value="GBP">GBP</option>
+                    {["BDT", "USD", "EUR", "GBP"].map((currency) => (
+                      <option key={currency} value={currency}>
+                        {currency}
+                      </option>
+                    ))}
                   </FieldSelect>
                 </Field>
               )}

@@ -2,11 +2,11 @@ import Logo from "@/components/shared/logo";
 import UserMenu from "@/components/shared/user-menu";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { AnimatedThemeToggle } from "@/providers/ThemeProvider";
 import useAuth, { logout as logoutAction } from "@/stores/auth";
 import { LayoutDashboard, LogOut, Menu, User } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation } from "react-router";
+import ThemeToggle from "./theme-toggle";
 const navLinks = [
   { to: "/", label: "Home" },
   { to: "/all-jobs", label: "Find Jobs" },
@@ -42,7 +42,7 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-2">
-          <AnimatedThemeToggle />
+          <ThemeToggle />
           <UserMenu />
 
           {/* Mobile Menu */}
