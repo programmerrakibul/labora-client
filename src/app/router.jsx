@@ -1,30 +1,28 @@
-import { createBrowserRouter } from "react-router";
-import RootLayout from "@/layouts/RootLayout";
-import DashboardLayout from "@/layouts/DashboardLayout";
 import PrivateRoute from "@/features/auth/components/private-route";
 import RoleGuard from "@/features/auth/components/role-guard";
 import ErrorPage from "@/features/public/pages/error-page";
+import DashboardLayout from "@/layouts/DashboardLayout";
+import RootLayout from "@/layouts/RootLayout";
+import { createBrowserRouter } from "react-router";
 
 // Public pages
-import Homepage from "@/features/public/pages/homepage";
-import AboutPage from "@/features/public/pages/about-page";
-import ContactPage from "@/features/public/pages/contact-page";
 import AllJobsPage from "@/features/jobs/pages/all-jobs-page";
 import JobDetailsPage from "@/features/jobs/pages/job-details-page";
+import AboutPage from "@/features/public/pages/about-page";
+import ContactPage from "@/features/public/pages/contact-page";
+import Homepage from "@/features/public/pages/homepage";
 
 // Auth pages
 import LoginPage from "@/features/auth/pages/login-page";
 import RegisterPage from "@/features/auth/pages/register-page";
 
 // Dashboard pages
+import ApplicationsPage from "@/features/applications/pages/applications-page";
 import DashboardOverview from "@/features/dashboard/pages/dashboard-overview";
 import AddJobPage from "@/features/jobs/pages/add-job-page";
-import UpdateJobPage from "@/features/jobs/pages/update-job-page";
 import MyJobsPage from "@/features/jobs/pages/my-jobs-page";
-import ApplicationsPage from "@/features/applications/pages/applications-page";
 import ManageUsersPage from "@/features/users/pages/manage-users-page";
 import ProfilePage from "@/features/users/pages/profile-page";
-import EditProfilePage from "@/features/users/pages/edit-profile-page";
 
 const router = createBrowserRouter([
   {
@@ -67,14 +65,6 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "my-jobs/update/:id",
-        element: (
-          <RoleGuard allowedRoles={["RECRUITER"]}>
-            <UpdateJobPage />
-          </RoleGuard>
-        ),
-      },
-      {
         path: "applications",
         element: (
           <RoleGuard allowedRoles={["RECRUITER", "JOB_SEEKER"]}>
@@ -91,7 +81,6 @@ const router = createBrowserRouter([
         ),
       },
       { path: "profile", element: <ProfilePage /> },
-      { path: "update-profile", element: <EditProfilePage /> },
     ],
   },
 ]);

@@ -6,12 +6,19 @@ import {
   JOB_TYPE,
   WORK_LOCATION_TYPE,
 } from "@/constants/enums";
-import { Briefcase, Clock, Eye, MapPin, Pencil, Trash2 } from "lucide-react";
-import { Link } from "react-router";
+import { cn } from "@/lib/utils";
+import {
+  Briefcase,
+  Clock,
+  EyeIcon,
+  MapPin,
+  Pencil,
+  Trash2,
+} from "lucide-react";
 import { formatJobLocation, formatPostedAt } from "../utils/job";
 import JobStatusSelect from "./job-status-select";
 
-const MyJobsCard = ({ job, onView, onDelete }) => {
+const MyJobsCard = ({ job, onView, onEdit, onDelete }) => {
   const jobType = getEnumByValue(JOB_TYPE, job.jobType);
   const locationType = getEnumByValue(WORK_LOCATION_TYPE, job.workLocationType);
 
@@ -58,30 +65,37 @@ const MyJobsCard = ({ job, onView, onDelete }) => {
           </span>
         </div>
         <div className="flex gap-2 border-t pt-3">
-          <Button
-            variant="outline"
-            size="sm"
-            className="flex-1"
-            onClick={() => onView?.(job)}
-          >
-            <Eye className="mr-1.5 h-4 w-4" />
-            View
-          </Button>
-          <Button variant="outline" size="sm" className="flex-1" asChild>
-            <Link to={`/dashboard/my-jobs/update/${job._id}`}>
-              <Pencil className="mr-1.5 h-4 w-4" />
-              Edit
-            </Link>
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            className="flex-1 text-destructive hover:text-destructive"
-            onClick={() => onDelete?.(job._id)}
-          >
-            <Trash2 className="mr-1.5 h-4 w-4" />
-            Delete
-          </Button>
+          {[
+            {
+              icon: EyeIcon,
+              label: "View",
+              onClick: () => onView?.(job),
+              className: "",
+            },
+            {
+              icon: Pencil,
+              label: "Edit",
+              onClick: () => onEdit?.(job),
+              className: "",
+            },
+            {
+              icon: Trash2,
+              label: "Delete",
+              onClick: () => onDelete?.(job._id),
+              className: "text-destructive hover:text-destructive",
+            },
+          ].map((item) => (
+            <Button
+              key={item.label}
+              variant="outline"
+              size="sm"
+              className={cn("flex-1", item.className)}
+              onClick={item.onClick}
+            >
+              <item.icon className="mr-1.5 size-4" />
+              {item.label}
+            </Button>
+          ))}
         </div>
       </CardContent>
     </Card>

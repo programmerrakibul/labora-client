@@ -1,7 +1,7 @@
-import { useTheme } from "next-themes";
 import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
+import { useTheme } from "next-themes";
 
-export const AnimatedThemeToggle = () => {
+const ThemeToggle = () => {
   const { resolvedTheme, setTheme } = useTheme();
 
   return (
@@ -14,3 +14,5 @@ export const AnimatedThemeToggle = () => {
     />
   );
 };
+
+export default ThemeToggle;

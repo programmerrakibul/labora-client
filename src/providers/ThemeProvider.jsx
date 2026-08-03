@@ -1,5 +1,4 @@
 import { ThemeProvider as NextThemesProvider } from "next-themes";
-import { AnimatedThemeToggle } from "@/components/shared/animated-theme-toggle";
 
 export const ThemeProvider = ({ children }) => {
   return (
@@ -13,5 +12,3 @@ export const ThemeProvider = ({ children }) => {
     </NextThemesProvider>
   );
 };
-
-export { AnimatedThemeToggle };

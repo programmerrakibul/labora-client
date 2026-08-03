@@ -96,7 +96,7 @@ src/
   - Recruiter: `add-job`, `my-jobs`, `my-jobs/update/:id`
   - Recruiter/Job seeker: `applications`
   - Admin: `manage-users`
-  - All users: `profile`, `update-profile`
+  - All users: `profile`
 
 ### Roles & Permissions
 

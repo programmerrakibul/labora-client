@@ -1,7 +1,7 @@
 import Container from "@/components/shared/container";
+import DataTable from "@/components/shared/data-table";
 import NotFound from "@/components/shared/not-found";
-import Pagination from "@/components/shared/pagination";
-import { CardSkeleton, TableSkeleton } from "@/components/shared/skeletons";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -11,25 +11,122 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { BriefcaseBusiness, Plus } from "lucide-react";
+import { getEnumByValue, JOB_TYPE, WORK_LOCATION_TYPE } from "@/constants/enums";
+import { BriefcaseBusiness, Eye, Pencil, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
+import EditJobDialog from "../components/edit-job-dialog";
 import JobDetailsModal from "../components/job-details-modal";
-import JobTableRow from "../components/job-table-row";
+import JobStatusSelect from "../components/job-status-select";
 import MyJobsCard from "../components/my-jobs-card";
 import { useDeleteJob, useUserJobs } from "../hooks/use-jobs";
+import { formatPostedAt } from "../utils/job";
 
 const MyJobsPage = () => {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [deleteId, setDeleteId] = useState(null);
   const [viewJob, setViewJob] = useState(null);
+  const [editJob, setEditJob] = useState(null);
   const { data, isLoading } = useUserJobs({ page, limit: 10 });
   const deleteJob = useDeleteJob();
 
   const jobs = data?.data || [];
   const totalPages = data?.pagination?.totalPages || 1;
+
+  const columns = [
+    {
+      header: "Job",
+      cell: (_, job) => (
+        <>
+          <Link
+            to={`/job-details/${job._id}`}
+            className="font-medium hover:underline"
+          >
+            {job.title}
+          </Link>
+          <p className="text-sm text-muted-foreground">{job.company}</p>
+        </>
+      ),
+    },
+    {
+      header: "Type",
+      className: "hidden md:table-cell",
+      cell: (_, job) => {
+        const jobType = getEnumByValue(JOB_TYPE, job.jobType);
+        return jobType ? (
+          <Badge variant="secondary" className={jobType.color}>
+            {jobType.label}
+          </Badge>
+        ) : null;
+      },
+    },
+    {
+      header: "Location",
+      className: "hidden md:table-cell",
+      cell: (_, job) => {
+        const locationType = getEnumByValue(
+          WORK_LOCATION_TYPE,
+          job.workLocationType
+        );
+        return locationType ? (
+          <Badge variant="secondary" className={locationType.color}>
+            {locationType.label}
+          </Badge>
+        ) : null;
+      },
+    },
+    {
+      header: "Status",
+      className: "hidden sm:table-cell",
+      cell: (_, job) => (
+        <JobStatusSelect jobId={job._id} status={job.status} />
+      ),
+    },
+    {
+      header: "Posted",
+      className: "hidden lg:table-cell",
+      cell: (_, job) => (
+        <span className="text-sm text-muted-foreground">
+          {formatPostedAt(job.createdAt)}
+        </span>
+      ),
+    },
+    {
+      header: "Actions",
+      cell: (_, job) => (
+        <div className="flex gap-1">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8"
+            onClick={() => setViewJob(job)}
+            aria-label="View job details"
+          >
+            <Eye className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8"
+            onClick={() => setEditJob(job)}
+            aria-label="Edit job"
+          >
+            <Pencil className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8 text-destructive hover:text-destructive"
+            onClick={() => setDeleteId(job._id)}
+          >
+            <Trash2 className="h-4 w-4" />
+          </Button>
+        </div>
+      ),
+    },
+  ];
 
   const handleDelete = async () => {
     if (!deleteId) return;
@@ -54,16 +151,7 @@ const MyJobsPage = () => {
         </Button>
       </div>
 
-      {isLoading ? (
-        <>
-          <div className="hidden md:block">
-            <TableSkeleton rows={5} columns={5} />
-          </div>
-          <div className="md:hidden">
-            <CardSkeleton count={3} />
-          </div>
-        </>
-      ) : jobs.length === 0 ? (
+      {!isLoading && jobs.length === 0 ? (
         <NotFound
           message="No jobs posted yet"
           icon={BriefcaseBusiness}
@@ -71,59 +159,26 @@ const MyJobsPage = () => {
           actionLabel="Post Your First Job"
         />
       ) : (
-        <>
-          <div className="hidden rounded-lg border md:block">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b bg-muted/50">
-                  <th className="p-4 text-left text-sm font-medium">Job</th>
-                  <th className="hidden p-4 text-left text-sm font-medium md:table-cell">
-                    Type
-                  </th>
-                  <th className="hidden p-4 text-left text-sm font-medium md:table-cell">
-                    Location
-                  </th>
-                  <th className="hidden p-4 text-left text-sm font-medium sm:table-cell">
-                    Status
-                  </th>
-                  <th className="hidden p-4 text-left text-sm font-medium lg:table-cell">
-                    Posted
-                  </th>
-                  <th className="p-4 text-left text-sm font-medium">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {jobs.map((job) => (
-                  <JobTableRow
-                    key={job._id}
-                    job={job}
-                    onView={setViewJob}
-                    onDelete={setDeleteId}
-                  />
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          <div className="space-y-3 md:hidden">
-            {jobs.map((job) => (
-              <MyJobsCard
-                key={job._id}
-                job={job}
-                onView={setViewJob}
-                onDelete={setDeleteId}
-              />
-            ))}
-          </div>
-
-          <div className="mt-6">
-            <Pagination
-              currentPage={page}
-              totalPages={totalPages}
-              onPageChange={setPage}
+        <DataTable
+          columns={columns}
+          data={jobs}
+          isLoading={isLoading}
+          page={page}
+          totalPages={totalPages}
+          totalItems={data?.pagination?.total || 0}
+          rowKey="_id"
+          loadingRows={5}
+          loadingCards={3}
+          onPageChange={setPage}
+          mobileCard={(job) => (
+            <MyJobsCard
+              job={job}
+              onView={setViewJob}
+              onEdit={setEditJob}
+              onDelete={setDeleteId}
             />
-          </div>
-        </>
+          )}
+        />
       )}
 
       <Dialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
@@ -154,6 +209,12 @@ const MyJobsPage = () => {
         job={viewJob}
         open={!!viewJob}
         onOpenChange={() => setViewJob(null)}
+      />
+
+      <EditJobDialog
+        job={editJob}
+        open={!!editJob}
+        onOpenChange={() => setEditJob(null)}
       />
     </Container>
   );

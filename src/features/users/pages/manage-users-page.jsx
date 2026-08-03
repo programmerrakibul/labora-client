@@ -2,7 +2,7 @@ import { useUsers, useToggleUserStatus, useDeleteUser } from "../hooks/use-users
 import { USER_ROLE } from "@/constants/enums";
 import { getEnumByValue } from "@/constants/enums";
 import Container from "@/components/shared/container";
-import Pagination from "@/components/shared/pagination";
+import DataTable from "@/components/shared/data-table";
 import NotFound from "@/components/shared/not-found";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -10,7 +10,6 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Users as UsersIcon, Trash2, ToggleLeft, ToggleRight } from "lucide-react";
-import { TableSkeleton, CardSkeleton } from "@/components/shared/skeletons";
 import {
   Dialog,
   DialogContent,
@@ -39,6 +38,82 @@ const ManageUsersPage = () => {
 
   const users = data?.data || [];
   const totalPages = data?.pagination?.totalPages || 1;
+
+  const columns = [
+    {
+      header: "User",
+      cell: (_, u) => (
+        <>
+          <p className="font-medium">{u.name}</p>
+          <p className="text-sm text-muted-foreground">{u.email}</p>
+        </>
+      ),
+    },
+    {
+      header: "Role",
+      className: "hidden md:table-cell",
+      cell: (_, u) => {
+        const role = getEnumByValue(USER_ROLE, u.role);
+        return role ? (
+          <Badge variant="secondary" className={role.color}>
+            {role.label}
+          </Badge>
+        ) : null;
+      },
+    },
+    {
+      header: "Phone",
+      className: "hidden lg:table-cell",
+      cell: (_, u) => <span className="text-sm">{u.phoneNumber || "-"}</span>,
+    },
+    {
+      header: "Location",
+      className: "hidden lg:table-cell",
+      cell: (_, u) => (
+        <span className="text-sm">
+          {[u.city, u.country].filter(Boolean).join(", ") || "-"}
+        </span>
+      ),
+    },
+    {
+      header: "Status",
+      cell: (_, u) => (
+        <Badge variant={u.isActive ? "secondary" : "destructive"}>
+          {u.isActive ? "Active" : "Inactive"}
+        </Badge>
+      ),
+    },
+    {
+      header: "Actions",
+      cell: (_, u) => (
+        <div className="flex gap-1">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8"
+            onClick={() =>
+              toggleStatus.mutate({ id: u._id, isActive: !u.isActive })
+            }
+            disabled={toggleStatus.isPending}
+          >
+            {u.isActive ? (
+              <ToggleRight className="h-4 w-4" />
+            ) : (
+              <ToggleLeft className="h-4 w-4" />
+            )}
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8 text-destructive"
+            onClick={() => setDeleteId(u._id)}
+          >
+            <Trash2 className="h-4 w-4" />
+          </Button>
+        </div>
+      ),
+    },
+  ];
 
   const handleDelete = async () => {
     if (!deleteId) return;
@@ -76,116 +151,70 @@ const ManageUsersPage = () => {
         </select>
       </div>
 
-      {isLoading ? (
-        <>
-          <div className="hidden md:block"><TableSkeleton rows={5} columns={5} /></div>
-          <div className="md:hidden"><CardSkeleton count={3} /></div>
-        </>
-      ) : users.length === 0 ? (
+      {!isLoading && users.length === 0 ? (
         <NotFound message="No users found" icon={UsersIcon} />
       ) : (
-        <>
-          {/* Desktop */}
-          <div className="hidden rounded-lg border md:block">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b bg-muted/50">
-                  <th className="p-4 text-left text-sm font-medium">User</th>
-                  <th className="hidden p-4 text-left text-sm font-medium md:table-cell">Role</th>
-                  <th className="hidden p-4 text-left text-sm font-medium lg:table-cell">Phone</th>
-                  <th className="hidden p-4 text-left text-sm font-medium lg:table-cell">Location</th>
-                  <th className="p-4 text-left text-sm font-medium">Status</th>
-                  <th className="p-4 text-left text-sm font-medium">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {users.map((u) => {
-                  const role = getEnumByValue(USER_ROLE, u.role);
-                  return (
-                    <tr key={u._id} className="border-b transition-colors hover:bg-muted/50">
-                      <td className="p-4">
-                        <p className="font-medium">{u.name}</p>
-                        <p className="text-sm text-muted-foreground">{u.email}</p>
-                      </td>
-                      <td className="hidden p-4 md:table-cell">
-                        {role && <Badge variant="secondary" className={role.color}>{role.label}</Badge>}
-                      </td>
-                      <td className="hidden p-4 text-sm lg:table-cell">{u.phoneNumber || "-"}</td>
-                      <td className="hidden p-4 text-sm lg:table-cell">
-                        {[u.city, u.country].filter(Boolean).join(", ") || "-"}
-                      </td>
-                      <td className="p-4">
-                        <Badge variant={u.isActive ? "secondary" : "destructive"}>
-                          {u.isActive ? "Active" : "Inactive"}
-                        </Badge>
-                      </td>
-                      <td className="p-4">
-                        <div className="flex gap-1">
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8"
-                            onClick={() => toggleStatus.mutate({ id: u._id, isActive: !u.isActive })}
-                            disabled={toggleStatus.isPending}
-                          >
-                            {u.isActive ? <ToggleRight className="h-4 w-4" /> : <ToggleLeft className="h-4 w-4" />}
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8 text-destructive"
-                            onClick={() => setDeleteId(u._id)}
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-
-          {/* Mobile */}
-          <div className="space-y-3 md:hidden">
-            {users.map((u) => {
-              const role = getEnumByValue(USER_ROLE, u.role);
-              return (
-                <Card key={u._id}>
-                  <CardHeader className="pb-2">
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <h3 className="font-semibold">{u.name}</h3>
-                        <p className="text-sm text-muted-foreground">{u.email}</p>
-                      </div>
-                      {role && <Badge variant="secondary" className={role.color}>{role.label}</Badge>}
+        <DataTable
+          columns={columns}
+          data={users}
+          isLoading={isLoading}
+          page={page}
+          totalPages={totalPages}
+          totalItems={data?.pagination?.total || 0}
+          rowKey="_id"
+          loadingRows={5}
+          loadingCards={3}
+          onPageChange={setPage}
+          mobileCard={(u) => {
+            const role = getEnumByValue(USER_ROLE, u.role);
+            return (
+              <Card>
+                <CardHeader className="pb-2">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <h3 className="font-semibold">{u.name}</h3>
+                      <p className="text-sm text-muted-foreground">{u.email}</p>
                     </div>
-                  </CardHeader>
-                  <CardContent className="pt-0 space-y-2">
-                    <div className="flex items-center justify-between">
-                      <Badge variant={u.isActive ? "secondary" : "destructive"}>
-                        {u.isActive ? "Active" : "Inactive"}
+                    {role && (
+                      <Badge variant="secondary" className={role.color}>
+                        {role.label}
                       </Badge>
-                      <div className="flex gap-1">
-                        <Button variant="ghost" size="sm" onClick={() => toggleStatus.mutate({ id: u._id, isActive: !u.isActive })}>
-                          {u.isActive ? "Deactivate" : "Activate"}
-                        </Button>
-                        <Button variant="ghost" size="sm" className="text-destructive" onClick={() => setDeleteId(u._id)}>
-                          Delete
-                        </Button>
-                      </div>
+                    )}
+                  </div>
+                </CardHeader>
+                <CardContent className="pt-0 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <Badge variant={u.isActive ? "secondary" : "destructive"}>
+                      {u.isActive ? "Active" : "Inactive"}
+                    </Badge>
+                    <div className="flex gap-1">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() =>
+                          toggleStatus.mutate({
+                            id: u._id,
+                            isActive: !u.isActive,
+                          })
+                        }
+                      >
+                        {u.isActive ? "Deactivate" : "Activate"}
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-destructive"
+                        onClick={() => setDeleteId(u._id)}
+                      >
+                        Delete
+                      </Button>
                     </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-
-          <div className="mt-6">
-            <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
-          </div>
-        </>
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          }}
+        />
       )}
 
       <Dialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
