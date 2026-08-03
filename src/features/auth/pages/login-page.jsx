@@ -4,6 +4,7 @@ import {
   FieldInput,
   FieldLabel,
 } from "@/components/forms/form-field";
+import PasswordInput from "@/components/forms/password-input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import GoogleSignInButton from "@/features/auth/components/google-sign-in-button";
@@ -40,7 +41,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex min-h-[calc(100vh-200px)] items-center justify-center px-4">
+    <div className="flex min-h-[calc(100vh-200px)] items-center justify-center px-4 py-12">
       <div className="w-full max-w-md space-y-6">
         <div className="text-center">
           <h1 className="text-2xl font-bold tracking-tight">Welcome back</h1>
@@ -61,10 +62,13 @@ const LoginPage = () => {
             control={control}
             render={({ field, fieldState }) => (
               <Field>
-                <FieldLabel required>Email</FieldLabel>
+                <FieldLabel required data-invalid={fieldState.invalid}>
+                  Email
+                </FieldLabel>
                 <FieldInput
                   type="email"
                   placeholder="you@example.com"
+                  aria-invalid={fieldState.invalid}
                   {...field}
                   error={fieldState.error}
                 />
@@ -77,16 +81,13 @@ const LoginPage = () => {
             name="password"
             control={control}
             render={({ field, fieldState }) => (
-              <Field>
-                <FieldLabel required>Password</FieldLabel>
-                <FieldInput
-                  type="password"
-                  placeholder="Enter your password"
-                  {...field}
-                  error={fieldState.error}
-                />
-                <FieldError error={fieldState.error} />
-              </Field>
+              <PasswordInput
+                label="Password"
+                required
+                placeholder="Enter your password"
+                error={fieldState.error}
+                {...field}
+              />
             )}
           />
 

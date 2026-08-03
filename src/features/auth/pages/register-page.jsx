@@ -4,6 +4,7 @@ import {
   FieldInput,
   FieldLabel,
 } from "@/components/forms/form-field";
+import PasswordInput from "@/components/forms/password-input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import GoogleSignInButton from "@/features/auth/components/google-sign-in-button";
@@ -39,7 +40,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="flex min-h-[calc(100vh-200px)] items-center justify-center px-4">
+    <div className="flex min-h-[calc(100vh-200px)] items-center justify-center px-4 py-12">
       <div className="w-full max-w-md space-y-6">
         <div className="text-center">
           <h1 className="text-2xl font-bold tracking-tight">
@@ -95,16 +96,13 @@ const RegisterPage = () => {
             name="password"
             control={control}
             render={({ field, fieldState }) => (
-              <Field>
-                <FieldLabel required>Password</FieldLabel>
-                <FieldInput
-                  type="password"
-                  placeholder="At least 6 characters"
-                  {...field}
-                  error={fieldState.error}
-                />
-                <FieldError error={fieldState.error} />
-              </Field>
+              <PasswordInput
+                label="Password"
+                required
+                placeholder="At least 6 characters"
+                error={fieldState.error}
+                {...field}
+              />
             )}
           />
 
@@ -112,16 +110,13 @@ const RegisterPage = () => {
             name="confirmPassword"
             control={control}
             render={({ field, fieldState }) => (
-              <Field>
-                <FieldLabel required>Confirm Password</FieldLabel>
-                <FieldInput
-                  type="password"
-                  placeholder="Confirm your password"
-                  {...field}
-                  error={fieldState.error}
-                />
-                <FieldError error={fieldState.error} />
-              </Field>
+              <PasswordInput
+                label="Confirm Password"
+                required
+                placeholder="Confirm your password"
+                error={fieldState.error}
+                {...field}
+              />
             )}
           />
 
