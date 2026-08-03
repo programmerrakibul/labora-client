@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Spinner } from "@/components/ui/spinner";
+import urlUtils from "@/lib/url";
 import useAuth, { logout as logoutAction } from "@/stores/auth";
 import { UserIcon } from "lucide-react";
 
@@ -18,6 +19,7 @@ const UserMenu = () => {
   const isLoading = useAuth((s) => s.loading);
   const navigate = useNavigate();
   const location = useLocation();
+  const callbackUrl = encodeURIComponent(urlUtils.getFullUrl());
 
   const inDashboard = location.pathname.startsWith("/dashboard");
   const initials = user?.name?.charAt(0)?.toUpperCase() || "U";
@@ -33,7 +35,7 @@ const UserMenu = () => {
         size="icon"
         className="size-9"
         aria-label="Sign in"
-        onClick={() => navigate("/auth/login")}
+        onClick={() => navigate(`/auth/login?callbackUrl=${callbackUrl}`)}
       >
         <UserIcon className="size-5" />
       </Button>

@@ -1,3 +1,4 @@
+import { dashboardQueryKeys } from "@/features/dashboard/hooks/use-dashboard";
 import { jobApi } from "@/features/jobs/services/job";
 import queryClient from "@/lib/query-client";
 import useAuth from "@/stores/auth";
@@ -43,6 +44,7 @@ export const useCreateJob = () => {
     mutationFn: jobApi.create,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: jobQueryKeys.all });
+      queryClient.invalidateQueries({ queryKey: dashboardQueryKeys.all });
     },
   });
 };
@@ -55,6 +57,7 @@ export const useUpdateJob = () => {
       queryClient.invalidateQueries({
         queryKey: jobQueryKeys.single(variables.id),
       });
+      queryClient.invalidateQueries({ queryKey: dashboardQueryKeys.all });
     },
   });
 };
@@ -67,6 +70,7 @@ export const useUpdateJobStatus = () => {
       queryClient.invalidateQueries({
         queryKey: jobQueryKeys.single(variables.id),
       });
+      queryClient.invalidateQueries({ queryKey: dashboardQueryKeys.all });
     },
   });
 };
@@ -76,6 +80,7 @@ export const useDeleteJob = () => {
     mutationFn: jobApi.delete,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: jobQueryKeys.all });
+      queryClient.invalidateQueries({ queryKey: dashboardQueryKeys.all });
     },
   });
 };

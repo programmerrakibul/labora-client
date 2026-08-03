@@ -1,3 +1,5 @@
+import DetailItem from "@/components/shared/detail-item";
+import DetailSection from "@/components/shared/detail-section";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTitle } from "@/components/ui/dialog";
@@ -17,40 +19,6 @@ import {
   User,
   X,
 } from "lucide-react";
-
-const DetailSection = ({ icon, title, children }) => {
-  const Icon = icon;
-  return (
-    <section className="space-y-3">
-      <h3 className="flex items-center gap-2 text-sm font-semibold text-foreground">
-        <span className="grid h-6 w-6 place-items-center rounded-md bg-muted text-muted-foreground">
-          <Icon className="h-3.5 w-3.5" />
-        </span>
-        {title}
-      </h3>
-      {children}
-    </section>
-  );
-};
-
-const DetailItem = ({ icon, label, value }) => {
-  const Icon = icon;
-  return (
-    <div className="flex items-start gap-3">
-      <div className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-muted/70 text-muted-foreground">
-        <Icon className="h-4 w-4" />
-      </div>
-      <div className="min-w-0">
-        <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-          {label}
-        </p>
-        <p className="mt-0.5 wrap-break-word text-sm font-medium text-foreground">
-          {value}
-        </p>
-      </div>
-    </div>
-  );
-};
 
 const ApplicationDetailsModal = ({ application, open, onOpenChange }) => {
   if (!open) return null;

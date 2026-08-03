@@ -63,7 +63,7 @@ const JobForm = ({
 
   const { control, handleSubmit, reset } = useForm({
     resolver: zodResolver(jobSchema),
-    defaultValues: () => buildDefaultValues(initialJob),
+    defaultValues: buildDefaultValues(initialJob),
   });
 
   useEffect(() => {

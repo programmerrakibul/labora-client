@@ -11,7 +11,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { getEnumByValue, JOB_TYPE, WORK_LOCATION_TYPE } from "@/constants/enums";
+import {
+  getEnumByValue,
+  JOB_TYPE,
+  WORK_LOCATION_TYPE,
+} from "@/constants/enums";
 import { BriefcaseBusiness, Eye, Pencil, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
@@ -68,7 +72,7 @@ const MyJobsPage = () => {
       cell: (_, job) => {
         const locationType = getEnumByValue(
           WORK_LOCATION_TYPE,
-          job.workLocationType
+          job.workLocationType,
         );
         return locationType ? (
           <Badge variant="secondary" className={locationType.color}>
@@ -80,9 +84,7 @@ const MyJobsPage = () => {
     {
       header: "Status",
       className: "hidden sm:table-cell",
-      cell: (_, job) => (
-        <JobStatusSelect jobId={job._id} status={job.status} />
-      ),
+      cell: (_, job) => <JobStatusSelect jobId={job._id} status={job.status} />,
     },
     {
       header: "Posted",
@@ -145,7 +147,10 @@ const MyJobsPage = () => {
           <h1 className="text-2xl font-bold tracking-tight">My Jobs</h1>
           <p className="text-muted-foreground">Manage your posted jobs</p>
         </div>
-        <Button onClick={() => navigate("/dashboard/add-job")} className="items-center">
+        <Button
+          onClick={() => navigate("/dashboard/add-job")}
+          className="items-center"
+        >
           <Plus className="h-4 w-4" />
           Post Job
         </Button>
@@ -155,7 +160,7 @@ const MyJobsPage = () => {
         <NotFound
           message="No jobs posted yet"
           icon={BriefcaseBusiness}
-          action={() => window.location.replace("/dashboard/add-job")}
+          action={() => navigate("/dashboard/add-job")}
           actionLabel="Post Your First Job"
         />
       ) : (

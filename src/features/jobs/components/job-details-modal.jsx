@@ -1,19 +1,14 @@
+import BulletList from "@/components/shared/bullet-list";
+import DetailItem from "@/components/shared/detail-item";
+import DetailSection from "@/components/shared/detail-section";
 import Skeleton from "@/components/shared/skeleton";
-import { Badge } from "@/components/ui/badge";
+import SkillChip from "@/components/shared/skill-chip";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTitle } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import {
-  EXPERIENCE_LEVEL,
-  getEnumByValue,
-  JOB_STATUS,
-  JOB_TYPE,
-  WORK_LOCATION_TYPE,
-} from "@/constants/enums";
-import {
   AlignLeft,
-  Briefcase,
   Building2,
   Clock,
   DollarSign,
@@ -26,71 +21,13 @@ import {
 } from "lucide-react";
 import { useJob } from "../hooks/use-jobs";
 import { formatJobLocation, formatPostedAt, formatSalary } from "../utils/job";
-
-const DetailSection = ({ icon, title, children }) => {
-  const Icon = icon;
-  return (
-    <section className="space-y-3">
-      <h3 className="flex items-center gap-2 text-sm font-semibold text-foreground">
-        <span className="grid h-6 w-6 place-items-center rounded-md bg-muted text-muted-foreground">
-          <Icon className="h-3.5 w-3.5" />
-        </span>
-        {title}
-      </h3>
-      {children}
-    </section>
-  );
-};
-
-const DetailItem = ({ icon, label, value }) => {
-  const Icon = icon;
-  return (
-    <div className="flex items-start gap-3">
-      <div className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-muted/70 text-muted-foreground">
-        <Icon className="h-4 w-4" />
-      </div>
-      <div className="min-w-0">
-        <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-          {label}
-        </p>
-        <p className="mt-0.5 wrap-break-word text-sm font-medium text-foreground">
-          {value}
-        </p>
-      </div>
-    </div>
-  );
-};
-
-const BulletList = ({ items }) => (
-  <ul className="space-y-2.5">
-    {items.map((item, i) => (
-      <li
-        key={i}
-        className="flex items-start gap-2.5 text-sm leading-relaxed text-muted-foreground"
-      >
-        <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
-        {item}
-      </li>
-    ))}
-  </ul>
-);
+import JobBadges from "./job-badges";
 
 const JobDetailsModal = ({ job, jobId, open, onOpenChange }) => {
   const { data, isLoading } = useJob(job ? null : jobId);
   const displayJob = job || data?.data;
 
   if (!open) return null;
-
-  const jobType = getEnumByValue(JOB_TYPE, displayJob?.jobType);
-  const locationType = getEnumByValue(
-    WORK_LOCATION_TYPE,
-    displayJob?.workLocationType,
-  );
-  const experienceLevel = getEnumByValue(
-    EXPERIENCE_LEVEL,
-    displayJob?.experienceLevel,
-  );
-  const status = getEnumByValue(JOB_STATUS, displayJob?.status);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange} className="max-w-3xl p-0">
@@ -148,33 +85,7 @@ const JobDetailsModal = ({ job, jobId, open, onOpenChange }) => {
             </div>
 
             <div className="space-y-6 px-5 py-5 sm:px-6 sm:py-6">
-                <div className="flex flex-wrap gap-2">
-                  {status && (
-                    <Badge variant="secondary" className={status.color}>
-                      {status.label}
-                    </Badge>
-                  )}
-                  {jobType && (
-                    <Badge variant="secondary" className={jobType.color}>
-                      <Briefcase className="mr-1 h-3 w-3" />
-                      {jobType.label}
-                    </Badge>
-                  )}
-                  {locationType && (
-                    <Badge variant="secondary" className={locationType.color}>
-                      <MapPin className="mr-1 h-3 w-3" />
-                      {locationType.label}
-                    </Badge>
-                  )}
-                  {experienceLevel && (
-                    <Badge
-                      variant="secondary"
-                      className={experienceLevel.color}
-                    >
-                      {experienceLevel.label}
-                    </Badge>
-                  )}
-                </div>
+                <JobBadges job={displayJob} showStatus />
 
                 <div className="grid gap-5 sm:grid-cols-2">
                   {displayJob.salary?.min != null && (
@@ -248,12 +159,12 @@ const JobDetailsModal = ({ job, jobId, open, onOpenChange }) => {
                   <DetailSection icon={Layers} title="Skills">
                     <div className="flex flex-wrap gap-2">
                       {displayJob.skills.map((skill) => (
-                        <span
+                        <SkillChip
                           key={skill}
-                          className="rounded-full bg-secondary px-3 py-1 text-xs font-medium text-secondary-foreground"
-                        >
-                          {skill}
-                        </span>
+                          skill={skill}
+                          size="md"
+                          className="text-xs font-medium"
+                        />
                       ))}
                     </div>
                   </DetailSection>
