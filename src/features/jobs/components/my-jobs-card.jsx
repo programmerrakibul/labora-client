@@ -15,14 +15,12 @@ import {
   Pencil,
   Trash2,
 } from "lucide-react";
-import { useNavigate } from "react-router";
 import { formatJobLocation, formatPostedAt } from "../utils/job";
 import JobStatusSelect from "./job-status-select";
 
-const MyJobsCard = ({ job, onView, onDelete }) => {
+const MyJobsCard = ({ job, onView, onEdit, onDelete }) => {
   const jobType = getEnumByValue(JOB_TYPE, job.jobType);
   const locationType = getEnumByValue(WORK_LOCATION_TYPE, job.workLocationType);
-  const navigate = useNavigate();
 
   return (
     <Card className="space-y-0">
@@ -77,7 +75,7 @@ const MyJobsCard = ({ job, onView, onDelete }) => {
             {
               icon: Pencil,
               label: "Edit",
-              onClick: () => navigate(`/dashboard/my-jobs/update/${job._id}`),
+              onClick: () => onEdit?.(job),
               className: "",
             },
             {

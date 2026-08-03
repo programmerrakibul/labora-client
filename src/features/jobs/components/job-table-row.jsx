@@ -10,7 +10,7 @@ import { Link } from "react-router";
 import { formatPostedAt } from "../utils/job";
 import JobStatusSelect from "./job-status-select";
 
-const JobTableRow = ({ job, onView, onDelete }) => {
+const JobTableRow = ({ job, onView, onEdit, onDelete }) => {
   const jobType = getEnumByValue(JOB_TYPE, job.jobType);
   const locationType = getEnumByValue(WORK_LOCATION_TYPE, job.workLocationType);
 
@@ -56,10 +56,14 @@ const JobTableRow = ({ job, onView, onDelete }) => {
           >
             <Eye className="h-4 w-4" />
           </Button>
-          <Button variant="ghost" size="icon" className="h-8 w-8" asChild>
-            <Link to={`/dashboard/my-jobs/update/${job._id}`}>
-              <Pencil className="h-4 w-4" />
-            </Link>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8"
+            onClick={() => onEdit?.(job)}
+            aria-label="Edit job"
+          >
+            <Pencil className="h-4 w-4" />
           </Button>
           <Button
             variant="ghost"
