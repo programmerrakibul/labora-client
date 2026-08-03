@@ -1,6 +1,5 @@
 import router from "@/app/router";
-import QueryProvider from "@/providers/QueryProvider";
-import { ThemeProvider } from "@/providers/ThemeProvider";
+import ProviderWrapper from "@/providers/provider-wrapper";
 import { fetchSession } from "@/stores/auth";
 import { useEffect } from "react";
 import { RouterProvider } from "react-router";
@@ -11,11 +10,9 @@ const App = () => {
   }, []);
 
   return (
-    <QueryProvider>
-      <ThemeProvider>
-        <RouterProvider router={router} />
-      </ThemeProvider>
-    </QueryProvider>
+    <ProviderWrapper>
+      <RouterProvider router={router} />
+    </ProviderWrapper>
   );
 };
 

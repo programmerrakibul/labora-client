@@ -1,3 +1,13 @@
+import { Field, FieldLabel, FieldSelect } from "@/components/forms/form-field";
+import SearchInput from "@/components/shared/search-input";
+import { Button } from "@/components/ui/button";
+import {
+  JOB_TYPE,
+  WORK_LOCATION_TYPE,
+  EXPERIENCE_LEVEL,
+  JOB_CATEGORIES,
+} from "@/constants/enums";
+import { useDebounce } from "@/hooks/use-debounce";
 import useJobFilters, {
   setSearch,
   setCategory,
@@ -6,27 +16,37 @@ import useJobFilters, {
   setExperienceLevel,
   resetFilters,
 } from "@/stores/job-filters";
-import {
-  JOB_TYPE,
-  WORK_LOCATION_TYPE,
-  EXPERIENCE_LEVEL,
-  JOB_CATEGORIES,
-} from "@/constants/enums";
-import { Field, FieldLabel, FieldSelect } from "@/components/forms/form-field";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { RotateCcw } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 const JobFilters = () => {
   const { search, category, jobType, workLocationType, experienceLevel } =
     useJobFilters();
+  const [searchInput, setSearchInput] = useState(search);
+  const debouncedSearch = useDebounce(searchInput, 500);
+  const lastSyncedRef = useRef(search);
+
+  useEffect(() => {
+    if (debouncedSearch !== lastSyncedRef.current) {
+      lastSyncedRef.current = debouncedSearch;
+      setSearch(debouncedSearch);
+    }
+  }, [debouncedSearch]);
+
+  useEffect(() => {
+    if (search !== lastSyncedRef.current) {
+      lastSyncedRef.current = search;
+      setSearchInput(search);
+    }
+  }, [search]);
 
   return (
     <div className="space-y-4">
-      <Input
+      <SearchInput
         placeholder="Search jobs..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        value={searchInput}
+        onChange={setSearchInput}
+        onClear={() => setSearchInput("")}
       />
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         <Field>
