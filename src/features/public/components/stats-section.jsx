@@ -1,5 +1,5 @@
 import Container from "@/components/shared/container";
-import StatCard from "@/components/shared/stat-card";
+import StatCard from "@/features/public/components/stat-card";
 import { platformStats } from "../data/stats";
 
 const StatsSection = () => {

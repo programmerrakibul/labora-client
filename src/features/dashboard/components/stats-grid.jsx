@@ -1,4 +1,4 @@
-import StatCard from "@/components/shared/stat-card";
+import StatCard from "@/features/public/components/stat-card";
 
 const StatsGrid = ({ stats }) => {
   return (

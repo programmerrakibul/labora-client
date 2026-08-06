@@ -1,6 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { BadgeCheck, Star } from "lucide-react";
-import SkillChip from "./skill-chip";
+import SkillChip from "@/components/shared/skill-chip";
 
 const TalentCard = ({
   name,

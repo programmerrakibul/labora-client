@@ -31,7 +31,8 @@ const GoogleIcon = () => (
 const GoogleSignInButton = ({ className, role }) => {
   const [loading, startTransition] = useTransition();
   const [searchParams] = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || urlUtils.getFullUrl();
+  const callbackUrl =
+    searchParams.get("callbackUrl") || urlUtils.getFullUrl("/");
 
   const handleGoogleSignIn = async () => {
     startTransition(async () => {

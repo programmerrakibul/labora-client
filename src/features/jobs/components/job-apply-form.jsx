@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { toast } from "@/components/ui/toast";
 import { useCreateApplication } from "@/features/applications/hooks/use-applications";
+import { getErrorMessage } from "@/lib/error";
 import { useState } from "react";
 
 const defaultValues = {
@@ -28,7 +29,7 @@ const JobApplyForm = ({ job, onCancel }) => {
         resumeUrl: formData.resumeUrl,
         coverLetter: formData.coverLetter,
         expectedSalary: formData.expectedSalary
-          ? Number(formData.expectedSalary)
+          ? parseFloat(formData.expectedSalary)
           : undefined,
       });
       toast.success({
@@ -38,10 +39,11 @@ const JobApplyForm = ({ job, onCancel }) => {
       setFormData(defaultValues);
       onCancel();
     } catch (err) {
+      const errorMessage = getErrorMessage(err);
+
       toast.error({
         title: "Failed to apply",
-        description:
-          err?.response?.data?.error || "Failed to apply for the job.",
+        description: errorMessage || "Failed to apply for the job.",
       });
     }
   };
@@ -85,6 +87,11 @@ const JobApplyForm = ({ job, onCancel }) => {
             <FieldInput
               type="number"
               min="0"
+              max={job.salary?.max || undefined}
+              step="0.01"
+              placeholder={`Enter expected salary (max: ${
+                job.salary?.max || "N/A"
+              })`}
               value={formData.expectedSalary}
               onChange={(e) =>
                 setFormData((prev) => ({
