@@ -7,6 +7,7 @@ import {
 import PasswordInput from "@/components/forms/password-input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import Seo from "@/components/shared/seo";
 import GoogleSignInButton from "@/features/auth/components/google-sign-in-button";
 import DemoLoginButtons from "@/features/auth/components/demo-login-buttons";
 import urlUtils from "@/lib/url";
@@ -56,6 +57,11 @@ const LoginPage = () => {
 
   return (
     <div className="flex min-h-[calc(100vh-200px)] items-center justify-center px-4 py-12">
+      <Seo
+        title="Sign In"
+        noindex
+        description="Sign in to your Labora account to apply for jobs, post listings, and manage your freelance career."
+      />
       <div className="w-full max-w-md space-y-6">
         <div className="text-center">
           <h1 className="text-2xl font-bold tracking-tight">Welcome back</h1>

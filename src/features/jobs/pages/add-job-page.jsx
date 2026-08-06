@@ -1,4 +1,5 @@
 import Container from "@/components/shared/container";
+import Seo from "@/components/shared/seo";
 import { useNavigate } from "react-router";
 import JobForm from "../components/job-form";
 import { useCreateJob } from "../hooks/use-jobs";
@@ -18,6 +19,11 @@ const AddJobPage = () => {
 
   return (
     <Container className="py-8">
+      <Seo
+        title="Post a New Job"
+        noindex
+        description="Post a new freelance job listing on Labora and connect with qualified talent."
+      />
       <div className="mb-6">
         <h1 className="text-2xl font-bold tracking-tight">Post a New Job</h1>
         <p className="text-muted-foreground">

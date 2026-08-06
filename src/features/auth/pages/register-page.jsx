@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import { USER_ROLE } from "@/constants/enums";
+import Seo from "@/components/shared/seo";
 import GoogleSignInButton from "@/features/auth/components/google-sign-in-button";
 import { cn } from "@/lib/utils";
 import { register as registerUser } from "@/stores/auth";
@@ -59,6 +60,11 @@ const RegisterPage = () => {
 
   return (
     <div className="flex min-h-[calc(100vh-200px)] items-center justify-center px-4 py-12">
+      <Seo
+        title="Create an Account"
+        noindex
+        description="Join Labora as a job seeker or recruiter and start connecting talent with opportunity today."
+      />
       <div className="w-full max-w-md space-y-6">
         <div className="text-center">
           <h1 className="text-2xl font-bold tracking-tight">

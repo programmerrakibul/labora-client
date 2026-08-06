@@ -1,4 +1,5 @@
 import Container from "@/components/shared/container";
+import Seo from "@/components/shared/seo";
 import { Card, CardContent } from "@/components/ui/card";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -55,6 +56,10 @@ const ContactPage = () => {
 
   return (
     <div>
+      <Seo
+        title="Contact Us"
+        description="Have a question about Labora? Get in touch with our support team, browse FAQs, or reach us by email and phone."
+      />
       <section className="bg-gradient-to-b from-primary/5 to-background py-20">
         <Container>
           <div className="mx-auto max-w-3xl text-center">

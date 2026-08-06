@@ -1,4 +1,5 @@
 import Container from "@/components/shared/container";
+import Seo from "@/components/shared/seo";
 import { Card, CardContent } from "@/components/ui/card";
 import { Target, Eye, Handshake } from "lucide-react";
 
@@ -18,6 +19,10 @@ const values = [
 const AboutPage = () => {
   return (
     <div>
+      <Seo
+        title="About Us"
+        description="Learn about Labora, the freelance job marketplace connecting talented professionals with meaningful opportunities worldwide."
+      />
       <section className="bg-gradient-to-b from-primary/5 to-background py-20">
         <Container>
           <div className="mx-auto max-w-3xl text-center">
