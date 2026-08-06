@@ -2,11 +2,11 @@ import Container from "@/components/shared/container";
 import NotFound from "@/components/shared/not-found";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { toast } from "@/components/ui/toast";
 import useAuth from "@/stores/auth";
 import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import { toast } from "sonner";
 import JobApplyForm from "../components/job-apply-form";
 import JobDetailsHeader from "../components/job-details-header";
 import JobDetailsInfoCard from "../components/job-details-info-card";
@@ -65,7 +65,10 @@ const JobDetailsPage = () => {
               className="w-full"
               onClick={() => {
                 if (!user) {
-                  toast.info("Please login to apply for this job");
+                  toast.info({
+                    title: "Login required",
+                    description: "Please log in to apply for this job.",
+                  });
                   return;
                 }
 
