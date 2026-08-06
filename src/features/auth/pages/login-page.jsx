@@ -8,6 +8,7 @@ import PasswordInput from "@/components/forms/password-input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import GoogleSignInButton from "@/features/auth/components/google-sign-in-button";
+import DemoLoginButtons from "@/features/auth/components/demo-login-buttons";
 import urlUtils from "@/lib/url";
 import { login } from "@/stores/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,12 +21,14 @@ import { loginSchema } from "../validation/auth";
 const LoginPage = () => {
   const [error, setError] = useState("");
   const [searchParams] = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || urlUtils.getFullUrl("/");
+  const callbackUrl =
+    searchParams.get("callbackUrl") || urlUtils.getFullUrl("/");
 
   const {
     control,
     handleSubmit,
     formState: { isSubmitting },
+    setValue
   } = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: "", password: "" },
@@ -37,7 +40,18 @@ const LoginPage = () => {
       await login(values.email, values.password, callbackUrl);
     } catch (err) {
       setError(err?.message || "Login failed. Please try again.");
+
+      setTimeout(() => {
+        setError("");
+      }, 3000);
     }
+  };
+
+  const fillDemoCredentials = (email, password) => {
+    setError("");
+    setValue("email", email);
+    setValue("password", password);
+    handleSubmit(onSubmit)();
   };
 
   return (
@@ -102,6 +116,8 @@ const LoginPage = () => {
             )}
           </Button>
         </form>
+
+        <DemoLoginButtons onFill={fillDemoCredentials} />
 
         <div className="relative">
           <div className="absolute inset-0 flex items-center">

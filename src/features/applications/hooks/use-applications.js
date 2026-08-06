@@ -32,8 +32,8 @@ export const useCreateApplication = () => {
   return useMutation({
     mutationFn: applicationApi.create,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: applicationQueryKeys.all });
       queryClient.invalidateQueries({ queryKey: dashboardQueryKeys.all });
+      queryClient.invalidateQueries({ queryKey: applicationQueryKeys.all });
     },
   });
 };
