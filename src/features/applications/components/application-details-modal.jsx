@@ -1,5 +1,3 @@
-import DetailItem from "@/components/shared/detail-item";
-import DetailSection from "@/components/shared/detail-section";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTitle } from "@/components/ui/dialog";
@@ -7,6 +5,8 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { APPLICATION_STATUS, getEnumByValue } from "@/constants/enums";
 import { formatPostedAt } from "@/features/jobs/utils/job";
+import DetailItem from "@/features/public/components/detail-item";
+import DetailSection from "@/features/public/components/detail-section";
 import {
   Briefcase,
   Building2,

@@ -1,6 +1,6 @@
 import Container from "@/components/shared/container";
-import SectionHeader from "@/components/shared/section-header";
-import EmployerCard from "@/components/shared/employer-card";
+import EmployerCard from "@/features/public/components/employer-card";
+import SectionHeader from "@/features/public/components/section-header";
 import { companies } from "../data/companies";
 
 const TopCompaniesSection = () => {

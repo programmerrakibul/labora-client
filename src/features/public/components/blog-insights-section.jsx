@@ -1,7 +1,7 @@
 import Container from "@/components/shared/container";
-import SectionHeader from "@/components/shared/section-header";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import SectionHeader from "@/features/public/components/section-header";
 import { CalendarDays, Clock } from "lucide-react";
 import { blogPosts } from "../data/blog-posts";
 

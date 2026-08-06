@@ -1,6 +1,6 @@
 import Container from "@/components/shared/container";
-import SectionHeader from "@/components/shared/section-header";
-import StepCard from "@/components/shared/step-card";
+import StepCard from "@/features/public/components/step-card";
+import SectionHeader from "@/features/public/components/section-header";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { employerSteps, jobSeekerSteps } from "../data/workflow";
@@ -33,7 +33,7 @@ const WorkflowSection = () => {
                   "rounded-full px-5 py-2 text-sm font-medium transition-all duration-300",
                   activeTab === tab.id
                     ? "bg-primary text-primary-foreground"
-                    : "text-muted-foreground hover:text-foreground"
+                    : "text-muted-foreground hover:text-foreground",
                 )}
               >
                 {tab.label}

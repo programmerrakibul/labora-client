@@ -20,7 +20,7 @@ import { loginSchema } from "../validation/auth";
 const LoginPage = () => {
   const [error, setError] = useState("");
   const [searchParams] = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || urlUtils.getFullUrl();
+  const callbackUrl = searchParams.get("callbackUrl") || urlUtils.getFullUrl("/");
 
   const {
     control,

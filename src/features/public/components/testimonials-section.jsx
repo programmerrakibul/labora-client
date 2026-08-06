@@ -1,6 +1,6 @@
 import Container from "@/components/shared/container";
-import SectionHeader from "@/components/shared/section-header";
-import TestimonialCard from "@/components/shared/testimonial-card";
+import SectionHeader from "@/features/public/components/section-header";
+import TestimonialCard from "@/features/public/components/testimonial-card";
 import { testimonials } from "../data/testimonials";
 
 const TestimonialsSection = () => {

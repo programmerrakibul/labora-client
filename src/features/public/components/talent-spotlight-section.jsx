@@ -1,6 +1,6 @@
 import Container from "@/components/shared/container";
-import SectionHeader from "@/components/shared/section-header";
-import TalentCard from "@/components/shared/talent-card";
+import SectionHeader from "@/features/public/components/section-header";
+import TalentCard from "@/features/public/components/talent-card";
 import { talents } from "../data/talents";
 
 const TalentSpotlightSection = () => {

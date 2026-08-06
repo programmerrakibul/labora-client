@@ -1,6 +1,6 @@
-import CategoryCard from "@/components/shared/category-card";
 import Container from "@/components/shared/container";
-import SectionHeader from "@/components/shared/section-header";
+import CategoryCard from "@/features/public/components/category-card";
+import SectionHeader from "@/features/public/components/section-header";
 import { categories } from "../data/categories";
 
 const CategoryExplorerSection = () => {
