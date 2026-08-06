@@ -25,7 +25,7 @@ const HomepageHero = () => {
             <Sparkles className="h-3.5 w-3.5" />
             Trusted by 48K+ professionals worldwide
           </span>
-          <h1 className="mt-6 text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
+          <h1 className="mt-6 text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl font-heading">
             Find Your Next <span className="text-primary">Dream Job</span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">

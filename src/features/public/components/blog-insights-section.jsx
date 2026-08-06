@@ -39,7 +39,7 @@ const BlogInsightsSection = () => {
                     {post.readTime}
                   </span>
                 </div>
-                <h3 className="mt-3 text-lg font-semibold leading-snug">
+                <h3 className="mt-3 text-lg font-semibold leading-snug font-heading">
                   {post.title}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">

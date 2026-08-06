@@ -21,7 +21,7 @@ const CategoryCard = ({
           <Icon className="h-6 w-6 text-primary" />
         </div>
         <div>
-          <h3 className="font-semibold">{title}</h3>
+          <h3 className="font-semibold font-heading">{title}</h3>
           <p className="text-sm text-muted-foreground">
             {openPositionsCount} open positions
           </p>

@@ -13,6 +13,7 @@ import { useJobs } from "@/features/jobs/hooks/use-jobs";
 import Autoplay from "embla-carousel-autoplay";
 import { ArrowRight, BriefcaseBusiness } from "lucide-react";
 import { useNavigate } from "react-router";
+import SectionHeader from "./section-header";
 
 const JobCardSkeleton = () => (
   <Card>
@@ -37,18 +38,16 @@ const LatestJobsSection = () => {
   return (
     <section className="bg-muted/50 py-16">
       <Container>
-        <div className="mb-8 flex items-center justify-between">
-          <div>
-            <h2 className="text-3xl font-bold tracking-tight">Latest Jobs</h2>
-            <p className="mt-1 text-muted-foreground">
-              Explore the newest opportunities
-            </p>
-          </div>
-          <Button variant="outline" onClick={() => navigate("/all-jobs")}>
-            View All
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
-        </div>
+        <SectionHeader
+          title="Latest Jobs"
+          subtitle="Jump straight to the roles that match your skills and ambitions across every industry."
+          actionButton={
+            <Button variant="outline" onClick={() => navigate("/all-jobs")}>
+              View All
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          }
+        />
         {!isLoading && jobs.length === 0 ? (
           <NotFound
             message="No jobs available right now"

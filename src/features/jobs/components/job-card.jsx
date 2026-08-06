@@ -1,5 +1,5 @@
-import SkillChip from "@/components/shared/skill-chip";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Clock } from "lucide-react";
 import { Link } from "react-router";
 import { formatJobLocation, formatPostedAt, formatSalary } from "../utils/job";
@@ -15,10 +15,12 @@ const JobCard = ({ job }) => {
         <CardHeader className="pb-2">
           <div className="flex items-start justify-between flex-wrap gap-2">
             <div>
-              <h3 className="text-lg font-semibold leading-tight line-clamp-1">
+              <CardTitle className="text-lg font-semibold leading-tight line-clamp-1">
                 {job.title}
-              </h3>
-              <p className="text-sm text-muted-foreground line-clamp-1">{job.company}</p>
+              </CardTitle>
+              <p className="text-sm text-muted-foreground line-clamp-1">
+                {job.company}
+              </p>
             </div>
             {job.salary?.min != null && (
               <div className="whitespace-break-spaces">
@@ -42,13 +44,17 @@ const JobCard = ({ job }) => {
               {skills.length > 3 ? (
                 <>
                   {skills.slice(0, 3).map((skill) => (
-                    <SkillChip key={skill} skill={skill} />
+                    <Badge key={skill} variant="secondary">
+                      {skill}
+                    </Badge>
                   ))}
-                  <SkillChip skill={`+${skills.length - 3}`} />
+                  <Badge variant="secondary">+{skills.length - 3} more</Badge>
                 </>
               ) : (
                 skills.map((skill) => (
-                  <SkillChip key={skill} skill={skill} />
+                  <Badge key={skill} variant="secondary">
+                    {skill}
+                  </Badge>
                 ))
               )}
             </div>

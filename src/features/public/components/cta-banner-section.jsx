@@ -11,7 +11,7 @@ const CtaBannerSection = () => {
               <Users className="h-6 w-6 text-primary" />
             </div>
             <div>
-              <h3 className="text-2xl font-bold tracking-tight">
+              <h3 className="text-2xl font-bold tracking-tight font-heading">
                 Looking to hire top 1% talent?
               </h3>
               <p className="mt-2 text-muted-foreground">
@@ -25,7 +25,7 @@ const CtaBannerSection = () => {
               <Upload className="h-6 w-6 text-secondary" />
             </div>
             <div>
-              <h3 className="text-2xl font-bold tracking-tight">
+              <h3 className="text-2xl font-bold tracking-tight font-heading">
                 Looking for your next career move?
               </h3>
               <p className="mt-2 text-muted-foreground">

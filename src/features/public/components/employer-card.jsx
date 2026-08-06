@@ -24,7 +24,7 @@ const EmployerCard = ({
           {rating}
         </span>
       </div>
-      <h3 className="mt-4 text-lg font-semibold">{name}</h3>
+      <h3 className="mt-4 text-lg font-semibold font-heading">{name}</h3>
       <p className="text-sm text-muted-foreground">{industry}</p>
       <p className="mt-1 flex items-center gap-1 text-xs text-muted-foreground">
         {location}
