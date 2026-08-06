@@ -21,7 +21,7 @@ import {
 export const useToast = useToastContext;
 
 export const toast = createToaster({
-  placement: "bottom-end",
+  placement: "top-end",
   overlap: true,
   max: 3,
 });

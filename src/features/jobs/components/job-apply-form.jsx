@@ -6,9 +6,9 @@ import {
 } from "@/components/forms/form-field";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { toast } from "@/components/ui/toast";
 import { useCreateApplication } from "@/features/applications/hooks/use-applications";
 import { useState } from "react";
-import { toast } from "sonner";
 
 const defaultValues = {
   resumeUrl: "",
@@ -31,11 +31,18 @@ const JobApplyForm = ({ job, onCancel }) => {
           ? Number(formData.expectedSalary)
           : undefined,
       });
-      toast.success("Application submitted");
+      toast.success({
+        title: "Application submitted",
+        description: "Your application has been submitted successfully.",
+      });
       setFormData(defaultValues);
       onCancel();
     } catch (err) {
-      toast.error(err?.response?.data?.error || "Failed to apply");
+      toast.error({
+        title: "Failed to apply",
+        description:
+          err?.response?.data?.error || "Failed to apply for the job.",
+      });
     }
   };
 
