@@ -1,10 +1,10 @@
-import BulletList from "@/features/jobs/components/bullet-list";
 import Skeleton from "@/components/shared/skeleton";
-import SkillChip from "@/components/shared/skill-chip";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTitle } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
+import BulletList from "@/features/jobs/components/bullet-list";
 import DetailItem from "@/features/public/components/detail-item";
 import DetailSection from "@/features/public/components/detail-section";
 import {
@@ -159,12 +159,9 @@ const JobDetailsModal = ({ job, jobId, open, onOpenChange }) => {
                 <DetailSection icon={Layers} title="Skills">
                   <div className="flex flex-wrap gap-2">
                     {displayJob.skills.map((skill) => (
-                      <SkillChip
-                        key={skill}
-                        skill={skill}
-                        size="md"
-                        className="text-xs font-medium"
-                      />
+                      <Badge variant="secondary" key={skill}>
+                        {skill}
+                      </Badge>
                     ))}
                   </div>
                 </DetailSection>

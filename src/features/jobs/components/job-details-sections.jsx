@@ -1,4 +1,4 @@
-import SkillChip from "@/components/shared/skill-chip";
+import { Badge } from "@/components/ui/badge";
 
 const Section = ({ title, children }) => (
   <div>
@@ -39,7 +39,9 @@ const JobDetailsSections = ({ job }) => (
       <Section title="Skills">
         <div className="flex flex-wrap gap-2">
           {job.skills.map((skill) => (
-            <SkillChip key={skill} skill={skill} size="md" />
+            <Badge key={skill} variant="secondary">
+              {skill}
+            </Badge>
           ))}
         </div>
       </Section>
