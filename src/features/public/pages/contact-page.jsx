@@ -1,18 +1,19 @@
-import Container from "@/components/shared/container";
-import { Card, CardContent } from "@/components/ui/card";
-import { useForm, Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { Button } from "@/components/ui/button";
 import {
   Field,
-  FieldLabel,
-  FieldInput,
-  FieldTextarea,
   FieldError,
+  FieldInput,
+  FieldLabel,
+  FieldTextarea,
 } from "@/components/forms/form-field";
-import { Mail, Phone, MapPin, Clock } from "lucide-react";
+import Container from "@/components/shared/container";
+import Seo from "@/components/shared/seo";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { z } from "zod";
 
 const contactSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -29,10 +30,22 @@ const contactInfo = [
 ];
 
 const faqs = [
-  { q: "How do I create an account?", a: "Click Sign Up and fill in your details. Choose your role as Job Seeker or Recruiter." },
-  { q: "How do I apply for a job?", a: "Navigate to a job listing, click Apply Now, and submit your resume URL and cover letter." },
-  { q: "Can I post jobs as a recruiter?", a: "Yes! Sign up as a Recruiter and use the dashboard to post and manage jobs." },
-  { q: "Is Labora free to use?", a: "Yes, Labora is free for job seekers. Recruiters can post jobs for free as well." },
+  {
+    q: "How do I create an account?",
+    a: "Click Sign Up and fill in your details. Choose your role as Job Seeker or Recruiter.",
+  },
+  {
+    q: "How do I apply for a job?",
+    a: "Navigate to a job listing, click Apply Now, and submit your resume URL and cover letter.",
+  },
+  {
+    q: "Can I post jobs as a recruiter?",
+    a: "Yes! Sign up as a Recruiter and use the dashboard to post and manage jobs.",
+  },
+  {
+    q: "Is Labora free to use?",
+    a: "Yes, Labora is free for job seekers. Recruiters can post jobs for free as well.",
+  },
 ];
 
 const ContactPage = () => {
@@ -55,7 +68,11 @@ const ContactPage = () => {
 
   return (
     <div>
-      <section className="bg-gradient-to-b from-primary/5 to-background py-20">
+      <Seo
+        title="Contact Us"
+        description="Have a question about Labora? Get in touch with our support team, browse FAQs, or reach us by email and phone."
+      />
+      <section className="bg-linear-to-b from-primary/5 to-background py-20">
         <Container>
           <div className="mx-auto max-w-3xl text-center">
             <h1 className="text-4xl font-bold tracking-tight">Contact Us</h1>
@@ -95,7 +112,11 @@ const ContactPage = () => {
                     render={({ field, fieldState }) => (
                       <Field>
                         <FieldLabel required>Email</FieldLabel>
-                        <FieldInput type="email" {...field} error={fieldState.error} />
+                        <FieldInput
+                          type="email"
+                          {...field}
+                          error={fieldState.error}
+                        />
                         <FieldError error={fieldState.error} />
                       </Field>
                     )}
@@ -118,7 +139,11 @@ const ContactPage = () => {
                   render={({ field, fieldState }) => (
                     <Field>
                       <FieldLabel required>Message</FieldLabel>
-                      <FieldTextarea rows={5} {...field} error={fieldState.error} />
+                      <FieldTextarea
+                        rows={5}
+                        {...field}
+                        error={fieldState.error}
+                      />
                       <FieldError error={fieldState.error} />
                     </Field>
                   )}
@@ -139,7 +164,9 @@ const ContactPage = () => {
                       </div>
                       <div>
                         <p className="text-sm font-medium">{info.title}</p>
-                        <p className="text-sm text-muted-foreground">{info.value}</p>
+                        <p className="text-sm text-muted-foreground">
+                          {info.value}
+                        </p>
                       </div>
                     </CardContent>
                   </Card>
@@ -153,7 +180,9 @@ const ContactPage = () => {
                     <Card key={i}>
                       <CardContent className="pt-4">
                         <p className="font-medium">{faq.q}</p>
-                        <p className="mt-1 text-sm text-muted-foreground">{faq.a}</p>
+                        <p className="mt-1 text-sm text-muted-foreground">
+                          {faq.a}
+                        </p>
                       </CardContent>
                     </Card>
                   ))}

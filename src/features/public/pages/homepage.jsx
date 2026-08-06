@@ -1,3 +1,4 @@
+import Seo from "@/components/shared/seo";
 import BlogInsightsSection from "../components/blog-insights-section";
 import CategoryExplorerSection from "../components/category-explorer-section";
 import CtaBannerSection from "../components/cta-banner-section";
@@ -11,6 +12,10 @@ import WorkflowSection from "../components/workflow-section";
 
 const Homepage = () => (
   <>
+    <Seo
+      title="Find Your Next Dream Job"
+      description="Search freelance jobs, connect with top employers, and grow your career on Labora — where talent meets opportunity."
+    />
     <HomepageHero />
     <StatsSection />
     <CategoryExplorerSection />

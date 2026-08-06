@@ -1,5 +1,6 @@
 import Container from "@/components/shared/container";
 import InfoRow from "@/components/shared/info-row";
+import Seo from "@/components/shared/seo";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -17,6 +18,10 @@ const ProfilePage = () => {
 
   return (
     <Container className="py-8">
+      <Seo
+        title={user?.name ? `${user.name}'s Profile` : "Profile"}
+        noindex
+      />
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-2xl font-bold tracking-tight">My Profile</h1>
         <Button onClick={() => setEditOpen(true)}>

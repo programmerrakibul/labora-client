@@ -2,6 +2,7 @@ import Container from "@/components/shared/container";
 import DataTable from "@/components/shared/data-table";
 import NotFound from "@/components/shared/not-found";
 import SearchInput from "@/components/shared/search-input";
+import Seo from "@/components/shared/seo";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -151,6 +152,11 @@ const MyJobsPage = () => {
 
   return (
     <Container className="py-8">
+      <Seo
+        title="My Jobs"
+        noindex
+        description="Manage your posted jobs on Labora — edit listings, update status, and track applications."
+      />
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">My Jobs</h1>

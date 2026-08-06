@@ -1,8 +1,10 @@
 import Container from "@/components/shared/container";
 import NotFound from "@/components/shared/not-found";
+import Seo from "@/components/shared/seo";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "@/components/ui/toast";
+import seo from "@/lib/seo";
 import useAuth from "@/stores/auth";
 import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
@@ -22,68 +24,75 @@ const JobDetailsPage = () => {
   const [showApplyForm, setShowApplyForm] = useState(false);
 
   const job = data?.data;
-
-  if (isLoading) {
-    return <JobDetailsSkeleton />;
-  }
-
-  if (!job) {
-    return (
-      <Container className="py-8">
-        <NotFound message="Job not found" />
-      </Container>
-    );
-  }
-
-  const isYourJob = user?.email === job.postedBy?.email;
+  const isYourJob = user?.email === job?.postedBy?.email;
 
   return (
-    <Container className="py-8">
-      <Button
-        variant="ghost"
-        onClick={() => navigate(-1)}
-        className="mb-6 gap-2"
-      >
-        <ArrowLeft className="h-4 w-4" />
-        Back
-      </Button>
+    <>
+      <Seo
+        title={job ? `${job.title} at ${job.company}` : "Job Details"}
+        description={job ? seo.truncate(job.description) : undefined}
+        canonical={job ? `/job-details/${job._id}` : undefined}
+        ogType="article"
+      />
 
-      <div className="grid gap-6 lg:grid-cols-3">
-        <div className="space-y-6 lg:col-span-2">
-          <JobDetailsHeader job={job} />
-          <Separator />
-          <JobDetailsSections job={job} />
-        </div>
+      {isLoading ? (
+        <JobDetailsSkeleton />
+      ) : !job ? (
+        <Container className="py-8">
+          <NotFound message="Job not found" />
+        </Container>
+      ) : (
+        <Container className="py-8">
+          <Button
+            variant="ghost"
+            onClick={() => navigate(-1)}
+            className="mb-6 gap-2"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back
+          </Button>
 
-        <div className="space-y-4">
-          <JobDetailsInfoCard
-            job={job}
-            postedByName={isYourJob ? "You" : job.postedBy?.name}
-          />
-          {!isYourJob && !showApplyForm && (
-            <Button
-              className="w-full"
-              onClick={() => {
-                if (!user) {
-                  toast.info({
-                    title: "Login required",
-                    description: "Please log in to apply for this job.",
-                  });
-                  return;
-                }
+          <div className="grid gap-6 lg:grid-cols-3">
+            <div className="space-y-6 lg:col-span-2">
+              <JobDetailsHeader job={job} />
+              <Separator />
+              <JobDetailsSections job={job} />
+            </div>
 
-                setShowApplyForm(true);
-              }}
-            >
-              Apply Now
-            </Button>
-          )}
-          {showApplyForm && (
-            <JobApplyForm job={job} onCancel={() => setShowApplyForm(false)} />
-          )}
-        </div>
-      </div>
-    </Container>
+            <div className="space-y-4">
+              <JobDetailsInfoCard
+                job={job}
+                postedByName={isYourJob ? "You" : job.postedBy?.name}
+              />
+              {!isYourJob && !showApplyForm && (
+                <Button
+                  className="w-full"
+                  onClick={() => {
+                    if (!user) {
+                      toast.info({
+                        title: "Login required",
+                        description: "Please log in to apply for this job.",
+                      });
+                      return;
+                    }
+
+                    setShowApplyForm(true);
+                  }}
+                >
+                  Apply Now
+                </Button>
+              )}
+              {showApplyForm && (
+                <JobApplyForm
+                  job={job}
+                  onCancel={() => setShowApplyForm(false)}
+                />
+              )}
+            </div>
+          </div>
+        </Container>
+      )}
+    </>
   );
 };
 

@@ -36,7 +36,7 @@ const TestimonialCard = ({
           )}
         </Avatar>
         <div>
-          <p className="flex items-center gap-1 text-sm font-semibold">
+          <p className="flex items-center gap-1 text-sm font-semibold font-heading">
             {name}
             {verified && <BadgeCheck className="h-4 w-4 text-primary" />}
           </p>

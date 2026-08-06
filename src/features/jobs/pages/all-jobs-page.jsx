@@ -8,6 +8,7 @@ import useJobFilters, {
 import JobCard from "../components/job-card";
 import JobFilters from "../components/job-filters";
 import Container from "@/components/shared/container";
+import Seo from "@/components/shared/seo";
 import Pagination from "@/components/shared/pagination";
 import NotFound from "@/components/shared/not-found";
 import { CardSkeleton } from "@/components/shared/skeletons";
@@ -82,6 +83,10 @@ const AllJobsPage = () => {
 
   return (
     <Container className="py-8">
+      <Seo
+        title={search ? `Jobs matching "${search}"` : "Browse Jobs"}
+        description="Browse and search freelance jobs on Labora. Filter by category, job type, location, and salary to find your next opportunity."
+      />
       <div className="mb-8 space-y-2">
         <h1 className="text-3xl font-bold tracking-tight">Browse Jobs</h1>
         <p className="text-muted-foreground">

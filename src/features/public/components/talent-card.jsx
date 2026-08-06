@@ -1,6 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { BadgeCheck, Star } from "lucide-react";
-import SkillChip from "@/components/shared/skill-chip";
 
 const TalentCard = ({
   name,
@@ -23,7 +23,7 @@ const TalentCard = ({
           )}
         </Avatar>
         <div className="min-w-0">
-          <h3 className="flex items-center gap-1 font-semibold">
+          <h3 className="flex items-center gap-1 font-semibold font-heading">
             <span className="truncate">{name}</span>
             {verified && (
               <BadgeCheck className="h-4 w-4 shrink-0 text-primary" />
@@ -34,7 +34,9 @@ const TalentCard = ({
       </div>
       <div className="mt-4 flex flex-wrap gap-2">
         {skills.map((skill) => (
-          <SkillChip key={skill} skill={skill} />
+          <Badge key={skill} variant="secondary">
+            {skill}
+          </Badge>
         ))}
       </div>
       <div className="mt-4 flex flex-1 items-end justify-between gap-2 border-t pt-4">

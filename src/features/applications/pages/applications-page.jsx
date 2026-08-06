@@ -3,6 +3,7 @@ import Container from "@/components/shared/container";
 import DataTable from "@/components/shared/data-table";
 import NotFound from "@/components/shared/not-found";
 import SearchInput from "@/components/shared/search-input";
+import Seo from "@/components/shared/seo";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -140,6 +141,11 @@ const ApplicationsPage = () => {
 
   return (
     <Container className="py-8">
+      <Seo
+        title="Applications"
+        noindex
+        description="Review job applications and track your applications on Labora."
+      />
       <div className="mb-6">
         <h1 className="text-2xl font-bold tracking-tight">Applications</h1>
         <p className="text-muted-foreground">

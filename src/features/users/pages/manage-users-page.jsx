@@ -3,6 +3,7 @@ import Container from "@/components/shared/container";
 import DataTable from "@/components/shared/data-table";
 import NotFound from "@/components/shared/not-found";
 import SearchInput from "@/components/shared/search-input";
+import Seo from "@/components/shared/seo";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
@@ -101,6 +102,7 @@ const ManageUsersPage = () => {
 
   return (
     <Container className="py-8">
+      <Seo title="Manage Users" noindex />
       <div className="mb-6">
         <h1 className="text-2xl font-bold tracking-tight">Manage Users</h1>
         <p className="text-muted-foreground">View and manage platform users</p>
