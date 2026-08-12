@@ -42,6 +42,13 @@ const faqs = [
   },
 ];
 
+const defaultValues = {
+  name: "",
+  email: "",
+  subject: "",
+  message: "",
+};
+
 const ContactPage = () => {
   const [submitted, setSubmitted] = useState(false);
 
@@ -52,12 +59,13 @@ const ContactPage = () => {
     reset,
   } = useForm({
     resolver: zodResolver(contactSchema),
+    defaultValues,
   });
 
   const onSubmit = async () => {
     await new Promise((r) => setTimeout(r, 1000));
     setSubmitted(true);
-    reset();
+    reset(defaultValues);
   };
 
   return (
