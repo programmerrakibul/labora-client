@@ -11,10 +11,10 @@ const JobCard = ({ job }) => {
 
   return (
     <Link to={`/job-details/${job._id}`} className="block h-full w-full">
-      <Card className="transition-shadow hover:shadow-md h-full">
+      <Card className="h-full rounded-2xl transition-shadow hover:shadow-lg">
         <CardHeader className="pb-2">
           <div className="flex items-start justify-between flex-wrap gap-2">
-            <div>
+            <div className="min-w-0">
               <CardTitle className="text-lg font-semibold leading-tight line-clamp-1">
                 {job.title}
               </CardTitle>
@@ -23,7 +23,7 @@ const JobCard = ({ job }) => {
               </p>
             </div>
             {job.salary?.min != null && (
-              <div className="whitespace-break-spaces">
+              <div className="whitespace-break-spaces text-right">
                 <p className="font-semibold text-primary">
                   {formatSalary(job.salary)}
                 </p>
@@ -40,22 +40,14 @@ const JobCard = ({ job }) => {
           </p>
           <JobBadges job={job} />
           {skills?.length > 0 && (
-            <div className="flex flex-wrap gap-1">
-              {skills.length > 3 ? (
-                <>
-                  {skills.slice(0, 3).map((skill) => (
-                    <Badge key={skill} variant="secondary">
-                      {skill}
-                    </Badge>
-                  ))}
-                  <Badge variant="secondary">+{skills.length - 3} more</Badge>
-                </>
-              ) : (
-                skills.map((skill) => (
-                  <Badge key={skill} variant="secondary">
-                    {skill}
-                  </Badge>
-                ))
+            <div className="flex flex-wrap gap-2">
+              {skills.slice(0, 3).map((skill) => (
+                <Badge key={skill} variant="secondary">
+                  {skill}
+                </Badge>
+              ))}
+              {skills.length > 3 && (
+                <Badge variant="secondary">+{skills.length - 3} more</Badge>
               )}
             </div>
           )}

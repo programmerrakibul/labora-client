@@ -1,6 +1,6 @@
 import Container from "@/components/shared/container";
-import StepCard from "@/features/public/components/step-card";
 import SectionHeader from "@/features/public/components/section-header";
+import StepCard from "@/features/public/components/step-card";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { employerSteps, jobSeekerSteps } from "../data/workflow";
@@ -15,7 +15,7 @@ const WorkflowSection = () => {
   const steps = activeTab === "jobSeekers" ? jobSeekerSteps : employerSteps;
 
   return (
-    <section className="bg-muted/50 py-16">
+    <section className="py-16">
       <Container>
         <SectionHeader
           badge="How It Works"

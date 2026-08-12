@@ -1,3 +1,4 @@
+import RoundedCard from "@/components/shared/rounded-card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { BadgeCheck, Star } from "lucide-react";
@@ -13,7 +14,7 @@ const TalentCard = ({
   verified = true,
 }) => {
   return (
-    <div className="flex h-full flex-col rounded-lg border bg-card p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-md">
+    <RoundedCard className="flex h-full flex-col p-6">
       <div className="flex items-center gap-3">
         <Avatar className="h-12 w-12">
           {avatar ? (
@@ -46,7 +47,7 @@ const TalentCard = ({
           {rating}
         </span>
       </div>
-    </div>
+    </RoundedCard>
   );
 };
 

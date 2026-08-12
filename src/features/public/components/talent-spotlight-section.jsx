@@ -5,7 +5,7 @@ import { talents } from "../data/talents";
 
 const TalentSpotlightSection = () => {
   return (
-    <section className="bg-muted/50 py-16">
+    <section className="py-16">
       <Container>
         <SectionHeader
           badge="Talent Spotlight"
