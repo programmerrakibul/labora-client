@@ -1,18 +1,12 @@
-import {
-  Field,
-  FieldError,
-  FieldInput,
-  FieldLabel,
-  FieldTextarea,
-} from "@/components/forms/form-field";
 import Container from "@/components/shared/container";
 import Seo from "@/components/shared/seo";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import FormField from "@/components/ui/form-field";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const contactSchema = z.object({
@@ -95,59 +89,41 @@ const ContactPage = () => {
               )}
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <Controller
+                  <FormField
                     name="name"
+                    label="Name"
                     control={control}
-                    render={({ field, fieldState }) => (
-                      <Field>
-                        <FieldLabel required>Name</FieldLabel>
-                        <FieldInput {...field} error={fieldState.error} />
-                        <FieldError error={fieldState.error} />
-                      </Field>
-                    )}
+                    required
+                    placeholder="e.g. John Doe"
                   />
-                  <Controller
+
+                  <FormField
                     name="email"
+                    type="email"
+                    label="Email"
                     control={control}
-                    render={({ field, fieldState }) => (
-                      <Field>
-                        <FieldLabel required>Email</FieldLabel>
-                        <FieldInput
-                          type="email"
-                          {...field}
-                          error={fieldState.error}
-                        />
-                        <FieldError error={fieldState.error} />
-                      </Field>
-                    )}
+                    required
+                    placeholder="e.g. you@example.com"
                   />
                 </div>
-                <Controller
+
+                <FormField
                   name="subject"
+                  label="Subject"
                   control={control}
-                  render={({ field, fieldState }) => (
-                    <Field>
-                      <FieldLabel required>Subject</FieldLabel>
-                      <FieldInput {...field} error={fieldState.error} />
-                      <FieldError error={fieldState.error} />
-                    </Field>
-                  )}
+                  required
+                  placeholder="e.g. Job Opportunity"
                 />
-                <Controller
+
+                <FormField
                   name="message"
+                  label="Message"
                   control={control}
-                  render={({ field, fieldState }) => (
-                    <Field>
-                      <FieldLabel required>Message</FieldLabel>
-                      <FieldTextarea
-                        rows={5}
-                        {...field}
-                        error={fieldState.error}
-                      />
-                      <FieldError error={fieldState.error} />
-                    </Field>
-                  )}
+                  required
+                  placeholder="Your message"
+                  type="textarea"
                 />
+
                 <Button type="submit" disabled={isSubmitting}>
                   {isSubmitting ? "Sending..." : "Send Message"}
                 </Button>

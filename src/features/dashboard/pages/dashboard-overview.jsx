@@ -18,7 +18,9 @@ const DashboardOverview = () => {
       </div>
 
       {role === "ADMIN" && <AdminDashboard />}
-      {role === "RECRUITER" && <RecruiterDashboard />}
+      {(role === "COMPANY_OWNER" || role === "COMPANY_MEMBER") && (
+        <RecruiterDashboard />
+      )}
       {role === "JOB_SEEKER" && <JobSeekerDashboard />}
     </Container>
   );

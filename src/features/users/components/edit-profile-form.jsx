@@ -1,16 +1,11 @@
-import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useUpdateProfile } from "../hooks/use-users";
-import useAuth, { updateUser } from "@/stores/auth";
 import { Button } from "@/components/ui/button";
-import {
-  Field,
-  FieldError,
-  FieldInput,
-  FieldLabel,
-} from "@/components/forms/form-field";
+import FormField from "@/components/ui/form-field";
+import useAuth, { updateUser } from "@/stores/auth";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useUpdateProfile } from "../hooks/use-users";
 import { profileSchema } from "../validation/profile";
 
 const EditProfileForm = ({ onCancel, onSuccess }) => {
@@ -52,64 +47,41 @@ const EditProfileForm = ({ onCancel, onSuccess }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <Controller
+      <FormField
         name="name"
         control={control}
-        render={({ field, fieldState }) => (
-          <Field>
-            <FieldLabel required>Full Name</FieldLabel>
-            <FieldInput {...field} error={fieldState.error} />
-            <FieldError error={fieldState.error} />
-          </Field>
-        )}
+        label="Full Name"
+        required
+        placeholder="e.g. John Doe"
       />
 
-      <Controller
+      <FormField
         name="phoneNumber"
         control={control}
-        render={({ field, fieldState }) => (
-          <Field>
-            <FieldLabel>Phone Number</FieldLabel>
-            <FieldInput {...field} error={fieldState.error} />
-            <FieldError error={fieldState.error} />
-          </Field>
-        )}
+        label="Phone Number"
+        placeholder={"+88012651465"}
       />
 
-      <Controller
+      <FormField
         name="address"
         control={control}
-        render={({ field, fieldState }) => (
-          <Field>
-            <FieldLabel>Address</FieldLabel>
-            <FieldInput {...field} error={fieldState.error} />
-            <FieldError error={fieldState.error} />
-          </Field>
-        )}
+        label="Address"
+        placeholder="e.g. 123 Main St, Anytown, USA"
       />
 
       <div className="grid gap-4 sm:grid-cols-2">
-        <Controller
+        <FormField
           name="city"
           control={control}
-          render={({ field, fieldState }) => (
-            <Field>
-              <FieldLabel>City</FieldLabel>
-              <FieldInput {...field} error={fieldState.error} />
-              <FieldError error={fieldState.error} />
-            </Field>
-          )}
+          label="City"
+          placeholder="e.g. New York"
         />
-        <Controller
+
+        <FormField
           name="country"
           control={control}
-          render={({ field, fieldState }) => (
-            <Field>
-              <FieldLabel>Country</FieldLabel>
-              <FieldInput {...field} error={fieldState.error} />
-              <FieldError error={fieldState.error} />
-            </Field>
-          )}
+          label="Country"
+          placeholder="e.g. USA"
         />
       </div>
 

@@ -1,31 +1,19 @@
-import {
-  Field,
-  FieldError,
-  FieldInput,
-  FieldLabel,
-  FieldSelect,
-  FieldTextarea,
-} from "@/components/forms/form-field";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Field, FieldLabel } from "@/components/ui/field";
+import FormField from "@/components/ui/form-field";
+import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, Plus, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { jobFormOptions } from "../utils/job-options";
 import { jobSchema } from "../validation/job";
+import JobFormCard from "./job-form-card";
 
-const buildDefaultValues = (job) => {
-  if (!job) {
-    return {
-      status: "ACTIVE",
-      salaryCurrency: "BDT",
-      isNegotiable: false,
-    };
-  }
+const buildDefaultValues = (job = {}) => {
   return {
     title: job.title ?? "",
-    company: job.company ?? "",
     description: job.description ?? "",
     jobType: job.jobType ?? "",
     workLocationType: job.workLocationType ?? "",
@@ -76,7 +64,6 @@ const JobForm = ({
   const handleFormSubmit = (values) => {
     onSubmit({
       title: values.title,
-      company: values.company,
       description: values.description,
       jobType: values.jobType,
       workLocationType: values.workLocationType,
@@ -113,306 +100,180 @@ const JobForm = ({
 
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
-      <Card>
-        <CardHeader>
-          <h2 className="text-lg font-semibold">Basic Information</h2>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Controller
-              name="title"
-              control={control}
-              render={({ field, fieldState }) => (
-                <Field>
-                  <FieldLabel required>Job Title</FieldLabel>
-                  <FieldInput
-                    placeholder="e.g. Senior React Developer"
-                    {...field}
-                    error={fieldState.error}
-                  />
-                  <FieldError error={fieldState.error} />
-                </Field>
-              )}
-            />
-            <Controller
-              name="company"
-              control={control}
-              render={({ field, fieldState }) => (
-                <Field>
-                  <FieldLabel required>Company</FieldLabel>
-                  <FieldInput
-                    placeholder="e.g. Tech Corp"
-                    {...field}
-                    error={fieldState.error}
-                  />
-                  <FieldError error={fieldState.error} />
-                </Field>
-              )}
-            />
-          </div>
-          <Controller
-            name="description"
-            control={control}
-            render={({ field, fieldState }) => (
-              <Field>
-                <FieldLabel required>Description</FieldLabel>
-                <FieldTextarea
-                  rows={5}
-                  placeholder="Describe the role..."
-                  {...field}
-                  error={fieldState.error}
-                />
-                <FieldError error={fieldState.error} />
-              </Field>
-            )}
-          />
-        </CardContent>
-      </Card>
+      <JobFormCard title="Basic Information">
+        <FormField
+          type="text"
+          name="title"
+          control={control}
+          label="Job Title"
+          placeholder={"e.g. Senior React Developer"}
+          required
+        />
 
-      <Card>
-        <CardHeader>
-          <h2 className="text-lg font-semibold">Job Details</h2>
-        </CardHeader>
-        <CardContent className="space-y-4">
+        <FormField
+          type="textarea"
+          name="description"
+          control={control}
+          label="Description"
+          placeholder={"Describe the role..."}
+          rows={5}
+          required
+        />
+      </JobFormCard>
+
+      <JobFormCard title="Job Details">
+        <div className="space-y-4">
           <div className="grid gap-4 sm:grid-cols-3">
-            <Controller
+            <FormField
               name="jobType"
               control={control}
-              render={({ field, fieldState }) => (
-                <Field>
-                  <FieldLabel required>Job Type</FieldLabel>
-                  <FieldSelect {...field} error={fieldState.error}>
-                    <option value="">Select...</option>
-                    {jobFormOptions.jobTypes.map((t) => (
-                      <option key={t.value} value={t.value}>
-                        {t.label}
-                      </option>
-                    ))}
-                  </FieldSelect>
-                  <FieldError error={fieldState.error} />
-                </Field>
-              )}
+              label="Job Type"
+              placeholder="Select..."
+              type="select"
+              options={jobFormOptions.jobTypes}
+              required
             />
-            <Controller
+
+            <FormField
               name="workLocationType"
               control={control}
-              render={({ field, fieldState }) => (
-                <Field>
-                  <FieldLabel required>Location Type</FieldLabel>
-                  <FieldSelect {...field} error={fieldState.error}>
-                    <option value="">Select...</option>
-                    {jobFormOptions.locationTypes.map((t) => (
-                      <option key={t.value} value={t.value}>
-                        {t.label}
-                      </option>
-                    ))}
-                  </FieldSelect>
-                  <FieldError error={fieldState.error} />
-                </Field>
-              )}
+              label="Location Type"
+              placeholder="Select..."
+              type="select"
+              options={jobFormOptions.locationTypes}
+              required
             />
-            <Controller
+
+            <FormField
               name="experienceLevel"
               control={control}
-              render={({ field, fieldState }) => (
-                <Field>
-                  <FieldLabel required>Experience Level</FieldLabel>
-                  <FieldSelect {...field} error={fieldState.error}>
-                    <option value="">Select...</option>
-                    {jobFormOptions.experienceLevels.map((t) => (
-                      <option key={t.value} value={t.value}>
-                        {t.label}
-                      </option>
-                    ))}
-                  </FieldSelect>
-                  <FieldError error={fieldState.error} />
-                </Field>
-              )}
+              label="Experience Level"
+              placeholder="Select..."
+              type="select"
+              options={jobFormOptions.experienceLevels}
+              required
             />
           </div>
+
           <div className="grid gap-4 sm:grid-cols-2">
-            <Controller
+            <FormField
               name="category"
               control={control}
-              render={({ field, fieldState }) => (
-                <Field>
-                  <FieldLabel required>Category</FieldLabel>
-                  <FieldSelect {...field} error={fieldState.error}>
-                    <option value="">Select...</option>
-                    {jobFormOptions.categories.map((c) => (
-                      <option key={c} value={c}>
-                        {c}
-                      </option>
-                    ))}
-                  </FieldSelect>
-                  <FieldError error={fieldState.error} />
-                </Field>
-              )}
+              label="Category"
+              placeholder="Select..."
+              type="select"
+              options={jobFormOptions.categories}
+              required
             />
-            <Controller
+
+            <FormField
               name="status"
               control={control}
-              render={({ field }) => (
-                <Field>
-                  <FieldLabel>Status</FieldLabel>
-                  <FieldSelect {...field}>
-                    {jobFormOptions.statuses.map((s) => (
-                      <option key={s.value} value={s.value}>
-                        {s.label}
-                      </option>
-                    ))}
-                  </FieldSelect>
-                </Field>
-              )}
+              label="Status"
+              placeholder="Select..."
+              type="select"
+              options={jobFormOptions.statuses}
+              required
             />
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </JobFormCard>
 
-      <Card>
-        <CardHeader>
-          <h2 className="text-lg font-semibold">Salary</h2>
-        </CardHeader>
-        <CardContent className="space-y-4">
+      <JobFormCard title="Salary Details">
+        <div className="space-y-4">
           <div className="grid gap-4 sm:grid-cols-3">
-            <Controller
+            <FormField
               name="salaryMin"
               control={control}
-              render={({ field, fieldState }) => (
-                <Field>
-                  <FieldLabel>Min Salary</FieldLabel>
-                  <FieldInput
-                    type="number"
-                    min="0"
-                    placeholder="0"
-                    {...field}
-                    value={field.value ?? ""}
-                    error={fieldState.error}
-                  />
-                  <FieldError error={fieldState.error} />
-                </Field>
+              label="Min Salary"
+              placeholder={"Min Salary"}
+              renderComponent={({ field, fieldState }) => (
+                <Input
+                  id={field.name}
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  placeholder="0"
+                  aria-invalid={fieldState.invalid}
+                  {...field}
+                />
               )}
             />
-            <Controller
+
+            <FormField
               name="salaryMax"
               control={control}
-              render={({ field, fieldState }) => (
-                <Field>
-                  <FieldLabel>Max Salary</FieldLabel>
-                  <FieldInput
-                    type="number"
-                    min="0"
-                    placeholder="0"
-                    {...field}
-                    value={field.value ?? ""}
-                    error={fieldState.error}
-                  />
-                  <FieldError error={fieldState.error} />
-                </Field>
+              label="Max Salary"
+              placeholder={"Max Salary"}
+              renderComponent={({ field, fieldState }) => (
+                <Input
+                  id={field.name}
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  placeholder="0"
+                  aria-invalid={fieldState.invalid}
+                  {...field}
+                />
               )}
             />
-            <Controller
+
+            <FormField
               name="salaryCurrency"
               control={control}
-              render={({ field }) => (
-                <Field>
-                  <FieldLabel>Currency</FieldLabel>
-                  <FieldSelect {...field}>
-                    {["BDT", "USD", "EUR", "GBP"].map((currency) => (
-                      <option key={currency} value={currency}>
-                        {currency}
-                      </option>
-                    ))}
-                  </FieldSelect>
-                </Field>
-              )}
+              label="Currency"
+              placeholder="Select..."
+              type="select"
+              options={["BDT", "USD", "EUR", "GBP"].map((currency) => ({
+                value: currency,
+                label: currency,
+              }))}
+              required
             />
           </div>
-          <Controller
+
+          <FormField
+            type="checkbox"
             name="isNegotiable"
             control={control}
-            render={({ field }) => (
-              <label className="flex items-center gap-2 text-sm">
-                <input
-                  type="checkbox"
-                  checked={field.value}
-                  onChange={field.onChange}
-                  onBlur={field.onBlur}
-                  name={field.name}
-                  ref={field.ref}
-                  className="rounded"
-                />
-                Salary is negotiable
-              </label>
-            )}
+            label={"Salary is negotiable"}
+            orientation="horizontal"
           />
-        </CardContent>
-      </Card>
+        </div>
+      </JobFormCard>
 
-      <Card>
-        <CardHeader>
-          <h2 className="text-lg font-semibold">Location</h2>
-        </CardHeader>
-        <CardContent>
-          <div className="grid gap-4 sm:grid-cols-3">
-            <Controller
-              name="city"
-              control={control}
-              render={({ field, fieldState }) => (
-                <Field>
-                  <FieldLabel>City</FieldLabel>
-                  <FieldInput
-                    placeholder="e.g. Dhaka"
-                    {...field}
-                    error={fieldState.error}
-                  />
-                  <FieldError error={fieldState.error} />
-                </Field>
-              )}
-            />
-            <Controller
-              name="state"
-              control={control}
-              render={({ field, fieldState }) => (
-                <Field>
-                  <FieldLabel>State</FieldLabel>
-                  <FieldInput
-                    placeholder="e.g. Dhaka Division"
-                    {...field}
-                    error={fieldState.error}
-                  />
-                  <FieldError error={fieldState.error} />
-                </Field>
-              )}
-            />
-            <Controller
-              name="country"
-              control={control}
-              render={({ field, fieldState }) => (
-                <Field>
-                  <FieldLabel>Country</FieldLabel>
-                  <FieldInput
-                    placeholder="e.g. Bangladesh"
-                    {...field}
-                    error={fieldState.error}
-                  />
-                  <FieldError error={fieldState.error} />
-                </Field>
-              )}
-            />
-          </div>
-        </CardContent>
-      </Card>
+      <JobFormCard title={"Location"}>
+        <div className="grid gap-4 sm:grid-cols-3">
+          <FormField
+            name="city"
+            control={control}
+            label={"City"}
+            placeholder={"e.g. Dhaka"}
+          />
 
-      <Card>
-        <CardHeader>
-          <h2 className="text-lg font-semibold">Skills & Requirements</h2>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div>
-            <label className="text-sm font-medium">Skills</label>
-            <div className="mt-1 flex gap-2">
-              <input
+          <FormField
+            name="state"
+            control={control}
+            label={"State"}
+            placeholder={"e.g. Dhaka Division"}
+          />
+
+          <FormField
+            name="country"
+            control={control}
+            label={"Country"}
+            placeholder={"e.g. Bangladesh"}
+          />
+        </div>
+      </JobFormCard>
+
+      <JobFormCard title={"Skills & Requirements"}>
+        <div className="space-y-4">
+          <Field>
+            <FieldLabel htmlFor="skill">Skills</FieldLabel>
+            <div className="flex items-center gap-2">
+              <Input
+                id="skill"
                 value={skillInput}
                 onChange={(e) => setSkillInput(e.target.value)}
                 onKeyDown={(e) => {
@@ -426,7 +287,8 @@ const JobForm = ({
               />
               <Button
                 type="button"
-                size="sm"
+                size="icon"
+                variant="secondary"
                 onClick={() =>
                   addListItem(skillInput, skills, setSkills, setSkillInput)
                 }
@@ -437,27 +299,27 @@ const JobForm = ({
             {skills.length > 0 && (
               <div className="mt-2 flex flex-wrap gap-1">
                 {skills.map((s, i) => (
-                  <span
-                    key={i}
-                    className="inline-flex items-center gap-1 rounded-full bg-secondary px-2.5 py-0.5 text-xs"
-                  >
-                    {s}
-                    <button
+                  <Badge key={i} variant="outline" className="gap-2">
+                    <span>{s}</span>
+                    <Button
                       type="button"
+                      size="icon-xs"
+                      variant="destructive"
                       onClick={() => removeListItem(i, skills, setSkills)}
                     >
                       <X className="h-3 w-3" />
-                    </button>
-                  </span>
+                    </Button>
+                  </Badge>
                 ))}
               </div>
             )}
-          </div>
+          </Field>
 
           <div>
-            <label className="text-sm font-medium">Requirements</label>
-            <div className="mt-1 flex gap-2">
-              <input
+            <FieldLabel htmlFor="requirement">Requirements</FieldLabel>
+            <div className="mt-1 flex items-center gap-2">
+              <Input
+                id="requirement"
                 value={reqInput}
                 onChange={(e) => setReqInput(e.target.value)}
                 onKeyDown={(e) => {
@@ -476,7 +338,8 @@ const JobForm = ({
               />
               <Button
                 type="button"
-                size="sm"
+                size="icon"
+                variant="secondary"
                 onClick={() =>
                   addListItem(
                     reqInput,
@@ -493,16 +356,18 @@ const JobForm = ({
               <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
                 {requirements.map((r, i) => (
                   <li key={i} className="flex items-center justify-between">
-                    {r}
-                    <button
+                    <span>{r}</span>
+                    <Button
                       type="button"
+                      size="icon-xs"
+                      variant="destructive"
                       onClick={() =>
                         removeListItem(i, requirements, setRequirements)
                       }
                       className="text-destructive"
                     >
                       <X className="h-3 w-3" />
-                    </button>
+                    </Button>
                   </li>
                 ))}
               </ul>
@@ -510,9 +375,9 @@ const JobForm = ({
           </div>
 
           <div>
-            <label className="text-sm font-medium">Responsibilities</label>
-            <div className="mt-1 flex gap-2">
-              <input
+            <FieldLabel>Responsibilities</FieldLabel>
+            <div className="mt-1 flex items-center gap-2">
+              <Input
                 value={respInput}
                 onChange={(e) => setRespInput(e.target.value)}
                 onKeyDown={(e) => {
@@ -531,7 +396,8 @@ const JobForm = ({
               />
               <Button
                 type="button"
-                size="sm"
+                size="icon"
+                variant="secondary"
                 onClick={() =>
                   addListItem(
                     respInput,
@@ -548,23 +414,25 @@ const JobForm = ({
               <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
                 {responsibilities.map((r, i) => (
                   <li key={i} className="flex items-center justify-between">
-                    {r}
-                    <button
+                    <span>{r}</span>
+                    <Button
                       type="button"
+                      size="icon-xs"
+                      variant="destructive"
                       onClick={() =>
                         removeListItem(i, responsibilities, setResponsibilities)
                       }
                       className="text-destructive"
                     >
                       <X className="h-3 w-3" />
-                    </button>
+                    </Button>
                   </li>
                 ))}
               </ul>
             )}
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </JobFormCard>
 
       <div className="flex gap-3">
         <Button type="submit" disabled={isSubmitting}>
@@ -577,9 +445,12 @@ const JobForm = ({
             submitLabel
           )}
         </Button>
-        <Button type="button" variant="outline" onClick={onCancel}>
-          Cancel
-        </Button>
+
+        {onCancel && (
+          <Button type="button" variant="outline" onClick={onCancel}>
+            Cancel
+          </Button>
+        )}
       </div>
     </form>
   );

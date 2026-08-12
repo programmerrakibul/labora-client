@@ -1,5 +1,7 @@
 import Container from "@/components/shared/container";
 import Seo from "@/components/shared/seo";
+import { toast } from "@/components/ui/toast";
+import { getErrorMessage } from "@/lib/error";
 import { useNavigate } from "react-router";
 import JobForm from "../components/job-form";
 import { useCreateJob } from "../hooks/use-jobs";
@@ -13,7 +15,11 @@ const AddJobPage = () => {
       await createJob.mutateAsync(payload);
       navigate("/dashboard/my-jobs");
     } catch (err) {
-      alert(err?.response?.data?.error || "Failed to create job");
+      const msg = getErrorMessage(err);
+      toast.error({
+        title: "Failed to create job",
+        description: msg || "Failed to create job",
+      });
     }
   };
 
@@ -34,7 +40,6 @@ const AddJobPage = () => {
       <JobForm
         onSubmit={handleSubmit}
         isSubmitting={createJob.isPending}
-        onCancel={() => navigate(-1)}
         submitLabel="Create Job"
         loadingLabel="Creating..."
       />

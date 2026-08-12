@@ -3,8 +3,8 @@
 **Where talent meets opportunity** — a modern freelance job marketplace.
 
 Labora is a React SPA that connects skilled professionals with clients. Users can
-browse and apply to jobs, recruiters can post and manage listings, and admins
-oversee the platform from a role-based dashboard.
+browse and apply to jobs, company members can post and manage listings, and
+admins oversee the platform from a role-based dashboard.
 
 [Live Demo](https://labora-7a232.web.app/) · [Backend repo](https://github.com/programmerrakibul/labora-server)
 
@@ -83,7 +83,8 @@ src/
 1. **Service layer** — thin Axios wrappers (`features/*/services/`) call
    `{VITE_API_BASE_URL}/api/*` with cookies (`withCredentials: true`).
 2. **Query hooks** — TanStack Query hooks wrap services with centralized query
-   keys; mutations invalidate `["jobs"]`, `["users"]`, `["applications"]`.
+   keys; mutations invalidate `["jobs"]`, `["users"]`, `["applications"]`,
+   `["companies"]`.
 3. **State** — server state lives in TanStack Query; client state (auth session,
    job filters) in Zustand.
 4. **Auth** — `App.jsx` calls `fetchSession()` on boot; `PrivateRoute` /
@@ -93,20 +94,35 @@ src/
 
 - `/` — public site under `RootLayout` (homepage, all jobs, job details, auth)
 - `/dashboard` — private, role-guarded:
-  - Recruiter: `add-job`, `my-jobs`, `my-jobs/update/:id`
-  - Recruiter/Job seeker: `applications`
+  - Company roles (`COMPANY_OWNER` / `COMPANY_MEMBER`): `add-job`, `my-jobs`,
+    `applications`, `company`
+  - Company roles + Job seeker: `applications`
+  - Job seeker: `company/onboarding`, `company/create`, `company/join`
   - Admin: `manage-users`
   - All users: `profile`
 
 ### Roles & Permissions
 
+Every account starts as `JOB_SEEKER`; recruiting roles are granted only via
+company actions (create a company → `COMPANY_OWNER`, get approved to join →
+`COMPANY_MEMBER`). The client never sends `role`.
+
 `USER_ROLE` (from `src/constants/enums.js`):
 
-| Role        | Capabilities                                       |
-| ----------- | -------------------------------------------------- |
-| `JOB_SEEKER`| Browse & apply to jobs, track applications          |
-| `RECRUITER` | Post, edit, delete jobs; view applications          |
-| `ADMIN`     | Manage users, full platform oversight               |
+| Role            | Capabilities                                               |
+| --------------- | ---------------------------------------------------------- |
+| `JOB_SEEKER`    | Browse & apply to jobs, track applications, request to join a company |
+| `COMPANY_OWNER` | Manage company profile, approve join requests, manage members, post/edit/delete jobs, view applications |
+| `COMPANY_MEMBER`| Post/edit/delete jobs, view applications, leave the company |
+| `ADMIN`         | Manage users, full platform oversight                      |
+
+### Company Flow
+
+`src/features/companies/` implements onboarding (`company/onboarding`),
+company creation (`company/create`), join requests (`company/join`), and
+management (`company`). Membership state comes from `GET /companies/me/membership`
+(`{ status: "active" | "pending" | "none" }`); the onboarding page polls every
+15s and re-fetches the session once a request is approved.
 
 ## Workflow
 

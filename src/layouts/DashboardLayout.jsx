@@ -1,11 +1,11 @@
 import Logo from "@/components/shared/logo";
 import ThemeToggle from "@/components/shared/theme-toggle";
 import UserMenu from "@/components/shared/user-menu";
-import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import useAuth, { logout as logoutAction } from "@/stores/auth";
 import {
   BriefcaseBusiness,
+  Building2,
   FileText,
   LayoutDashboard,
   LogOut,
@@ -26,7 +26,7 @@ const DashboardLayout = () => {
   const navItems = getNavItems(role);
 
   return (
-    <div className="flex h-dvh overflow-hidden">
+    <div className="flex min-h-dvh overflow-hidden">
       {/* Desktop Sidebar */}
       <aside className="hidden w-64 shrink-0 flex-col border-r bg-muted/30 lg:flex">
         <div className="flex h-16 shrink-0 items-center border-b px-6">
@@ -59,10 +59,8 @@ const DashboardLayout = () => {
         <header className="flex h-16 shrink-0 items-center justify-between border-b bg-background px-4 lg:hidden">
           <div className="flex items-center gap-2">
             <Sheet open={open} onOpenChange={setOpen}>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-9 w-9">
-                  <Menu className="h-5 w-5" />
-                </Button>
+              <SheetTrigger>
+                <Menu className="size-5" />
               </SheetTrigger>
               <SheetContent side="left" className="w-64 p-0">
                 <div className="flex h-16 items-center border-b px-6">
@@ -143,7 +141,8 @@ function getNavItems(role) {
         ...common,
         { to: "/dashboard/manage-users", label: "Manage Users", icon: Users },
       ];
-    case "RECRUITER":
+    case "COMPANY_OWNER":
+    case "COMPANY_MEMBER":
       return [
         ...common,
         { to: "/dashboard/add-job", label: "Post Job", icon: PlusCircle },
@@ -153,6 +152,7 @@ function getNavItems(role) {
           label: "Applications",
           icon: FileText,
         },
+        { to: "/dashboard/company", label: "My Company", icon: Building2 },
       ];
     case "JOB_SEEKER":
       return [
@@ -161,6 +161,11 @@ function getNavItems(role) {
           to: "/dashboard/applications",
           label: "My Applications",
           icon: FileText,
+        },
+        {
+          to: "/dashboard/company/onboarding",
+          label: "Hiring? Create a Company",
+          icon: Building2,
         },
       ];
     default:

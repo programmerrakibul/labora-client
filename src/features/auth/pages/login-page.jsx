@@ -1,21 +1,16 @@
-import {
-  Field,
-  FieldError,
-  FieldInput,
-  FieldLabel,
-} from "@/components/forms/form-field";
-import PasswordInput from "@/components/forms/password-input";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import Seo from "@/components/shared/seo";
-import GoogleSignInButton from "@/features/auth/components/google-sign-in-button";
+import { Button } from "@/components/ui/button";
+import FormField from "@/components/ui/form-field";
+import PasswordInput from "@/components/ui/password-input";
+import { Separator } from "@/components/ui/separator";
 import DemoLoginButtons from "@/features/auth/components/demo-login-buttons";
+import GoogleSignInButton from "@/features/auth/components/google-sign-in-button";
 import urlUtils from "@/lib/url";
 import { login } from "@/stores/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Link, useSearchParams } from "react-router";
 import { loginSchema } from "../validation/auth";
 
@@ -29,7 +24,7 @@ const LoginPage = () => {
     control,
     handleSubmit,
     formState: { isSubmitting },
-    setValue
+    setValue,
   } = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: "", password: "" },
@@ -77,38 +72,27 @@ const LoginPage = () => {
             </div>
           )}
 
-          <Controller
+          <FormField
             name="email"
+            label="Email"
             control={control}
-            render={({ field, fieldState }) => (
-              <Field>
-                <FieldLabel required data-invalid={fieldState.invalid}>
-                  Email
-                </FieldLabel>
-                <FieldInput
-                  type="email"
-                  placeholder="you@example.com"
-                  aria-invalid={fieldState.invalid}
-                  {...field}
-                  error={fieldState.error}
-                />
-                <FieldError error={fieldState.error} />
-              </Field>
-            )}
+            placeholder={"you@example.com"}
+            required
           />
 
-          <Controller
+          <FormField
             name="password"
+            label="Password"
             control={control}
-            render={({ field, fieldState }) => (
+            renderComponent={({ field, fieldState }) => (
               <PasswordInput
-                label="Password"
-                required
-                placeholder="Enter your password"
-                error={fieldState.error}
                 {...field}
+                id={field.name}
+                placeholder="At least 6 characters"
+                ariaInvalid={fieldState.invalid}
               />
             )}
+            required
           />
 
           <Button type="submit" className="w-full" disabled={isSubmitting}>

@@ -44,7 +44,8 @@ const ApplicationsPage = () => {
 
   const applications = data?.data || [];
   const totalPages = data?.pagination?.totalPages || 1;
-  const isRecruiter = user?.role === "RECRUITER";
+  const isRecruiter =
+    user?.role === "COMPANY_OWNER" || user?.role === "COMPANY_MEMBER";
   const canWithdraw = (app) =>
     !isRecruiter && !["WITHDRAWN", "REJECTED", "HIRED"].includes(app.status);
 

@@ -13,8 +13,6 @@ export const registerSchema = z
       .min(1, "Email is required")
       .email("Invalid email address"),
 
-    role: z.enum(["JOB_SEEKER", "RECRUITER"], "Please select a role"),
-
     password: z
       .string()
       .min(1, "Password is required")

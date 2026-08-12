@@ -53,8 +53,8 @@ src/
 └── stores/               # Zustand stores: auth.js, job-filters.js
 ```
 
-Features present: `auth`, `jobs`, `applications`, `dashboard`, `users`,
-`public`.
+Features present: `auth`, `companies`, `jobs`, `applications`, `dashboard`,
+`users`, `public`.
 
 ## Conventions
 
@@ -78,15 +78,52 @@ Features present: `auth`, `jobs`, `applications`, `dashboard`, `users`,
   `features/<feature>/validation/`.
 - **Routing guards**: `PrivateRoute` (auth) and `RoleGuard` (role) from
   `features/auth/components/`. Role values come from `constants/enums.js`
-  (`USER_ROLE`).
+  (`USER_ROLE`). There is **no `RECRUITER` role** — recruiting roles are
+  `COMPANY_OWNER` / `COMPANY_MEMBER`.
+
+## Role Model & Company Flow
+
+Every account registers as `JOB_SEEKER`; the client never sends `role`. A user
+becomes `COMPANY_OWNER` by creating a company, or `COMPANY_MEMBER` by being
+approved to join one (server assigns both). Routes under `/dashboard` use
+`RoleGuard` with the company roles where appropriate.
+
+`src/features/companies/` implements the whole lifecycle:
+
+- **Onboarding** (`/dashboard/company/onboarding`) — three states from
+  `useMyMembership()`: `pending` (card with Cancel + polled "Check status"),
+  `active` (redirect), or no affiliation (choose Create vs Join).
+  Polls membership via `useMyMembership({ refetchInterval: 15000 })`; on
+  approval it calls `fetchSession()` so guards/nav unlock.
+- **Create** (`/dashboard/company/create`) — `CompanyForm` + `useCreateCompany`
+  (optimistically applies `COMPANY_OWNER`/`companyId` via `updateUser`, then
+  `fetchSession()`).
+- **Join** (`/dashboard/company/join`) — debounced `useCompanies({ search })`
+  grid of `CompanyCard`; "Request to Join" → `useJoinCompany` (409 → toast).
+- **My Company** (`/dashboard/company`) — owner sees editable `CompanyForm`,
+  `PendingRequestsTable` (Approve/Reject via `useRespondToRequest`), and
+  `MembersTable` (Remove via `useRemoveMember`); member sees a read-only
+  profile + Leave Company (confirm dialog → `useLeaveCompany`, which reverts
+  the store to `JOB_SEEKER`).
+
+`getMyMembership` returns `{ status: "active" | "pending" | "none" }` (server
+normalizes `APPROVED` → `active`); read it as `data?.data?.status`. Query keys
+live in `companyQueryKeys` (`list`, `single`, `requests`, `members`,
+`myMembership`).
 
 ## Auth Flow
 
 1. `App.jsx` calls `fetchSession()` on mount (better-auth `getSession`), which
-   populates the Zustand auth store.
-2. Axios and the better-auth client both use `withCredentials: true`
+   populates the Zustand auth store. The store also infers `companyId` via
+   `inferAdditionalFields`, so the session payload carries the current
+   affiliation.
+2. Registration has no role field — every account starts as `JOB_SEEKER`
+   (`register(name, email, password)`). Roles change only via company actions;
+   company mutations (`useCreateCompany`, `useLeaveCompany`) call
+   `updateUser(...)` then `fetchSession()` to keep the store in sync.
+3. Axios and the better-auth client both use `withCredentials: true`
    (cookie-based session; `lib/local-storage.js` token helpers are unused).
-3. `PrivateRoute` redirects unauthenticated users to `/auth/login`; `RoleGuard`
+4. `PrivateRoute` redirects unauthenticated users to `/auth/login`; `RoleGuard`
    redirects wrong-role users to `/dashboard`.
 
 ## Gotchas
