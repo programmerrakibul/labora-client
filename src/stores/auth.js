@@ -1,22 +1,14 @@
 import { createAuthClient } from "better-auth/react";
 import { create } from "zustand";
-import { inferAdditionalFields } from "better-auth/client/plugins";
 
 const authClient = createAuthClient({
   baseURL: import.meta.env.VITE_API_BASE_URL,
   fetchOptions: {
     credentials: "include",
   },
-  plugins: [
-    inferAdditionalFields({
-      user: {
-        role: { type: "string", required: false },
-      },
-    }),
-  ],
 });
 
-const { signIn, signUp, signOut, getSession } = authClient;
+export const { signIn, signUp, signOut, getSession } = authClient;
 
 const initialState = {
   user: null,
@@ -56,22 +48,8 @@ export const login = async (email, password, callbackURL) => {
   return data;
 };
 
-export const logInWithGoogle = async ({ callbackURL, additionalData }) => {
-  const { data, error } = await signIn.social({
-    provider: "google",
-    callbackURL,
-    additionalData,
-  });
-
-  if (error) throw error;
-
-  await fetchSession();
-
-  return data;
-};
-
-export const register = async (name, email, password, role) => {
-  const { data, error } = await signUp.email({ name, email, password, role });
+export const register = async (name, email, password) => {
+  const { data, error } = await signUp.email({ name, email, password });
 
   if (error) throw error;
 

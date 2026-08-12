@@ -18,6 +18,10 @@ import RegisterPage from "@/features/auth/pages/register-page";
 
 // Dashboard pages
 import ApplicationsPage from "@/features/applications/pages/applications-page";
+import CompanyOnboardingPage from "@/features/companies/pages/company-onboarding-page";
+import CreateCompanyPage from "@/features/companies/pages/create-company-page";
+import JoinCompanyPage from "@/features/companies/pages/join-company-page";
+import MyCompanyPage from "@/features/companies/pages/my-company-page";
 import DashboardOverview from "@/features/dashboard/pages/dashboard-overview";
 import AddJobPage from "@/features/jobs/pages/add-job-page";
 import MyJobsPage from "@/features/jobs/pages/my-jobs-page";
@@ -51,7 +55,7 @@ const router = createBrowserRouter([
       {
         path: "add-job",
         element: (
-          <RoleGuard allowedRoles={["RECRUITER"]}>
+          <RoleGuard allowedRoles={["COMPANY_OWNER", "COMPANY_MEMBER"]}>
             <AddJobPage />
           </RoleGuard>
         ),
@@ -59,7 +63,7 @@ const router = createBrowserRouter([
       {
         path: "my-jobs",
         element: (
-          <RoleGuard allowedRoles={["RECRUITER"]}>
+          <RoleGuard allowedRoles={["COMPANY_OWNER", "COMPANY_MEMBER"]}>
             <MyJobsPage />
           </RoleGuard>
         ),
@@ -67,8 +71,30 @@ const router = createBrowserRouter([
       {
         path: "applications",
         element: (
-          <RoleGuard allowedRoles={["RECRUITER", "JOB_SEEKER"]}>
+          <RoleGuard
+            allowedRoles={["COMPANY_OWNER", "COMPANY_MEMBER", "JOB_SEEKER"]}
+          >
             <ApplicationsPage />
+          </RoleGuard>
+        ),
+      },
+      {
+        path: "company/onboarding",
+        element: <CompanyOnboardingPage />,
+      },
+      {
+        path: "company/create",
+        element: <CreateCompanyPage />,
+      },
+      {
+        path: "company/join",
+        element: <JoinCompanyPage />,
+      },
+      {
+        path: "company",
+        element: (
+          <RoleGuard allowedRoles={["COMPANY_OWNER", "COMPANY_MEMBER"]}>
+            <MyCompanyPage />
           </RoleGuard>
         ),
       },

@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://labora-marketplace.vercel.app/api/:path*"
+      "destination": "https://api-labora-job.vercel.app/api/:path*"
     },
     {
       "source": "/(.*)",

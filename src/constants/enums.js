@@ -4,11 +4,17 @@ export const USER_ROLE = {
     label: "Job Seeker",
     color: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300",
   },
-  RECRUITER: {
-    value: "RECRUITER",
-    label: "Recruiter",
+  COMPANY_MEMBER: {
+    value: "COMPANY_MEMBER",
+    label: "Company Member",
     color:
       "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300",
+  },
+  COMPANY_OWNER: {
+    value: "COMPANY_OWNER",
+    label: "Company Owner",
+    color:
+      "bg-fuchsia-100 text-fuchsia-800 dark:bg-fuchsia-900 dark:text-fuchsia-300",
   },
   ADMIN: {
     value: "ADMIN",
@@ -159,6 +165,24 @@ export const APPLICATION_STATUS = {
     label: "Withdrawn",
     color:
       "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-300",
+  },
+};
+
+export const MEMBERSHIP_STATUS = {
+  PENDING: {
+    value: "PENDING",
+    label: "Pending",
+    color: "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300",
+  },
+  APPROVED: {
+    value: "APPROVED",
+    label: "Approved",
+    color: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300",
+  },
+  REJECTED: {
+    value: "REJECTED",
+    label: "Rejected",
+    color: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300",
   },
 };
 

@@ -1,26 +1,16 @@
-import {
-  Field,
-  FieldError,
-  FieldInput,
-  FieldLabel,
-} from "@/components/forms/form-field";
-import PasswordInput from "@/components/forms/password-input";
-import { Button } from "@/components/ui/button";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Separator } from "@/components/ui/separator";
-import { USER_ROLE } from "@/constants/enums";
 import Seo from "@/components/shared/seo";
+import { Button } from "@/components/ui/button";
+import FormField from "@/components/ui/form-field";
+import PasswordInput from "@/components/ui/password-input";
+import { Separator } from "@/components/ui/separator";
 import GoogleSignInButton from "@/features/auth/components/google-sign-in-button";
-import { cn } from "@/lib/utils";
 import { register as registerUser } from "@/stores/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
-import { Controller, useForm, useWatch } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import { registerSchema } from "../validation/auth";
-
-const REGISTER_ROLE_OPTIONS = [USER_ROLE.JOB_SEEKER, USER_ROLE.RECRUITER];
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -35,23 +25,15 @@ const RegisterPage = () => {
     defaultValues: {
       name: "",
       email: "",
-      role: "",
       password: "",
       confirmPassword: "",
     },
   });
 
-  const watchedRole = useWatch({ control, name: "role" });
-
   const onSubmit = async (values) => {
     setError("");
     try {
-      await registerUser(
-        values.name,
-        values.email,
-        values.password,
-        values.role,
-      );
+      await registerUser(values.name, values.email, values.password);
       navigate("/");
     } catch (err) {
       setError(err?.message || "Registration failed. Please try again.");
@@ -63,7 +45,7 @@ const RegisterPage = () => {
       <Seo
         title="Create an Account"
         noindex
-        description="Join Labora as a job seeker or recruiter and start connecting talent with opportunity today."
+        description="Join Labora and start your journey today."
       />
       <div className="w-full max-w-md space-y-6">
         <div className="text-center">
@@ -82,99 +64,50 @@ const RegisterPage = () => {
             </div>
           )}
 
-          <Controller
+          <FormField
             name="name"
+            label="Full Name"
             control={control}
-            render={({ field, fieldState }) => (
-              <Field>
-                <FieldLabel required>Full Name</FieldLabel>
-                <FieldInput
-                  type="text"
-                  placeholder="John Doe"
-                  {...field}
-                  error={fieldState.error}
-                />
-                <FieldError error={fieldState.error} />
-              </Field>
-            )}
+            placeholder={"John Doe"}
+            required
           />
 
-          <Controller
+          <FormField
             name="email"
+            label="Email"
             control={control}
-            render={({ field, fieldState }) => (
-              <Field>
-                <FieldLabel required>Email</FieldLabel>
-                <FieldInput
-                  type="email"
-                  placeholder="you@example.com"
-                  {...field}
-                  error={fieldState.error}
-                />
-                <FieldError error={fieldState.error} />
-              </Field>
-            )}
+            placeholder={"you@example.com"}
+            required
           />
 
-          <Controller
-            name="role"
-            control={control}
-            render={({ field, fieldState }) => (
-              <Field>
-                <FieldLabel required>I am a</FieldLabel>
-                <RadioGroup
-                  value={field.value}
-                  onValueChange={field.onChange}
-                  onBlur={field.onBlur}
-                  name={field.name}
-                  aria-invalid={fieldState.invalid}
-                >
-                  {REGISTER_ROLE_OPTIONS.map((option) => (
-                    <label
-                      key={option.value}
-                      className={cn(
-                        "flex cursor-pointer items-center gap-3 rounded-md border px-3 py-2.5 text-sm transition-colors",
-                        field.value === option.value
-                          ? "border-primary bg-primary/5"
-                          : "border-input hover:bg-input/20",
-                      )}
-                    >
-                      <RadioGroupItem value={option.value} />
-                      <span className="font-medium">{option.label}</span>
-                    </label>
-                  ))}
-                </RadioGroup>
-                <FieldError error={fieldState.error} />
-              </Field>
-            )}
-          />
-
-          <Controller
+          <FormField
             name="password"
+            label="Password"
             control={control}
-            render={({ field, fieldState }) => (
+            renderComponent={({ field, fieldState }) => (
               <PasswordInput
-                label="Password"
-                required
-                placeholder="At least 6 characters"
-                error={fieldState.error}
                 {...field}
+                id={field.name}
+                placeholder="At least 6 characters"
+                ariaInvalid={fieldState.invalid}
               />
             )}
+            required
           />
 
-          <Controller
+          <FormField
             name="confirmPassword"
+            label="Confirm Password"
             control={control}
-            render={({ field, fieldState }) => (
+            renderComponent={({ field, fieldState }) => (
               <PasswordInput
-                label="Confirm Password"
-                required
-                placeholder="Confirm your password"
-                error={fieldState.error}
                 {...field}
+                id={field.name}
+                placeholder="At least 6 characters"
+                ariaInvalid={fieldState.error}
               />
             )}
+            required
           />
 
           <Button type="submit" className="w-full" disabled={isSubmitting}>
@@ -198,7 +131,7 @@ const RegisterPage = () => {
           </div>
         </div>
 
-        <GoogleSignInButton className="w-full" role={watchedRole} />
+        <GoogleSignInButton className="w-full" />
 
         <p className="text-center text-sm text-muted-foreground">
           Already have an account?{" "}

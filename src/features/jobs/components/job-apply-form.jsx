@@ -1,11 +1,8 @@
-import {
-  Field,
-  FieldInput,
-  FieldLabel,
-  FieldTextarea,
-} from "@/components/forms/form-field";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Field, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/components/ui/toast";
 import { useCreateApplication } from "@/features/applications/hooks/use-applications";
 import { getErrorMessage } from "@/lib/error";
@@ -56,8 +53,8 @@ const JobApplyForm = ({ job, onCancel }) => {
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-3">
           <Field>
-            <FieldLabel required>Resume URL</FieldLabel>
-            <FieldInput
+            <FieldLabel>Resume URL</FieldLabel>
+            <Input
               type="url"
               required
               value={formData.resumeUrl}
@@ -69,7 +66,7 @@ const JobApplyForm = ({ job, onCancel }) => {
           </Field>
           <Field>
             <FieldLabel>Cover Letter</FieldLabel>
-            <FieldTextarea
+            <Textarea
               rows={3}
               value={formData.coverLetter}
               onChange={(e) =>
@@ -84,7 +81,7 @@ const JobApplyForm = ({ job, onCancel }) => {
             <FieldLabel>
               Expected Salary ({job.salary?.currency || "BDT"})
             </FieldLabel>
-            <FieldInput
+            <Input
               type="number"
               min="0"
               max={job.salary?.max || undefined}
