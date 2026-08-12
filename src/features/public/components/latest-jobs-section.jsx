@@ -36,7 +36,7 @@ const LatestJobsSection = () => {
   const jobs = data?.data || [];
 
   return (
-    <section className="bg-muted/50 py-16">
+    <section className="py-16">
       <Container>
         <SectionHeader
           title="Latest Jobs"
@@ -63,17 +63,21 @@ const LatestJobsSection = () => {
                 ? Array.from({ length: 6 }).map((_, i) => (
                     <CarouselItem
                       key={i}
-                      className="basis-full sm:basis-1/2 lg:basis-1/3"
+                      className="basis-full sm:basis-1/2 lg:basis-1/3 px-2"
                     >
-                      <JobCardSkeleton />
+                      <div className="h-full">
+                        <JobCardSkeleton />
+                      </div>
                     </CarouselItem>
                   ))
                 : jobs.map((job) => (
                     <CarouselItem
                       key={job._id}
-                      className="basis-full sm:basis-1/2 lg:basis-1/3 min-h-full"
+                      className="basis-full sm:basis-1/2 lg:basis-1/3 min-h-full px-2"
                     >
-                      <JobCard job={job} />
+                      <div className="h-full">
+                        <JobCard job={job} />
+                      </div>
                     </CarouselItem>
                   ))}
             </CarouselContent>

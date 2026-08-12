@@ -1,41 +1,21 @@
-import Container from "@/components/shared/container";
-import { Upload, Users } from "lucide-react";
-
 const CtaBannerSection = () => {
   return (
-    <section className="py-16">
-      <Container>
-        <div className="grid gap-6 overflow-hidden rounded-2xl border bg-linear-to-br from-primary/10 via-background to-secondary/10 shadow-sm lg:grid-cols-2">
-          <div className="flex flex-col items-start gap-6 p-8 lg:p-10">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-              <Users className="h-6 w-6 text-primary" />
-            </div>
-            <div>
-              <h3 className="text-2xl font-bold tracking-tight font-heading">
-                Looking to hire top 1% talent?
-              </h3>
-              <p className="mt-2 text-muted-foreground">
-                Post a job in minutes and connect with thousands of vetted
-                professionals ready to make an impact.
-              </p>
-            </div>
-          </div>
-          <div className="flex flex-col items-start gap-6 border-t p-8 lg:border-l lg:border-t-0 lg:p-10">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-secondary/10">
-              <Upload className="h-6 w-6 text-secondary" />
-            </div>
-            <div>
-              <h3 className="text-2xl font-bold tracking-tight font-heading">
-                Looking for your next career move?
-              </h3>
-              <p className="mt-2 text-muted-foreground">
-                Create your profile and let recruiters find you. Your dream job
-                is one click away.
-              </p>
-            </div>
-          </div>
+    <section className="mt-12">
+      <div className="rounded-2xl bg-primary/70 p-12 text-primary-foreground shadow-md">
+        <div className="mx-auto max-w-5xl text-center">
+          <h2 className="text-3xl font-bold leading-tight sm:text-4xl font-heading">
+            Make the next move
+            <br />
+            <span className="block text-2xl font-semibold">
+              with more signal.
+            </span>
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-base opacity-90">
+            Everyone starts, creates a team, or simply starts where they are.
+            Labora is built to help you take the next useful step.
+          </p>
         </div>
-      </Container>
+      </div>
     </section>
   );
 };

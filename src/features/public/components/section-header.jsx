@@ -29,7 +29,7 @@ const SectionHeader = ({
         {subtitle && (
           <p
             className={cn(
-              "text-muted-foreground",
+              "text-muted-foreground text-base",
               centered && "mx-auto max-w-2xl",
             )}
           >
