@@ -7,6 +7,7 @@ import useJobFilters, {
 } from "@/stores/job-filters";
 import JobCard from "../components/job-card";
 import JobFilters from "../components/job-filters";
+import CompanyFilterBanner from "../components/company-filter-banner";
 import Container from "@/components/shared/container";
 import Seo from "@/components/shared/seo";
 import Pagination from "@/components/shared/pagination";
@@ -22,6 +23,7 @@ const filterKeys = [
   "experienceLevel",
   "minSalary",
   "maxSalary",
+  "companyId",
   "page",
   "limit",
 ];
@@ -30,7 +32,7 @@ const AllJobsPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const hydrated = useRef(false);
 
-  const { search, category, jobType, workLocationType, experienceLevel, page, limit } =
+  const { search, category, jobType, workLocationType, experienceLevel, companyId, page, limit } =
     useJobFilters();
 
   // Hydrate Zustand from URL on mount
@@ -60,10 +62,11 @@ const AllJobsPage = () => {
     if (jobType) next.set("jobType", jobType);
     if (workLocationType) next.set("workLocationType", workLocationType);
     if (experienceLevel) next.set("experienceLevel", experienceLevel);
+    if (companyId) next.set("companyId", companyId);
     if (page > 1) next.set("page", String(page));
 
     setSearchParams(next, { replace: true });
-  }, [search, category, jobType, workLocationType, experienceLevel, page, setSearchParams]);
+  }, [search, category, jobType, workLocationType, experienceLevel, companyId, page, setSearchParams]);
 
   const filters = {
     ...(search && { search }),
@@ -71,6 +74,7 @@ const AllJobsPage = () => {
     ...(jobType && { jobType }),
     ...(workLocationType && { workLocationType }),
     ...(experienceLevel && { experienceLevel }),
+    ...(companyId && { companyId }),
     page,
     limit,
   };
@@ -95,6 +99,8 @@ const AllJobsPage = () => {
       </div>
 
       <JobFilters />
+
+      <CompanyFilterBanner />
 
       <div className="mt-6">
         {isLoading ? (

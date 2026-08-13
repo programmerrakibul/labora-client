@@ -3,10 +3,11 @@ import UserMenu from "@/components/shared/user-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { useIsMobile } from "@/hooks/use-is-mobile";
+import { useIsMobile } from "@/hooks/use-mobile";
 import useAuth, { logout as logoutAction } from "@/stores/auth";
 import {
   Briefcase,
+  Building2,
   Home,
   Info,
   LayoutDashboard,
@@ -20,6 +21,7 @@ import ThemeToggle from "./theme-toggle";
 const navLinks = [
   { to: "/", label: "Home", icon: Home },
   { to: "/all-jobs", label: "Find Jobs", icon: Briefcase },
+  { to: "/companies", label: "Companies", icon: Building2 },
   { to: "/about-us", label: "About", icon: Info },
   { to: "/contact-us", label: "Contact", icon: Mail },
 ];

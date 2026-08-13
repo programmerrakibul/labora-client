@@ -46,7 +46,7 @@ src/
 │   ├── services/         # Axios API wrappers (xxxApi)
 │   ├── validation/       # Zod schemas
 │   └── utils/
-├── hooks/                # Shared hooks (e.g. use-is-mobile.jsx)
+├── hooks/                # Shared hooks (e.g. use-mobile.js)
 ├── layouts/              # RootLayout (navbar/footer/toaster), DashboardLayout
 ├── lib/                  # axios.js, query-client.js, local-storage.js, utils.js (cn)
 ├── providers/            # QueryProvider, ThemeProvider
@@ -69,7 +69,7 @@ Features present: `auth`, `companies`, `jobs`, `applications`, `dashboard`,
   query hooks live in `features/<feature>/hooks/use-*.js`.
 - **Query keys**: use centralized `xxxQueryKeys` factories; scope keys by
   `user?.email` when data is per-user. Mutations invalidate `["jobs"]`,
-  `["users"]`, `["applications"]`.
+  `["users"]`, `["applications"]`, `["companies"]`.
 - **State**: server state via TanStack Query; client state via Zustand
   (`stores/auth.js`, `stores/job-filters.js`). No React Context stores.
 - **API response shape**: backend wraps payloads as `{ data, pagination }`.
@@ -90,16 +90,21 @@ approved to join one (server assigns both). Routes under `/dashboard` use
 
 `src/features/companies/` implements the whole lifecycle:
 
-- **Onboarding** (`/dashboard/company/onboarding`) — three states from
-  `useMyMembership()`: `pending` (card with Cancel + polled "Check status"),
-  `active` (redirect), or no affiliation (choose Create vs Join).
-  Polls membership via `useMyMembership({ refetchInterval: 15000 })`; on
-  approval it calls `fetchSession()` so guards/nav unlock.
-- **Create** (`/dashboard/company/create`) — `CompanyForm` + `useCreateCompany`
-  (optimistically applies `COMPANY_OWNER`/`companyId` via `updateUser`, then
-  `fetchSession()`).
-- **Join** (`/dashboard/company/join`) — debounced `useCompanies({ search })`
-  grid of `CompanyCard`; "Request to Join" → `useJoinCompany` (409 → toast).
+- **Onboarding** — homepage `CompanyOnboardingSection` (renders only when
+  `user.role === "JOB_SEEKER"`, else `null`). Three states from
+  `useMyMembership()`: `pending` (card with Cancel request), `active` (calls
+  `fetchSession()` so guards/nav unlock), or no affiliation (choose Create vs
+  Join). Polls via `useMyMembership({ refetchInterval: 15000 })`.
+- **Create** — the "Create a Company" card opens `CreateCompanyDialog`
+  (`CompanyForm` + `useCreateCompany`; optimistically applies
+  `COMPANY_OWNER`/`companyId` via `updateUser`, then `fetchSession()`, then
+  navigates to `/dashboard`).
+- **Join** — the "Join a Company" card navigates to the public `/companies`
+  page: debounced `useCompanies({ search })`, paginated grid of reusable
+  `CompanyCard`s, `CompanyDetailsModal`, and a "View Jobs" link →
+  `/all-jobs?companyId={id}`. "Request to Join" (shown only to `JOB_SEEKER`) →
+  `useJoinCompany` (409 → toast), then navigates home so the onboarding section
+  shows the pending state.
 - **My Company** (`/dashboard/company`) — owner sees editable `CompanyForm`,
   `PendingRequestsTable` (Approve/Reject via `useRespondToRequest`), and
   `MembersTable` (Remove via `useRemoveMember`); member sees a read-only
@@ -110,6 +115,19 @@ approved to join one (server assigns both). Routes under `/dashboard` use
 normalizes `APPROVED` → `active`); read it as `data?.data?.status`. Query keys
 live in `companyQueryKeys` (`list`, `single`, `requests`, `members`,
 `myMembership`).
+
+## Reusable Company UI
+
+- `CompanyCard` is the single reusable card for companies (homepage top
+  companies + `/companies`). Config-driven: `showSeats`, `showJoin`,
+  `isJoining`, `onJoin`, `showDetails`, `onViewDetails`, `showViewJobs`.
+- `CompanyCardSkeleton` is the matching loading state; `NotFound` (shared)
+  covers empty states; `Pagination` (shared) drives the `/companies` grid.
+- `CompanyProfileInfo` is shared by `MyCompanyPage` and `CompanyDetailsModal`.
+- The `/all-jobs` page supports a `?companyId=` filter: it hydrates from the
+  URL, passes `companyId` to `useJobs`, and renders `CompanyFilterBanner`
+  (in `features/jobs/components/`) to clear it. The field lives in the
+  `job-filters` Zustand store alongside the other filters.
 
 ## Auth Flow
 
