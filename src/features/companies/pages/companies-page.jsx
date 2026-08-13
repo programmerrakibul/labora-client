@@ -8,14 +8,12 @@ import { useDebouncedSearch } from "@/hooks/use-debounced-search";
 import useAuth from "@/stores/auth";
 import { Building2 } from "lucide-react";
 import { useState } from "react";
-import { useNavigate } from "react-router";
 import CompanyCard from "../components/company-card";
 import CompanyCardSkeleton from "../components/company-card-skeleton";
 import CompanyDetailsModal from "../components/company-details-modal";
 import { useCompanies, useJoinCompany } from "../hooks/use-companies";
 
 const CompaniesPage = () => {
-  const navigate = useNavigate();
   const user = useAuth((s) => s.user);
   const isJobSeeker = user?.role === "JOB_SEEKER";
   const joinCompany = useJoinCompany();
@@ -44,7 +42,6 @@ const CompaniesPage = () => {
         title: "Request sent",
         description: "Awaiting approval from the company owner.",
       });
-      navigate("/");
     } catch (err) {
       if (err?.response?.status === 409) {
         toast.error({
