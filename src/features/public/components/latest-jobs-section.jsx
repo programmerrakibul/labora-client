@@ -12,7 +12,7 @@ import JobCard from "@/features/jobs/components/job-card";
 import { useJobs } from "@/features/jobs/hooks/use-jobs";
 import Autoplay from "embla-carousel-autoplay";
 import { ArrowRight, BriefcaseBusiness } from "lucide-react";
-import { useNavigate } from "react-router";
+import { Link } from "react-router";
 import SectionHeader from "./section-header";
 
 const JobCardSkeleton = () => (
@@ -31,7 +31,6 @@ const JobCardSkeleton = () => (
 );
 
 const LatestJobsSection = () => {
-  const navigate = useNavigate();
   const { data, isLoading } = useJobs({ limit: 6, status: "ACTIVE" });
   const jobs = data?.data || [];
 
@@ -42,8 +41,12 @@ const LatestJobsSection = () => {
           title="Latest Jobs"
           subtitle="Jump straight to the roles that match your skills and ambitions across every industry."
           actionButton={
-            <Button variant="outline" onClick={() => navigate("/all-jobs")}>
-              View All
+            <Button
+              variant="outline"
+              render={<Link to={"/all-jobs"} />}
+              nativeButton={false}
+            >
+              <span>View All</span>
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           }
@@ -56,7 +59,7 @@ const LatestJobsSection = () => {
         ) : (
           <Carousel
             opts={{ align: "start", loop: true }}
-            plugins={[Autoplay({ delay: 4000, stopOnInteraction: false })]}
+            plugins={[Autoplay({ delay: 2000, stopOnInteraction: false })]}
           >
             <CarouselContent className="h-full items-stretch">
               {isLoading

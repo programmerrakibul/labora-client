@@ -1,6 +1,7 @@
 import Container from "@/components/shared/container";
 import NotFound from "@/components/shared/not-found";
 import { Button } from "@/components/ui/button";
+import { COMPANY_STATUS } from "@/constants/enums";
 import CompanyCard from "@/features/companies/components/company-card";
 import CompanyCardSkeleton from "@/features/companies/components/company-card-skeleton";
 import { useCompanies } from "@/features/companies/hooks/use-companies";
@@ -9,7 +10,10 @@ import { Link } from "react-router";
 import SectionHeader from "./section-header";
 
 const TopCompaniesSection = () => {
-  const { data, isLoading } = useCompanies({ limit: 6 });
+  const { data, isLoading } = useCompanies({
+    limit: 6,
+    status: COMPANY_STATUS.ACTIVE,
+  });
   const companies = (data?.data || []).slice(0, 6);
 
   return (
@@ -20,7 +24,11 @@ const TopCompaniesSection = () => {
           title="Companies Hiring on Labora"
           subtitle="Join thousands of top companies and growing startups that trust Labora to find exceptional talent."
           actionButton={
-            <Button variant="outline" render={<Link to={"/companies"} />}>
+            <Button
+              variant="outline"
+              render={<Link to={"/companies"} />}
+              nativeButton={false}
+            >
               <span>View All</span>
               <ArrowRight className="size-4" />
             </Button>

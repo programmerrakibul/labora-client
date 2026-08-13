@@ -4,6 +4,7 @@ import Pagination from "@/components/shared/pagination";
 import SearchInput from "@/components/shared/search-input";
 import Seo from "@/components/shared/seo";
 import { toast } from "@/components/ui/toast";
+import { COMPANY_STATUS, USER_ROLE } from "@/constants/enums";
 import { useDebouncedSearch } from "@/hooks/use-debounced-search";
 import useAuth from "@/stores/auth";
 import { Building2 } from "lucide-react";
@@ -15,7 +16,7 @@ import { useCompanies, useJoinCompany } from "../hooks/use-companies";
 
 const CompaniesPage = () => {
   const user = useAuth((s) => s.user);
-  const isJobSeeker = user?.role === "JOB_SEEKER";
+  const isJobSeeker = user?.role === USER_ROLE.JOB_SEEKER;
   const joinCompany = useJoinCompany();
   const { search, setSearch, debouncedSearch } = useDebouncedSearch(() =>
     setPage(1),
@@ -27,6 +28,7 @@ const CompaniesPage = () => {
     page,
     limit: 9,
     ...(debouncedSearch && { search: debouncedSearch }),
+    status: COMPANY_STATUS.ACTIVE,
   };
 
   const { data, isLoading } = useCompanies(filters);

@@ -74,7 +74,7 @@ const router = createBrowserRouter([
       {
         path: "applications",
         element: (
-          <RoleGuard allowedRoles={[USER_ROLE.ADMIN, ...RECRUITER]}>
+          <RoleGuard allowedRoles={[USER_ROLE.JOB_SEEKER, ...RECRUITER]}>
             <ApplicationsPage />
           </RoleGuard>
         ),

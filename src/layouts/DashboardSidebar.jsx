@@ -17,19 +17,25 @@ import {
 } from "@/components/ui/sidebar";
 import useAuth, { logout as logoutAction } from "@/stores/auth";
 import { LogOut, X } from "lucide-react";
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router";
 import { getNavItems } from "./dashboard-nav";
 
 const DashboardSidebar = () => {
   const user = useAuth((s) => s.user);
   const { pathname } = useLocation();
   const { setOpenMobile } = useSidebar();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const navItems = getNavItems(user?.role);
 
   const handleLogout = async () => {
     setOpenMobile(false);
-    await logoutAction();
+    await logoutAction({
+      pathname,
+      searchParams,
+      navigate,
+    });
   };
 
   return (

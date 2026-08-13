@@ -1,9 +1,11 @@
 import useAuth from "@/stores/auth";
-import { useLocation, Navigate } from "react-router";
+import { Navigate, useLocation, useSearchParams } from "react-router";
 
-const RoleGuard = ({ allowedRoles, children }) => {
+const RoleGuard = ({ allowedRoles = [], children }) => {
   const { user, loading } = useAuth();
-  const location = useLocation();
+  const { pathname } = useLocation();
+  const [searchParams] = useSearchParams();
+  const to = encodeURIComponent(`${pathname}?${searchParams.toString()}`);
 
   if (loading) {
     return (
@@ -14,7 +16,7 @@ const RoleGuard = ({ allowedRoles, children }) => {
   }
 
   if (!user) {
-    return <Navigate to="/auth/login" state={{ from: location }} replace />;
+    return <Navigate to={`/auth/login?to=${to}`} replace />;
   }
 
   if (allowedRoles && !allowedRoles.includes(user.role)) {

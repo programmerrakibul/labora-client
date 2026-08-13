@@ -20,14 +20,14 @@ const DashboardLayout = () => {
   const open = useSidebarStore((s) => s.open);
 
   const currentNavItem = getNavItems(user?.role).find(
-    (item) => pathname === item.to
+    (item) => pathname === item.to,
   );
 
   return (
     <SidebarProvider
       open={open}
       onOpenChange={setSidebarOpen}
-      className="h-svh overflow-hidden"
+      className="h-dvh overflow-hidden"
     >
       <DashboardSidebar />
       <div className="flex min-w-0 flex-1 flex-col">
