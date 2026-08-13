@@ -9,6 +9,7 @@ import { companySchema } from "../validation/company";
 const buildDefaultValues = (company) => {
   return {
     name: company?.name ?? "",
+    email: company?.email ?? "",
     website: company?.website ?? "",
     industry: company?.industry ?? "",
     about: company?.about ?? "",
@@ -24,6 +25,7 @@ const buildDefaultValues = (company) => {
 const buildPayload = (values) => {
   const payload = {
     name: values.name.trim(),
+    email: values.email.trim(),
     ...(values.website?.trim() ? { website: values.website.trim() } : {}),
     ...(values.industry?.trim() ? { industry: values.industry.trim() } : {}),
     ...(values.about?.trim() ? { about: values.about.trim() } : {}),
@@ -76,14 +78,20 @@ const CompanyForm = ({
             />
 
             <FormField
+              name={"email"}
+              label={"Company Email"}
+              control={control}
+              required
+              placeholder="e.g. hr@tech-corp.com"
+            />
+
+            <FormField
               name="website"
               control={control}
               label="Website"
               type="url"
               placeholder={"https://example.com"}
             />
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2">
             <FormField
               name="industry"
               control={control}
@@ -91,13 +99,15 @@ const CompanyForm = ({
               placeholder={"e.g. Software Development"}
             />
 
-            <FormField
-              name="logo"
-              control={control}
-              label="Logo URL"
-              type="url"
-              placeholder="https://example.com/logo.png"
-            />
+            <div className="sm:col-span-2">
+              <FormField
+                name="logo"
+                control={control}
+                label="Logo URL"
+                type="url"
+                placeholder="https://example.com/logo.png"
+              />
+            </div>
           </div>
 
           <FormField
@@ -141,7 +151,7 @@ const CompanyForm = ({
         </CardContent>
       </Card>
 
-      <div className="flex gap-3">
+      <div className="flex justify-end gap-3">
         <Button type="submit" disabled={isSubmitting}>
           {isSubmitting ? (
             <>
