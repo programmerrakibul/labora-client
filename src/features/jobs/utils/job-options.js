@@ -4,7 +4,7 @@ import {
   JOB_STATUS,
   JOB_TYPE,
   WORK_LOCATION_TYPE,
-} from "@/constants/enums";
+} from "@/constants/enum-configs";
 
 export const jobFormOptions = {
   jobTypes: Object.values(JOB_TYPE),

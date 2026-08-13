@@ -5,7 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { APPLICATION_STATUS, getEnumByValue } from "@/constants/enums";
+import { APPLICATION_STATUS, getEnumByValue } from "@/constants/enum-configs";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { useUpdateApplicationStatus } from "../hooks/use-applications";

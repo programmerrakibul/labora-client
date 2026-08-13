@@ -7,7 +7,7 @@ import Seo from "@/components/shared/seo";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { APPLICATION_STATUS, getEnumByValue } from "@/constants/enums";
+import { APPLICATION_STATUS, getEnumByValue } from "@/constants/enum-configs";
 import { useDebouncedSearch } from "@/hooks/use-debounced-search";
 import useAuth from "@/stores/auth";
 import { ChevronDown, ChevronUp, Eye, FileText } from "lucide-react";

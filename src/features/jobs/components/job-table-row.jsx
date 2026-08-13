@@ -4,7 +4,7 @@ import {
   getEnumByValue,
   JOB_TYPE,
   WORK_LOCATION_TYPE,
-} from "@/constants/enums";
+} from "@/constants/enum-configs";
 import { Eye, Pencil, Trash2 } from "lucide-react";
 import { Link } from "react-router";
 import { formatPostedAt } from "../utils/job";

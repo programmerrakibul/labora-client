@@ -2,19 +2,19 @@ import { Field, FieldLabel, FieldSelect } from "@/components/forms/form-field";
 import SearchInput from "@/components/shared/search-input";
 import { Button } from "@/components/ui/button";
 import {
-  JOB_TYPE,
-  WORK_LOCATION_TYPE,
   EXPERIENCE_LEVEL,
   JOB_CATEGORIES,
-} from "@/constants/enums";
+  JOB_TYPE,
+  WORK_LOCATION_TYPE,
+} from "@/constants/enum-configs";
 import { useDebounce } from "@/hooks/use-debounce";
 import useJobFilters, {
-  setSearch,
-  setCategory,
-  setJobType,
-  setWorkLocationType,
-  setExperienceLevel,
   resetFilters,
+  setCategory,
+  setExperienceLevel,
+  setJobType,
+  setSearch,
+  setWorkLocationType,
 } from "@/stores/job-filters";
 import { RotateCcw } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -51,7 +51,10 @@ const JobFilters = () => {
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         <Field>
           <FieldLabel>Category</FieldLabel>
-          <FieldSelect value={category} onChange={(e) => setCategory(e.target.value)}>
+          <FieldSelect
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
             <option value="">All Categories</option>
             {JOB_CATEGORIES.map((cat) => (
               <option key={cat} value={cat}>
@@ -63,7 +66,10 @@ const JobFilters = () => {
 
         <Field>
           <FieldLabel>Job Type</FieldLabel>
-          <FieldSelect value={jobType} onChange={(e) => setJobType(e.target.value)}>
+          <FieldSelect
+            value={jobType}
+            onChange={(e) => setJobType(e.target.value)}
+          >
             <option value="">All Types</option>
             {Object.values(JOB_TYPE).map((t) => (
               <option key={t.value} value={t.value}>
@@ -104,7 +110,12 @@ const JobFilters = () => {
         </Field>
       </div>
 
-      <Button variant="ghost" size="sm" onClick={resetFilters} className="gap-1">
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={resetFilters}
+        className="gap-1"
+      >
         <RotateCcw className="h-3 w-3" />
         Reset Filters
       </Button>

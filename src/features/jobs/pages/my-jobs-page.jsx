@@ -17,7 +17,7 @@ import {
   getEnumByValue,
   JOB_TYPE,
   WORK_LOCATION_TYPE,
-} from "@/constants/enums";
+} from "@/constants/enum-configs";
 import { useDebouncedSearch } from "@/hooks/use-debounced-search";
 import { BriefcaseBusiness, Eye, Pencil, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";

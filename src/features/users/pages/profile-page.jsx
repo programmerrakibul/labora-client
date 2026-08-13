@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getEnumByValue, USER_ROLE } from "@/constants/enums";
+import { getEnumByValue, USER_ROLE_CONFIG } from "@/constants/enum-configs";
 import useAuth from "@/stores/auth";
 import { Mail, MapPin, Pencil, Phone, User } from "lucide-react";
 import { useState } from "react";
@@ -13,15 +13,12 @@ import EditProfileDialog from "../components/edit-profile-dialog";
 
 const ProfilePage = () => {
   const user = useAuth((s) => s.user);
-  const role = getEnumByValue(USER_ROLE, user?.role);
+  const role = getEnumByValue(USER_ROLE_CONFIG, user?.role);
   const [editOpen, setEditOpen] = useState(false);
 
   return (
     <Container className="py-8">
-      <Seo
-        title={user?.name ? `${user.name}'s Profile` : "Profile"}
-        noindex
-      />
+      <Seo title={user?.name ? `${user.name}'s Profile` : "Profile"} noindex />
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-2xl font-bold tracking-tight">My Profile</h1>
         <Button onClick={() => setEditOpen(true)}>

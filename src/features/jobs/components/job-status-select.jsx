@@ -5,7 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { getEnumByValue, JOB_STATUS } from "@/constants/enums";
+import { getEnumByValue, JOB_STATUS } from "@/constants/enum-configs";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { useUpdateJobStatus } from "../hooks/use-jobs";
