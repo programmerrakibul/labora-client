@@ -4,3 +4,8 @@ export const USER_ROLE = {
   COMPANY_OWNER: "COMPANY_OWNER",
   ADMIN: "ADMIN",
 };
+
+export const COMPANY_STATUS = {
+  ACTIVE: "ACTIVE",
+  SUSPENDED: "SUSPENDED",
+};

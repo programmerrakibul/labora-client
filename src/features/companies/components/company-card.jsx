@@ -3,8 +3,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { ArrowUpRight, Loader2, MapPin, Users } from "lucide-react";
+import { ArrowUpRight, Loader2, MapPin, Trash2, Users } from "lucide-react";
 import { Link } from "react-router";
+import CompanyStatusSelect from "./company-status-select";
 
 const getInitials = (name) =>
   (name || "C")
@@ -19,9 +20,12 @@ const CompanyCard = ({
   showSeats = false,
   showJoin = false,
   showDetails = false,
+  showStatus = false,
+  showDelete = false,
   isJoining = false,
   onJoin,
   onViewDetails,
+  onDelete,
   className,
 }) => {
   const seatsFilled = company?.recruiterCount ?? 0;
@@ -58,17 +62,26 @@ const CompanyCard = ({
               )}
             </div>
           </div>
-          {showSeats && (
-            <Badge
-              variant="secondary"
-              className={cn(
-                "shrink-0",
-                isFull && "bg-destructive/10 text-destructive",
+          {(showSeats || showStatus) && (
+            <div className="flex shrink-0 flex-col items-end gap-2">
+              {showSeats && (
+                <Badge
+                  variant="secondary"
+                  className={cn(
+                    isFull && "bg-destructive/10 text-destructive",
+                  )}
+                >
+                  <Users className="mr-1 h-3 w-3" />
+                  {seatsFilled}/{maxRecruiters} seats
+                </Badge>
               )}
-            >
-              <Users className="mr-1 h-3 w-3" />
-              {seatsFilled}/{maxRecruiters} seats
-            </Badge>
+              {showStatus && (
+                <CompanyStatusSelect
+                  companyId={company?._id}
+                  status={company?.status}
+                />
+              )}
+            </div>
           )}
         </div>
       </CardHeader>
@@ -90,6 +103,7 @@ const CompanyCard = ({
               variant="ghost"
               size="sm"
               render={<Link to={`/all-jobs?companyId=${company?._id}`} />}
+              nativeButton={false}
             >
               View Jobs
               <ArrowUpRight className="h-3.5 w-3.5" />
@@ -102,6 +116,18 @@ const CompanyCard = ({
                 onClick={() => onViewDetails(company)}
               >
                 Details
+              </Button>
+            )}
+
+            {showDelete && (
+              <Button
+                variant="ghost"
+                size="icon-sm"
+                className="text-destructive"
+                onClick={() => onDelete?.(company)}
+                aria-label="Delete company"
+              >
+                <Trash2 className="h-4 w-4" />
               </Button>
             )}
 

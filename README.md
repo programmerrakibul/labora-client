@@ -101,7 +101,7 @@ src/
   - Company roles (`COMPANY_OWNER` / `COMPANY_MEMBER`): `add-job`, `my-jobs`,
     `applications`, `company`
   - Job seeker: `applications`
-  - Admin: `manage-users`
+  - Admin: `manage-users`, `companies`
   - All users: `profile`
 
 ### Roles & Permissions
@@ -117,7 +117,7 @@ company actions (create a company → `COMPANY_OWNER`, get approved to join →
 | `JOB_SEEKER`    | Browse & apply to jobs, track applications, request to join a company |
 | `COMPANY_OWNER` | Manage company profile, approve join requests, manage members, post/edit/delete jobs, view applications |
 | `COMPANY_MEMBER`| Post/edit/delete jobs, view applications, leave the company |
-| `ADMIN`         | Manage users, full platform oversight                      |
+| `ADMIN`         | Manage users & companies, full platform oversight                |
 
 ### Company Flow
 
@@ -142,6 +142,13 @@ company actions (create a company → `COMPANY_OWNER`, get approved to join →
   `MembersTable` (Remove via `useRemoveMember`); member sees a read-only
   profile + Leave Company (confirm dialog → `useLeaveCompany`, which reverts
   the store to `JOB_SEEKER`).
+- **Admin Oversight** (`/dashboard/companies`) — admins manage the whole
+  platform via a debounced search (name/email/industry), a status filter
+  (All/Active/Suspended), and a paginated `CompanyCard` grid. Each card offers
+  Details (`CompanyDetailsModal`), an inline status select
+  (`useUpdateCompanyStatus`), and Delete (confirm dialog →
+  `useDeleteCompany`). The page passes `isAdmin: "true"` to `useCompanies` so
+  the default view lists every company regardless of status.
 
 Membership state comes from `GET /companies/me/membership`
 (`{ status: "active" | "pending" | "none" }`). The homepage "top companies"

@@ -2,7 +2,7 @@ import InfoRow from "@/components/shared/info-row";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Globe, MapPin, Tags, Users } from "lucide-react";
+import { BadgeCheck, Globe, Mail, MapPin, Tags, Users } from "lucide-react";
 
 const CompanyProfileInfo = ({ company }) => {
   const location = [
@@ -28,6 +28,14 @@ const CompanyProfileInfo = ({ company }) => {
           <div>
             <div className="flex flex-wrap items-center gap-2">
               <CardTitle className="text-xl">{company?.name}</CardTitle>
+              {company?.isVerified ? (
+                <Badge className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
+                  <BadgeCheck className="mr-1 h-3 w-3" />
+                  Verified
+                </Badge>
+              ) : (
+                <Badge variant="secondary">Unverified</Badge>
+              )}
               <Badge variant="secondary">
                 <Users className="mr-1 h-3 w-3" />
                 {company?.recruiterCount ?? 0}/{company?.maxRecruiters ?? 5}{" "}
@@ -47,6 +55,7 @@ const CompanyProfileInfo = ({ company }) => {
           <p className="text-sm text-muted-foreground">{company.about}</p>
         )}
         <div className="space-y-2 pt-2">
+          {company?.email && <InfoRow icon={Mail}>{company.email}</InfoRow>}
           {company?.website && (
             <InfoRow icon={Globe}>
               <a

@@ -1,4 +1,4 @@
-import { USER_ROLE } from "./enums";
+import { COMPANY_STATUS, USER_ROLE } from "./enums";
 
 export const USER_ROLE_CONFIG = {
   [USER_ROLE.JOB_SEEKER]: {
@@ -207,6 +207,20 @@ export const MEMBERSHIP_STATUS = {
   REJECTED: {
     value: "REJECTED",
     label: "Rejected",
+    color: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300",
+  },
+};
+
+export const COMPANY_STATUS_CONFIG = {
+  [COMPANY_STATUS.ACTIVE]: {
+    value: COMPANY_STATUS.ACTIVE,
+    label: "Active",
+    color: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300",
+  },
+
+  [COMPANY_STATUS.SUSPENDED]: {
+    value: COMPANY_STATUS.SUSPENDED,
+    label: "Suspended",
     color: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300",
   },
 };
