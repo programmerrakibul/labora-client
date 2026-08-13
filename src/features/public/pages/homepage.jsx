@@ -1,5 +1,5 @@
 import Seo from "@/components/shared/seo";
-import CompanyOnboardingSection from "@/features/companies/components/company-onboarding-section";
+import CompanyOnboardingSection from "@/features/public/components/company-onboarding-section";
 import BlogInsightsSection from "../components/blog-insights-section";
 import CategoryExplorerSection from "../components/category-explorer-section";
 import CtaBannerSection from "../components/cta-banner-section";
