@@ -3,7 +3,7 @@ import UserMenu from "@/components/shared/user-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { useIsMobile } from "@/hooks/use-is-mobile";
+import { useIsMobile } from "@/hooks/use-mobile";
 import useAuth, { logout as logoutAction } from "@/stores/auth";
 import {
   Briefcase,

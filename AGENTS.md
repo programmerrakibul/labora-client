@@ -46,7 +46,7 @@ src/
 │   ├── services/         # Axios API wrappers (xxxApi)
 │   ├── validation/       # Zod schemas
 │   └── utils/
-├── hooks/                # Shared hooks (e.g. use-is-mobile.jsx)
+├── hooks/                # Shared hooks (e.g. use-mobile.js)
 ├── layouts/              # RootLayout (navbar/footer/toaster), DashboardLayout
 ├── lib/                  # axios.js, query-client.js, local-storage.js, utils.js (cn)
 ├── providers/            # QueryProvider, ThemeProvider
