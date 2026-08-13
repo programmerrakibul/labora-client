@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { APPLICATION_STATUS, getEnumByValue } from "@/constants/enum-configs";
+import { USER_ROLE } from "@/constants/enums";
 import { useDebouncedSearch } from "@/hooks/use-debounced-search";
 import useAuth from "@/stores/auth";
 import { ChevronDown, ChevronUp, Eye, FileText } from "lucide-react";
@@ -44,8 +45,11 @@ const ApplicationsPage = () => {
 
   const applications = data?.data || [];
   const totalPages = data?.pagination?.totalPages || 1;
-  const isRecruiter =
-    user?.role === "COMPANY_OWNER" || user?.role === "COMPANY_MEMBER";
+  const isRecruiter = [
+    USER_ROLE.COMPANY_MEMBER,
+    USER_ROLE.COMPANY_OWNER,
+  ].includes(user?.role);
+  
   const canWithdraw = (app) =>
     !isRecruiter && !["WITHDRAWN", "REJECTED", "HIRED"].includes(app.status);
 

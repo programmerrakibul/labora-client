@@ -16,7 +16,7 @@ import {
   Menu,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router";
 import ThemeToggle from "./theme-toggle";
 const navLinks = [
   { to: "/", label: "Home", icon: Home },
@@ -28,9 +28,12 @@ const navLinks = [
 
 const Navbar = () => {
   const user = useAuth((s) => s.user);
-  const location = useLocation();
+  const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
   const isMobile = useIsMobile();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const to = encodeURIComponent(`${pathname}?${searchParams.toString()}`);
 
   useEffect(() => {
     if (!isMobile) {
@@ -63,15 +66,17 @@ const Navbar = () => {
         <div className="flex items-center gap-2">
           {isMobile ? (
             <Sheet open={open} onOpenChange={setOpen}>
-              <SheetTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-9 w-9 md:hidden"
-                >
-                  <Menu className="h-5 w-5" />
-                </Button>
-              </SheetTrigger>
+              <SheetTrigger
+                render={
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="size-9 md:hidden"
+                  >
+                    <Menu className="size-5" />
+                  </Button>
+                }
+              />
               <SheetContent side="right" className="flex w-80 flex-col p-0">
                 <div className="flex h-16 shrink-0 items-center border-b px-6">
                   <Logo />
@@ -109,7 +114,8 @@ const Navbar = () => {
                   <nav className="space-y-1 p-3">
                     {navLinks.map((link) => {
                       const Icon = link.icon;
-                      const isActive = location.pathname === link.to;
+                      const isActive = pathname === link.to;
+
                       return (
                         <Link
                           key={link.to}
@@ -131,40 +137,51 @@ const Navbar = () => {
 
                 <div className="shrink-0 space-y-1 border-t p-3">
                   {user ? (
-                    <>
-                      <Link
-                        to="/dashboard"
+                    <div className="space-y-2">
+                      <Button
+                        variant="outline"
+                        render={<Link to="/dashboard" />}
                         onClick={() => setOpen(false)}
-                        className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                        nativeButton={false}
+                        className="w-full"
                       >
                         <LayoutDashboard className="h-4 w-4 shrink-0" />
                         Dashboard
-                      </Link>
-                      <button
+                      </Button>
+                      <Button
                         onClick={() => {
-                          logoutAction();
+                          logoutAction({
+                            navigate,
+                            searchParams,
+                            pathname,
+                          });
                           setOpen(false);
                         }}
-                        className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-destructive transition-colors hover:bg-destructive/10"
+                        variant="destructive"
+                        className="w-full"
                       >
                         <LogOut className="h-4 w-4 shrink-0" />
                         Sign Out
-                      </button>
-                    </>
+                      </Button>
+                    </div>
                   ) : (
                     <div className="flex flex-col gap-2 pt-1">
-                      <Button variant="outline" className="w-full">
-                        <Link to="/auth/login" onClick={() => setOpen(false)}>
-                          Sign In
-                        </Link>
+                      <Button
+                        variant="outline"
+                        className="w-full"
+                        render={<Link to={`/auth/login?to=${to}`} />}
+                        nativeButton={false}
+                        onClick={() => setOpen(false)}
+                      >
+                        Sign In
                       </Button>
-                      <Button className="w-full">
-                        <Link
-                          to="/auth/register"
-                          onClick={() => setOpen(false)}
-                        >
-                          Sign Up
-                        </Link>
+                      <Button
+                        className="w-full"
+                        render={<Link to={`/auth/register?to=${to}`} />}
+                        nativeButton={false}
+                        onClick={() => setOpen(false)}
+                      >
+                        Sign Up
                       </Button>
                     </div>
                   )}

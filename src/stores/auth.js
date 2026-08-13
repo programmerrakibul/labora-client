@@ -1,7 +1,7 @@
 import { createAuthClient } from "better-auth/react";
 import { create } from "zustand";
 
-const authClient = createAuthClient({
+export const authClient = createAuthClient({
   baseURL: import.meta.env.VITE_API_BASE_URL,
   fetchOptions: {
     credentials: "include",
@@ -39,28 +39,41 @@ export const fetchSession = async () => {
   }
 };
 
-export const login = async (email, password, callbackURL) => {
-  const { data, error } = await signIn.email({ email, password, callbackURL });
+export const login = async (email, password) => {
+  const { data, error } = await signIn.email({
+    email,
+    password,
+    dontRedirect: true,
+  });
+
   if (error) throw error;
 
-  await fetchSession();
+  useAuth.setState({ user: data.user, isAuthenticated: true });
 
   return data;
 };
 
 export const register = async (name, email, password) => {
-  const { data, error } = await signUp.email({ name, email, password });
+  const { data, error } = await signUp.email({
+    name,
+    email,
+    password,
+    dontRedirect: true,
+  });
 
   if (error) throw error;
 
-  await fetchSession();
+  useAuth.setState({ user: data.user, isAuthenticated: true });
 
   return data;
 };
 
-export const logout = async () => {
+export const logout = async ({ pathname, searchParams, navigate }) => {
+  const to = encodeURIComponent(`${pathname}?${searchParams.toString()}`);
+
   useAuth.setState({ loading: true });
   await signOut();
+  navigate?.(`/auth/login?to=${to}`);
   useAuth.setState({ user: null, loading: false, isAuthenticated: false });
 };
 

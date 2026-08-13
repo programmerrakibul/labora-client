@@ -1,5 +1,5 @@
 import { ChevronDown, Home, LayoutDashboard, LogOut } from "lucide-react";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate, useSearchParams } from "react-router";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -10,7 +10,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Spinner } from "@/components/ui/spinner";
-import urlUtils from "@/lib/url";
 import useAuth, { logout as logoutAction } from "@/stores/auth";
 import { UserIcon } from "lucide-react";
 
@@ -18,10 +17,12 @@ const UserMenu = () => {
   const user = useAuth((s) => s.user);
   const isLoading = useAuth((s) => s.loading);
   const navigate = useNavigate();
-  const location = useLocation();
-  const callbackUrl = encodeURIComponent(urlUtils.getFullUrl());
+  const { pathname } = useLocation();
+  const [searchParams] = useSearchParams();
 
-  const inDashboard = location.pathname.startsWith("/dashboard");
+  const to = encodeURIComponent(`${pathname}?${searchParams.toString()}`);
+
+  const inDashboard = pathname.startsWith("/dashboard");
   const initials = user?.name?.charAt(0)?.toUpperCase() || "U";
 
   if (isLoading) {
@@ -35,7 +36,11 @@ const UserMenu = () => {
         size="icon"
         className="size-9"
         aria-label="Sign in"
-        onClick={() => navigate(`/auth/login?callbackUrl=${callbackUrl}`)}
+        onClick={() =>
+          navigate(`/auth/login?to=${to}`, {
+            replace: true,
+          })
+        }
       >
         <UserIcon className="size-5" />
       </Button>
@@ -82,7 +87,13 @@ const UserMenu = () => {
         <DropdownMenuSeparator />
         <DropdownMenuItem
           className="text-destructive focus:text-destructive"
-          onClick={logoutAction}
+          onClick={() =>
+            logoutAction({
+              navigate,
+              searchParams,
+              pathname,
+            })
+          }
         >
           <LogOut className="size-4" />
           Sign Out

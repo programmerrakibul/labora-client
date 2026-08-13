@@ -1,8 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { toast } from "@/components/ui/toast";
-import urlUtils from "@/lib/url";
 import { cn } from "@/lib/utils";
-import { fetchSession, signIn } from "@/stores/auth";
+import { signIn } from "@/stores/auth";
 import { Loader2 } from "lucide-react";
 import { useTransition } from "react";
 import { useSearchParams } from "react-router";
@@ -31,34 +29,14 @@ const GoogleIcon = () => (
 const GoogleSignInButton = ({ className }) => {
   const [loading, startTransition] = useTransition();
   const [searchParams] = useSearchParams();
-  const callbackURL =
-    searchParams.get("callbackUrl") || urlUtils.getFullUrl("/");
+  const to = searchParams.get("to") || "/";
 
   const handleGoogleSignIn = async () => {
     startTransition(async () => {
-      await signIn.social(
-        {
-          provider: "google",
-          callbackURL,
-        },
-        {
-          onSuccess: async () => {
-            await fetchSession();
-
-            toast.success({
-              title: "Logged in",
-              description: "You have successfully logged in with Google.",
-            });
-          },
-
-          onError: (err) => {
-            toast.error({
-              title: "Login failed",
-              description: err?.message || "An error occurred during login.",
-            });
-          },
-        },
-      );
+      await signIn.social({
+        provider: "google",
+        callbackURL: to,
+      });
     });
   };
 
