@@ -29,12 +29,12 @@ const CompanyProfileInfo = ({ company }) => {
             <div className="flex flex-wrap items-center gap-2">
               <CardTitle className="text-xl">{company?.name}</CardTitle>
               {company?.isVerified ? (
-                <Badge className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
+                <Badge variant="secondary">
                   <BadgeCheck className="mr-1 h-3 w-3" />
                   Verified
                 </Badge>
               ) : (
-                <Badge variant="secondary">Unverified</Badge>
+                <Badge variant="destructive">Unverified</Badge>
               )}
               <Badge variant="secondary">
                 <Users className="mr-1 h-3 w-3" />

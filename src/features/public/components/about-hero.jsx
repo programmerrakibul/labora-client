@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import useAuth from "@/stores/auth";
 import { ArrowRight, BadgeCheck, Sparkles, Star } from "lucide-react";
-import { useNavigate } from "react-router";
+import { Link } from "react-router";
 
 const avatars = [
   { initials: "SA", className: "bg-primary/20 text-primary" },
@@ -17,7 +17,6 @@ const avatars = [
 
 const AboutHero = () => {
   const isAuthenticated = useAuth((s) => s.isAuthenticated);
-  const navigate = useNavigate();
 
   return (
     <section className="relative overflow-hidden bg-linear-to-b from-primary/5 to-background py-20 lg:py-28">
@@ -29,8 +28,7 @@ const AboutHero = () => {
               About Labora
             </Badge>
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl font-heading">
-              Where{" "}
-              <span className="text-primary">talent</span> meets{" "}
+              Where <span className="text-primary">talent</span> meets{" "}
               <span className="text-primary">opportunity</span>
             </h1>
             <p className="max-w-xl text-lg leading-relaxed text-muted-foreground">
@@ -39,7 +37,11 @@ const AboutHero = () => {
               tools to hire with confidence.
             </p>
             <div className="flex flex-wrap items-center gap-3">
-              <Button size="lg" onClick={() => navigate("/all-jobs")}>
+              <Button
+                size="lg"
+                render={<Link to="/all-jobs" />}
+                nativeButton={false}
+              >
                 <span>Browse Jobs</span>
                 <ArrowRight data-icon="inline-end" />
               </Button>
@@ -47,7 +49,8 @@ const AboutHero = () => {
                 <Button
                   variant="outline"
                   size="lg"
-                  onClick={() => navigate("/auth/register")}
+                  nativeButton={false}
+                  render={<Link to="/auth/register" />}
                 >
                   <span>Join for Free</span>
                 </Button>
@@ -64,10 +67,7 @@ const AboutHero = () => {
                     )}
                   >
                     <AvatarFallback
-                      className={cn(
-                        "text-xs font-semibold",
-                        avatar.className,
-                      )}
+                      className={cn("text-xs font-semibold", avatar.className)}
                     >
                       {avatar.initials}
                     </AvatarFallback>

@@ -2,12 +2,11 @@ import Container from "@/components/shared/container";
 import { Button } from "@/components/ui/button";
 import useAuth from "@/stores/auth";
 import { ArrowRight } from "lucide-react";
-import { useNavigate } from "react-router";
+import { Link } from "react-router";
 import HeroMedia from "./hero-media";
 
 const HomepageHero = () => {
   const isAuthenticated = useAuth((s) => s.isAuthenticated);
-  const navigate = useNavigate();
 
   return (
     <section className="py-16 lg:py-24">
@@ -30,7 +29,11 @@ const HomepageHero = () => {
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Button size="lg" onClick={() => navigate("/all-jobs")}>
+              <Button
+                size="lg"
+                render={<Link to="/all-jobs" />}
+                nativeButton={false}
+              >
                 Explore Jobs
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
@@ -38,7 +41,8 @@ const HomepageHero = () => {
                 <Button
                   variant="outline"
                   size="lg"
-                  onClick={() => navigate("/auth/register")}
+                  render={<Link to="/auth/register" />}
+                  nativeButton={false}
                 >
                   Create Account
                 </Button>
