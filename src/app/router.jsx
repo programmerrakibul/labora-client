@@ -9,6 +9,7 @@ import { createBrowserRouter } from "react-router";
 import AllJobsPage from "@/features/jobs/pages/all-jobs-page";
 import JobDetailsPage from "@/features/jobs/pages/job-details-page";
 import AboutPage from "@/features/public/pages/about-page";
+import CompaniesPage from "@/features/companies/pages/companies-page";
 import ContactPage from "@/features/public/pages/contact-page";
 import Homepage from "@/features/public/pages/homepage";
 
@@ -18,9 +19,6 @@ import RegisterPage from "@/features/auth/pages/register-page";
 
 // Dashboard pages
 import ApplicationsPage from "@/features/applications/pages/applications-page";
-import CompanyOnboardingPage from "@/features/companies/pages/company-onboarding-page";
-import CreateCompanyPage from "@/features/companies/pages/create-company-page";
-import JoinCompanyPage from "@/features/companies/pages/join-company-page";
 import MyCompanyPage from "@/features/companies/pages/my-company-page";
 import DashboardOverview from "@/features/dashboard/pages/dashboard-overview";
 import AddJobPage from "@/features/jobs/pages/add-job-page";
@@ -35,6 +33,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <Homepage /> },
+      { path: "companies", element: <CompaniesPage /> },
       { path: "about-us", element: <AboutPage /> },
       { path: "contact-us", element: <ContactPage /> },
       { path: "all-jobs", element: <AllJobsPage /> },
@@ -77,18 +76,6 @@ const router = createBrowserRouter([
             <ApplicationsPage />
           </RoleGuard>
         ),
-      },
-      {
-        path: "company/onboarding",
-        element: <CompanyOnboardingPage />,
-      },
-      {
-        path: "company/create",
-        element: <CreateCompanyPage />,
-      },
-      {
-        path: "company/join",
-        element: <JoinCompanyPage />,
       },
       {
         path: "company",

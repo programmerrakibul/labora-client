@@ -8,6 +8,7 @@ const initialState = {
   experienceLevel: "",
   minSalary: "",
   maxSalary: "",
+  companyId: "",
   page: 1,
   limit: 10,
 };
@@ -35,6 +36,9 @@ export const setMinSalary = (minSalary) =>
 export const setMaxSalary = (maxSalary) =>
   useJobFilters.setState({ maxSalary, page: 1 });
 
+export const setCompanyId = (companyId) =>
+  useJobFilters.setState({ companyId, page: 1 });
+
 export const setPage = (page) => useJobFilters.setState({ page });
 
 export const resetFilters = () => useJobFilters.setState(initialState);
@@ -49,6 +53,7 @@ export const toQueryParams = () => {
   if (s.experienceLevel) params.set("experienceLevel", s.experienceLevel);
   if (s.minSalary) params.set("minSalary", s.minSalary);
   if (s.maxSalary) params.set("maxSalary", s.maxSalary);
+  if (s.companyId) params.set("companyId", s.companyId);
   params.set("page", String(s.page));
   params.set("limit", String(s.limit));
   return params.toString();

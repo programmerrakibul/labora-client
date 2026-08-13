@@ -162,11 +162,6 @@ function getNavItems(role) {
           label: "My Applications",
           icon: FileText,
         },
-        {
-          to: "/dashboard/company/onboarding",
-          label: "Hiring? Create a Company",
-          icon: Building2,
-        },
       ];
     default:
       return common;
