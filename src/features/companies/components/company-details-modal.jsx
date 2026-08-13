@@ -45,6 +45,7 @@ const CompanyDetailsModal = ({
               <Button
                 variant="outline"
                 render={<Link to={`/all-jobs?companyId=${company?._id}`} />}
+                nativeButton={false}
                 onClick={() => onOpenChange(false)}
               >
                 View Jobs

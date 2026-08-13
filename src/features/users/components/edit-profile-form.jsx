@@ -1,9 +1,11 @@
 import { Button } from "@/components/ui/button";
 import FormField from "@/components/ui/form-field";
+import { toast } from "@/components/ui/toast";
+import { getErrorMessage } from "@/lib/error";
 import useAuth, { updateUser } from "@/stores/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useUpdateProfile } from "../hooks/use-users";
 import { profileSchema } from "../validation/profile";
@@ -12,6 +14,17 @@ const EditProfileForm = ({ onCancel, onSuccess }) => {
   const user = useAuth((s) => s.user);
   const updateProfile = useUpdateProfile();
 
+  const defaultValues = useMemo(
+    () => ({
+      name: user?.name || "",
+      phoneNumber: user?.phoneNumber || "",
+      address: user?.address || "",
+      city: user?.city || "",
+      country: user?.country || "",
+    }),
+    [user],
+  );
+
   const {
     control,
     handleSubmit,
@@ -19,19 +32,14 @@ const EditProfileForm = ({ onCancel, onSuccess }) => {
     formState: { isSubmitting },
   } = useForm({
     resolver: zodResolver(profileSchema),
+    defaultValues,
   });
 
   useEffect(() => {
     if (user) {
-      reset({
-        name: user.name || "",
-        phoneNumber: user.phoneNumber || "",
-        address: user.address || "",
-        city: user.city || "",
-        country: user.country || "",
-      });
+      reset(defaultValues);
     }
-  }, [user, reset]);
+  }, [defaultValues, reset, user]);
 
   const onSubmit = async (values) => {
     try {
@@ -41,7 +49,11 @@ const EditProfileForm = ({ onCancel, onSuccess }) => {
       }
       onSuccess?.();
     } catch (err) {
-      alert(err?.response?.data?.error || "Failed to update profile");
+      const msg = getErrorMessage(err);
+      toast.error({
+        title: "Error updating profile",
+        description: msg || "An error occurred while updating your profile.",
+      });
     }
   };
 

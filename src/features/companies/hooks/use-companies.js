@@ -90,6 +90,54 @@ export const useUpdateCompany = () => {
   });
 };
 
+export const useUpdateCompanyStatus = () => {
+  return useMutation({
+    mutationFn: ({ id, status }) => companyApi.updateStatus(id, status),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: companyQueryKeys.all });
+      queryClient.invalidateQueries({
+        queryKey: companyQueryKeys.single(variables.id),
+      });
+      toast.success({
+        title: "Company status updated",
+        description: "The company status has been updated successfully.",
+      });
+    },
+    onError: (err) => {
+      toast.error({
+        title: "Error updating company status",
+        description:
+          err?.response?.data?.error ||
+          "An error occurred while updating the company status.",
+      });
+    },
+  });
+};
+
+export const useDeleteCompany = () => {
+  return useMutation({
+    mutationFn: companyApi.delete,
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: companyQueryKeys.all });
+      queryClient.invalidateQueries({
+        queryKey: companyQueryKeys.single(variables),
+      });
+      toast.success({
+        title: "Company deleted",
+        description: "The company has been deleted successfully.",
+      });
+    },
+    onError: (err) => {
+      toast.error({
+        title: "Error deleting company",
+        description:
+          err?.response?.data?.error ||
+          "An error occurred while deleting the company.",
+      });
+    },
+  });
+};
+
 export const useJoinCompany = () => {
   return useMutation({
     mutationFn: companyApi.join,

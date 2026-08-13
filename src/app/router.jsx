@@ -6,10 +6,10 @@ import RootLayout from "@/layouts/RootLayout";
 import { createBrowserRouter } from "react-router";
 
 // Public pages
+import CompaniesPage from "@/features/companies/pages/companies-page";
 import AllJobsPage from "@/features/jobs/pages/all-jobs-page";
 import JobDetailsPage from "@/features/jobs/pages/job-details-page";
 import AboutPage from "@/features/public/pages/about-page";
-import CompaniesPage from "@/features/companies/pages/companies-page";
 import ContactPage from "@/features/public/pages/contact-page";
 import Homepage from "@/features/public/pages/homepage";
 
@@ -18,13 +18,17 @@ import LoginPage from "@/features/auth/pages/login-page";
 import RegisterPage from "@/features/auth/pages/register-page";
 
 // Dashboard pages
+import { USER_ROLE } from "@/constants/enums";
 import ApplicationsPage from "@/features/applications/pages/applications-page";
+import ManageCompaniesPage from "@/features/companies/pages/manage-companies-page";
 import MyCompanyPage from "@/features/companies/pages/my-company-page";
 import DashboardOverview from "@/features/dashboard/pages/dashboard-overview";
 import AddJobPage from "@/features/jobs/pages/add-job-page";
 import MyJobsPage from "@/features/jobs/pages/my-jobs-page";
 import ManageUsersPage from "@/features/users/pages/manage-users-page";
 import ProfilePage from "@/features/users/pages/profile-page";
+
+const RECRUITER = [USER_ROLE.COMPANY_OWNER, USER_ROLE.COMPANY_MEMBER];
 
 const router = createBrowserRouter([
   {
@@ -54,7 +58,7 @@ const router = createBrowserRouter([
       {
         path: "add-job",
         element: (
-          <RoleGuard allowedRoles={["COMPANY_OWNER", "COMPANY_MEMBER"]}>
+          <RoleGuard allowedRoles={RECRUITER}>
             <AddJobPage />
           </RoleGuard>
         ),
@@ -62,7 +66,7 @@ const router = createBrowserRouter([
       {
         path: "my-jobs",
         element: (
-          <RoleGuard allowedRoles={["COMPANY_OWNER", "COMPANY_MEMBER"]}>
+          <RoleGuard allowedRoles={RECRUITER}>
             <MyJobsPage />
           </RoleGuard>
         ),
@@ -70,9 +74,7 @@ const router = createBrowserRouter([
       {
         path: "applications",
         element: (
-          <RoleGuard
-            allowedRoles={["COMPANY_OWNER", "COMPANY_MEMBER", "JOB_SEEKER"]}
-          >
+          <RoleGuard allowedRoles={[USER_ROLE.ADMIN, ...RECRUITER]}>
             <ApplicationsPage />
           </RoleGuard>
         ),
@@ -80,7 +82,7 @@ const router = createBrowserRouter([
       {
         path: "company",
         element: (
-          <RoleGuard allowedRoles={["COMPANY_OWNER", "COMPANY_MEMBER"]}>
+          <RoleGuard allowedRoles={RECRUITER}>
             <MyCompanyPage />
           </RoleGuard>
         ),
@@ -88,8 +90,16 @@ const router = createBrowserRouter([
       {
         path: "manage-users",
         element: (
-          <RoleGuard allowedRoles={["ADMIN"]}>
+          <RoleGuard allowedRoles={[USER_ROLE.ADMIN]}>
             <ManageUsersPage />
+          </RoleGuard>
+        ),
+      },
+      {
+        path: "companies",
+        element: (
+          <RoleGuard allowedRoles={[USER_ROLE.ADMIN]}>
+            <ManageCompaniesPage />
           </RoleGuard>
         ),
       },

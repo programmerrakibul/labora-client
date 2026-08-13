@@ -41,7 +41,7 @@ const UserStatusSelect = ({ userId, isActive, className }) => {
         <span className={cn("size-2 rounded-full", current?.color)} />
         <SelectValue className={"capitalize"} />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent alignItemWithTrigger={false}>
         {USER_STATUS_OPTIONS.map((status) => (
           <SelectItem key={status.value} value={status.value}>
             <div className="flex items-center gap-2">

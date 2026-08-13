@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogTitle } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import { APPLICATION_STATUS, getEnumByValue } from "@/constants/enums";
+import { APPLICATION_STATUS, getEnumByValue } from "@/constants/enum-configs";
 import { formatPostedAt } from "@/features/jobs/utils/job";
 import DetailItem from "@/features/public/components/detail-item";
 import DetailSection from "@/features/public/components/detail-section";

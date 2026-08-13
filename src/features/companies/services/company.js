@@ -17,7 +17,17 @@ export const companyApi = {
   },
 
   update: async (id, payload) => {
-    const { data } = await api.patch(`/companies/${id}`, payload);
+    const { data } = await api.put(`/companies/${id}`, payload);
+    return data;
+  },
+
+  updateStatus: async (id, status) => {
+    const { data } = await api.patch(`/companies/${id}/status`, { status });
+    return data;
+  },
+
+  delete: async (id) => {
+    const { data } = await api.delete(`/companies/${id}`);
     return data;
   },
 

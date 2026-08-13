@@ -1,3 +1,4 @@
+import { USER_ROLE } from "@/constants/enums";
 import {
   BriefcaseBusiness,
   Building2,
@@ -15,13 +16,14 @@ export function getNavItems(role) {
   ];
 
   switch (role) {
-    case "ADMIN":
+    case USER_ROLE.ADMIN:
       return [
         ...common,
         { to: "/dashboard/manage-users", label: "Manage Users", icon: Users },
+        { to: "/dashboard/companies", label: "Companies", icon: Building2 },
       ];
-    case "COMPANY_OWNER":
-    case "COMPANY_MEMBER":
+    case USER_ROLE.COMPANY_OWNER:
+    case USER_ROLE.COMPANY_MEMBER:
       return [
         ...common,
         { to: "/dashboard/add-job", label: "Post Job", icon: PlusCircle },
@@ -33,7 +35,7 @@ export function getNavItems(role) {
         },
         { to: "/dashboard/company", label: "My Company", icon: Building2 },
       ];
-    case "JOB_SEEKER":
+    case USER_ROLE.JOB_SEEKER:
       return [
         ...common,
         {

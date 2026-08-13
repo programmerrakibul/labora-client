@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import { getEnumByValue, JOB_STATUS } from "@/constants/enums";
+import { getEnumByValue, JOB_STATUS } from "@/constants/enum-configs";
 import { Building2 } from "lucide-react";
 import JobBadges from "./job-badges";
 

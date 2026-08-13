@@ -14,13 +14,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { USER_ROLE } from "@/constants/enums";
 import { useDebouncedSearch } from "@/hooks/use-debounced-search";
 import { Trash2, Users as UsersIcon } from "lucide-react";
 import { useState } from "react";
 import UserRoleSelect from "../components/user-role-select";
 import UserStatusSelect from "../components/user-status-select";
 import { useDeleteUser, useUsers } from "../hooks/use-users";
+import { USER_ROLE_CONFIG } from "@/constants/enum-configs";
 
 const ManageUsersPage = () => {
   const [page, setPage] = useState(1);
@@ -125,7 +125,7 @@ const ManageUsersPage = () => {
           className="sm:w-52"
         >
           <option value="">All Roles</option>
-          {Object.values(USER_ROLE).map((r) => (
+          {Object.values(USER_ROLE_CONFIG).map((r) => (
             <option key={r.value} value={r.value}>
               {r.label}
             </option>

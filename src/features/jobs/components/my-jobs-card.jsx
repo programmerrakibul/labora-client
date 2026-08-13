@@ -5,7 +5,7 @@ import {
   getEnumByValue,
   JOB_TYPE,
   WORK_LOCATION_TYPE,
-} from "@/constants/enums";
+} from "@/constants/enum-configs";
 import { cn } from "@/lib/utils";
 import {
   Briefcase,

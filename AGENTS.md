@@ -110,6 +110,14 @@ approved to join one (server assigns both). Routes under `/dashboard` use
   `MembersTable` (Remove via `useRemoveMember`); member sees a read-only
   profile + Leave Company (confirm dialog → `useLeaveCompany`, which reverts
   the store to `JOB_SEEKER`).
+- **Manage Companies** (`/dashboard/companies`, `RoleGuard ["ADMIN"]`) — admin
+  oversight page (`ManageCompaniesPage`): debounced search (name/email/
+  industry) + status filter (All/Active/Suspended), paginated grid of
+  `CompanyCard`s where each card supports Details (`CompanyDetailsModal`),
+  inline status change (`CompanyStatusSelect` → `useUpdateCompanyStatus`), and
+  Delete (confirm `Dialog` → `useDeleteCompany`). It passes `isAdmin: "true"`
+  in the `useCompanies` filters so the default view lists ALL statuses;
+  without it the server defaults to `ACTIVE`-only.
 
 `getMyMembership` returns `{ status: "active" | "pending" | "none" }` (server
 normalizes `APPROVED` → `active`); read it as `data?.data?.status`. Query keys
@@ -119,11 +127,18 @@ live in `companyQueryKeys` (`list`, `single`, `requests`, `members`,
 ## Reusable Company UI
 
 - `CompanyCard` is the single reusable card for companies (homepage top
-  companies + `/companies`). Config-driven: `showSeats`, `showJoin`,
-  `isJoining`, `onJoin`, `showDetails`, `onViewDetails`, `showViewJobs`.
+  companies + `/companies` + admin `/dashboard/companies`). Config-driven:
+  `showSeats`, `showJoin`, `isJoining`, `onJoin`, `showDetails`,
+  `onViewDetails`, `showViewJobs`, plus admin-only `showStatus`, `showDelete`,
+  `onDelete`.
 - `CompanyCardSkeleton` is the matching loading state; `NotFound` (shared)
-  covers empty states; `Pagination` (shared) drives the `/companies` grid.
-- `CompanyProfileInfo` is shared by `MyCompanyPage` and `CompanyDetailsModal`.
+  covers empty states; `Pagination` (shared) drives the `/companies` and
+  `/dashboard/companies` grids.
+- `CompanyProfileInfo` is shared by `MyCompanyPage` and `CompanyDetailsModal`;
+  it renders the company email and a Verified/Unverified badge.
+- `CompanyStatusSelect` (in `features/companies/components/`) is the inline
+  Active/Suspended `<Select>` used on admin company cards (modeled on
+  `UserStatusSelect`).
 - The `/all-jobs` page supports a `?companyId=` filter: it hydrates from the
   URL, passes `companyId` to `useJobs`, and renders `CompanyFilterBanner`
   (in `features/jobs/components/`) to clear it. The field lives in the

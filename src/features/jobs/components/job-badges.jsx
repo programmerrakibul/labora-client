@@ -5,15 +5,21 @@ import {
   JOB_STATUS,
   JOB_TYPE,
   WORK_LOCATION_TYPE,
-} from "@/constants/enums";
+} from "@/constants/enum-configs";
 import { cn } from "@/lib/utils";
 import { Briefcase, MapPin } from "lucide-react";
 
 const JobBadges = ({ job, showStatus = false, className = "" }) => {
   const status = getEnumByValue(JOB_STATUS, job?.status);
   const jobType = getEnumByValue(JOB_TYPE, job?.jobType);
-  const locationType = getEnumByValue(WORK_LOCATION_TYPE, job?.workLocationType);
-  const experienceLevel = getEnumByValue(EXPERIENCE_LEVEL, job?.experienceLevel);
+  const locationType = getEnumByValue(
+    WORK_LOCATION_TYPE,
+    job?.workLocationType,
+  );
+  const experienceLevel = getEnumByValue(
+    EXPERIENCE_LEVEL,
+    job?.experienceLevel,
+  );
 
   return (
     <div className={cn("flex flex-wrap gap-2", className)}>
