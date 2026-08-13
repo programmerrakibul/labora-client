@@ -92,12 +92,15 @@ src/
 
 ### Routing
 
-- `/` — public site under `RootLayout` (homepage, all jobs, job details, auth)
+- `/` — public site under `RootLayout` (homepage, companies, all jobs, job
+  details, auth)
+  - `companies` — browse all companies, view details in a modal, request to
+    join (job seekers), and jump to a company's jobs via
+    `/all-jobs?companyId=...`
 - `/dashboard` — private, role-guarded:
   - Company roles (`COMPANY_OWNER` / `COMPANY_MEMBER`): `add-job`, `my-jobs`,
     `applications`, `company`
-  - Company roles + Job seeker: `applications`
-  - Job seeker: `company/onboarding`, `company/create`, `company/join`
+  - Job seeker: `applications`
   - Admin: `manage-users`
   - All users: `profile`
 
@@ -118,11 +121,32 @@ company actions (create a company → `COMPANY_OWNER`, get approved to join →
 
 ### Company Flow
 
-`src/features/companies/` implements onboarding (`company/onboarding`),
-company creation (`company/create`), join requests (`company/join`), and
-management (`company`). Membership state comes from `GET /companies/me/membership`
-(`{ status: "active" | "pending" | "none" }`); the onboarding page polls every
-15s and re-fetches the session once a request is approved.
+`src/features/companies/` implements the whole lifecycle:
+
+- **Onboarding** — the homepage renders a `CompanyOnboardingSection` for
+  `JOB_SEEKER` users only (renders `null` for everyone else). It mirrors the
+  states from `useMyMembership()`: `pending` (card with Cancel request),
+  `active` (re-fetches the session), or no affiliation (choose Create vs Join).
+  It polls every 15s and calls `fetchSession()` once a request is approved.
+- **Create** — the "Create a Company" card opens a `CreateCompanyDialog`
+  containing `CompanyForm` + `useCreateCompany` (optimistically applies
+  `COMPANY_OWNER`/`companyId` via `updateUser`, then `fetchSession()`), then
+  redirects to `/dashboard`.
+- **Join** — the "Join a Company" card navigates to the public `/companies`
+  page: a debounced search plus a paginated grid of reusable `CompanyCard`s.
+  Job seekers get a "Request to Join" button (`useJoinCompany`, 409 → toast);
+  everyone gets "Details" (opened via `CompanyDetailsModal`) and "View Jobs"
+  (`/all-jobs?companyId=...`).
+- **Management** (`/dashboard/company`) — owner sees editable `CompanyForm`,
+  `PendingRequestsTable` (Approve/Reject via `useRespondToRequest`), and
+  `MembersTable` (Remove via `useRemoveMember`); member sees a read-only
+  profile + Leave Company (confirm dialog → `useLeaveCompany`, which reverts
+  the store to `JOB_SEEKER`).
+
+Membership state comes from `GET /companies/me/membership`
+(`{ status: "active" | "pending" | "none" }`). The homepage "top companies"
+section is also dynamic (`useCompanies({ limit: 6 })`) and reuses the same
+`CompanyCard`.
 
 ## Workflow
 
